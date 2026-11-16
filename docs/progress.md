@@ -11,7 +11,7 @@ Specification: `HANDOFF.md`. Branch: `p0-setup`. Update this file with every tas
 | P0-T3 `drawgen_shared` | CC | done | implemented by Codex, reviewed; edge centroid and arc box choices in decision 010 |
 | P0-T4 synthetic generator and fixtures | CC | done | implemented by Codex; side-view rotation fixed in review; see decision 011 |
 | P0-T5 worker skeleton, `ping`, backends, `drawgen ping` | CC | done | implemented by Codex, reviewed; see decision 012 |
-| P0-T6 architecture tests | CC | todo | |
+| P0-T6 architecture tests | CC | done | implemented by Codex; pack-name scan scope fixed in review; `make gate` runs lint, types and these tests |
 | P0-H1 NX release, Python version, parts on the seat, recorded journals | HUMAN | todo | |
 | P0-H2 run `ping` through `run_journal`, commit `status.json` | HUMAN | todo | gate G0 |
 

@@ -1,4 +1,4 @@
-.PHONY: check lint fmt types test py310 schemas synthetic
+.PHONY: check lint fmt types test py310 schemas synthetic arch gate
 
 PY310_RUN = uv run --python 3.10 --isolated --no-project --with pytest
 
@@ -30,3 +30,8 @@ schemas:
 
 synthetic:
 	uv run python tools/make_synthetic.py
+
+arch:
+	uv run pytest tests/arch -q
+
+gate: lint types arch

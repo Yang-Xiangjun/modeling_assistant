@@ -12,7 +12,7 @@ from drawgen.backends.base import WorkerFailed, WorkerProtocolError, WorkerTimeo
 from drawgen.backends.mock import MockBackend
 from drawgen.backends.nx import NxBackend, build_command
 
-FIXTURE_SET = Path("fixtures/synthetic/pcba/reference")
+FIXTURE_SET = Path("fixtures/synthetic/pcba/reference")  # arch: allow-pack-name (fixture path only)
 
 
 def make_executable(tmp_path: Path, body: str, name: str = "fake.py") -> Path:
