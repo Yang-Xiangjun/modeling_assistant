@@ -6,7 +6,21 @@ Every NXOpen call in `nx_worker/` that is not backed by a journal in
 
 ## Unverified calls in the code
 
-None. No NXOpen code exists yet.
+| Call | Evidence | Confirmation |
+|---|---|---|
+| `NXOpen.Session.GetSession()` in `nx_worker/commands/ping.py` | HANDOFF.md section 13 | Backed by the published-journal list, not by a recording yet. |
+
+## Runtime assumptions about `run_journal`
+
+The following runtime behaviours are assumptions to confirm in P0-H2:
+
+| Assumption | Confirmation task |
+|---|---|
+| `__file__` is set in the journal process. | P0-H2 |
+| Arguments after `-args` arrive in `sys.argv[1:]` (HANDOFF.md section 13). | P0-H2 |
+| `__name__` is `"__main__"`. | P0-H2 |
+| The effect of `SystemExit` is safe in the journal runner. | P0-H2 |
+| `UGII_VERSION` and `UGII_BASE_DIR` are set on the seat. | P0-H2 |
 
 ## Recordings requested
 

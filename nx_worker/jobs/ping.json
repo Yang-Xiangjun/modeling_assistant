@@ -1,0 +1,7 @@
+{
+  "protocol": "1",
+  "command": "ping",
+  "inputs": {},
+  "output_dir": "../../runs/ping",
+  "options": {}
+}

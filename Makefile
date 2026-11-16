@@ -22,7 +22,8 @@ test:
 # shared/ (and later nx_worker/) on a bare Python 3.10 with no project packages:
 # proves 3.10 syntax and standard library only.
 py310:
-	$(PY310_RUN) python -m pytest tests/unit/shared -q -p no:cacheprovider
+	$(PY310_RUN) python -m pytest tests/unit/shared tests/unit/worker -q -p no:cacheprovider
+	$(PY310_RUN) python nx_worker/main.py --selftest
 
 schemas:
 	uv run python tools/export_schemas.py
