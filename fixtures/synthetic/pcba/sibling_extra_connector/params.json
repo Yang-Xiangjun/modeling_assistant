@@ -1,0 +1,163 @@
+{
+  "board_length": 80.0,
+  "board_thickness": 1.6,
+  "board_width": 60.0,
+  "box_components": [
+    {
+      "height": 2.5,
+      "refdes": "C1",
+      "side": "top",
+      "size_x": 5.0,
+      "size_y": 5.0,
+      "x": 10.0,
+      "y": 20.0
+    },
+    {
+      "height": 2.5,
+      "refdes": "C2",
+      "side": "top",
+      "size_x": 5.0,
+      "size_y": 5.0,
+      "x": 17.0,
+      "y": 20.0
+    },
+    {
+      "height": 3.2,
+      "refdes": "D1",
+      "side": "bottom",
+      "size_x": 8.0,
+      "size_y": 5.0,
+      "x": 45.0,
+      "y": 45.0
+    },
+    {
+      "height": 4.0,
+      "refdes": "L1",
+      "side": "top",
+      "size_x": 7.0,
+      "size_y": 5.0,
+      "x": 10.0,
+      "y": 30.0
+    },
+    {
+      "height": 2.0,
+      "refdes": "R1",
+      "side": "top",
+      "size_x": 5.0,
+      "size_y": 5.0,
+      "x": 10.0,
+      "y": 10.0
+    },
+    {
+      "height": 2.0,
+      "refdes": "R2",
+      "side": "top",
+      "size_x": 5.0,
+      "size_y": 5.0,
+      "x": 17.0,
+      "y": 10.0
+    },
+    {
+      "height": 14.0,
+      "refdes": "U1",
+      "side": "top",
+      "size_x": 14.0,
+      "size_y": 12.0,
+      "x": 27.0,
+      "y": 28.0
+    },
+    {
+      "height": 2.4,
+      "refdes": "C3",
+      "side": "bottom",
+      "size_x": 5.0,
+      "size_y": 5.0,
+      "x": 57.0,
+      "y": 45.0
+    }
+  ],
+  "connectors": [
+    {
+      "height": 6.0,
+      "pin_cols": 5,
+      "pin_diameter": 0.8,
+      "pin_length_above_body": 3.0,
+      "pin_rows": 2,
+      "pitch": 2.54,
+      "refdes": "J1",
+      "size_x": 16.0,
+      "size_y": 14.0,
+      "x": 48.0,
+      "y": 12.0
+    },
+    {
+      "height": 4.0,
+      "pin_cols": 4,
+      "pin_diameter": 0.8,
+      "pin_length_above_body": 2.5,
+      "pin_rows": 2,
+      "pitch": 2.54,
+      "refdes": "J2",
+      "size_x": 14.0,
+      "size_y": 10.0,
+      "x": 12.0,
+      "y": 42.0
+    }
+  ],
+  "mounting_holes": [
+    {
+      "diameter": 3.2,
+      "x": 8.0,
+      "y": 8.0
+    },
+    {
+      "diameter": 3.2,
+      "x": 72.0,
+      "y": 8.0
+    },
+    {
+      "diameter": 3.2,
+      "x": 72.0,
+      "y": 52.0
+    },
+    {
+      "diameter": 3.2,
+      "x": 8.0,
+      "y": 52.0
+    }
+  ],
+  "name": "sibling_extra_connector",
+  "synthetic": true,
+  "vias": [
+    {
+      "diameter": 0.4,
+      "x": 20.0,
+      "y": 20.0
+    },
+    {
+      "diameter": 0.4,
+      "x": 40.0,
+      "y": 20.0
+    },
+    {
+      "diameter": 0.4,
+      "x": 60.0,
+      "y": 20.0
+    },
+    {
+      "diameter": 0.4,
+      "x": 20.0,
+      "y": 40.0
+    },
+    {
+      "diameter": 0.4,
+      "x": 40.0,
+      "y": 40.0
+    },
+    {
+      "diameter": 0.4,
+      "x": 60.0,
+      "y": 40.0
+    }
+  ]
+}

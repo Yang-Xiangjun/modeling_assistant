@@ -1,0 +1,7141 @@
+{
+  "bodies": [
+    {
+      "bbox": [
+        0.0,
+        0.0,
+        0.0,
+        90.0,
+        65.0,
+        1.6
+      ],
+      "component_id": "c1",
+      "edges": [
+        {
+          "center": null,
+          "direction": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            90.0,
+            0.0,
+            0.0
+          ],
+          "face_ids": [
+            "c1.b0.f0",
+            "c1.b0.f2"
+          ],
+          "geom": "line",
+          "id": "c1.b0.e0",
+          "length": 90.0,
+          "radius": null,
+          "start": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "end": [
+            90.0,
+            65.0,
+            0.0
+          ],
+          "face_ids": [
+            "c1.b0.f0",
+            "c1.b0.f3"
+          ],
+          "geom": "line",
+          "id": "c1.b0.e1",
+          "length": 65.0,
+          "radius": null,
+          "start": [
+            90.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            0.0,
+            65.0,
+            0.0
+          ],
+          "face_ids": [
+            "c1.b0.f0",
+            "c1.b0.f4"
+          ],
+          "geom": "line",
+          "id": "c1.b0.e2",
+          "length": 90.0,
+          "radius": null,
+          "start": [
+            90.0,
+            65.0,
+            0.0
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "end": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "face_ids": [
+            "c1.b0.f0",
+            "c1.b0.f5"
+          ],
+          "geom": "line",
+          "id": "c1.b0.e3",
+          "length": 65.0,
+          "radius": null,
+          "start": [
+            0.0,
+            65.0,
+            0.0
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            90.0,
+            0.0,
+            1.6
+          ],
+          "face_ids": [
+            "c1.b0.f1",
+            "c1.b0.f2"
+          ],
+          "geom": "line",
+          "id": "c1.b0.e4",
+          "length": 90.0,
+          "radius": null,
+          "start": [
+            0.0,
+            0.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "end": [
+            90.0,
+            65.0,
+            1.6
+          ],
+          "face_ids": [
+            "c1.b0.f1",
+            "c1.b0.f3"
+          ],
+          "geom": "line",
+          "id": "c1.b0.e5",
+          "length": 65.0,
+          "radius": null,
+          "start": [
+            90.0,
+            0.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            0.0,
+            65.0,
+            1.6
+          ],
+          "face_ids": [
+            "c1.b0.f1",
+            "c1.b0.f4"
+          ],
+          "geom": "line",
+          "id": "c1.b0.e6",
+          "length": 90.0,
+          "radius": null,
+          "start": [
+            90.0,
+            65.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "end": [
+            0.0,
+            0.0,
+            1.6
+          ],
+          "face_ids": [
+            "c1.b0.f1",
+            "c1.b0.f5"
+          ],
+          "geom": "line",
+          "id": "c1.b0.e7",
+          "length": 65.0,
+          "radius": null,
+          "start": [
+            0.0,
+            65.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": [
+            0.0,
+            0.0,
+            1.6
+          ],
+          "face_ids": [
+            "c1.b0.f2",
+            "c1.b0.f5"
+          ],
+          "geom": "line",
+          "id": "c1.b0.e8",
+          "length": 1.6,
+          "radius": null,
+          "start": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": [
+            90.0,
+            0.0,
+            1.6
+          ],
+          "face_ids": [
+            "c1.b0.f2",
+            "c1.b0.f3"
+          ],
+          "geom": "line",
+          "id": "c1.b0.e9",
+          "length": 1.6,
+          "radius": null,
+          "start": [
+            90.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": [
+            90.0,
+            65.0,
+            1.6
+          ],
+          "face_ids": [
+            "c1.b0.f3",
+            "c1.b0.f4"
+          ],
+          "geom": "line",
+          "id": "c1.b0.e10",
+          "length": 1.6,
+          "radius": null,
+          "start": [
+            90.0,
+            65.0,
+            0.0
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": [
+            0.0,
+            65.0,
+            1.6
+          ],
+          "face_ids": [
+            "c1.b0.f4",
+            "c1.b0.f5"
+          ],
+          "geom": "line",
+          "id": "c1.b0.e11",
+          "length": 1.6,
+          "radius": null,
+          "start": [
+            0.0,
+            65.0,
+            0.0
+          ]
+        },
+        {
+          "center": [
+            8.0,
+            8.0,
+            0.0
+          ],
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": null,
+          "face_ids": [
+            "c1.b0.f0",
+            "c1.b0.f6"
+          ],
+          "geom": "circle",
+          "id": "c1.b0.e12",
+          "length": 10.053096491487338,
+          "radius": 1.6,
+          "start": null
+        },
+        {
+          "center": [
+            8.0,
+            8.0,
+            1.6
+          ],
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": null,
+          "face_ids": [
+            "c1.b0.f1",
+            "c1.b0.f6"
+          ],
+          "geom": "circle",
+          "id": "c1.b0.e13",
+          "length": 10.053096491487338,
+          "radius": 1.6,
+          "start": null
+        },
+        {
+          "center": [
+            72.0,
+            8.0,
+            0.0
+          ],
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": null,
+          "face_ids": [
+            "c1.b0.f0",
+            "c1.b0.f7"
+          ],
+          "geom": "circle",
+          "id": "c1.b0.e14",
+          "length": 10.053096491487338,
+          "radius": 1.6,
+          "start": null
+        },
+        {
+          "center": [
+            72.0,
+            8.0,
+            1.6
+          ],
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": null,
+          "face_ids": [
+            "c1.b0.f1",
+            "c1.b0.f7"
+          ],
+          "geom": "circle",
+          "id": "c1.b0.e15",
+          "length": 10.053096491487338,
+          "radius": 1.6,
+          "start": null
+        },
+        {
+          "center": [
+            72.0,
+            52.0,
+            0.0
+          ],
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": null,
+          "face_ids": [
+            "c1.b0.f0",
+            "c1.b0.f8"
+          ],
+          "geom": "circle",
+          "id": "c1.b0.e16",
+          "length": 10.053096491487338,
+          "radius": 1.6,
+          "start": null
+        },
+        {
+          "center": [
+            72.0,
+            52.0,
+            1.6
+          ],
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": null,
+          "face_ids": [
+            "c1.b0.f1",
+            "c1.b0.f8"
+          ],
+          "geom": "circle",
+          "id": "c1.b0.e17",
+          "length": 10.053096491487338,
+          "radius": 1.6,
+          "start": null
+        },
+        {
+          "center": [
+            8.0,
+            52.0,
+            0.0
+          ],
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": null,
+          "face_ids": [
+            "c1.b0.f0",
+            "c1.b0.f9"
+          ],
+          "geom": "circle",
+          "id": "c1.b0.e18",
+          "length": 10.053096491487338,
+          "radius": 1.6,
+          "start": null
+        },
+        {
+          "center": [
+            8.0,
+            52.0,
+            1.6
+          ],
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": null,
+          "face_ids": [
+            "c1.b0.f1",
+            "c1.b0.f9"
+          ],
+          "geom": "circle",
+          "id": "c1.b0.e19",
+          "length": 10.053096491487338,
+          "radius": 1.6,
+          "start": null
+        },
+        {
+          "center": [
+            20.0,
+            20.0,
+            0.0
+          ],
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": null,
+          "face_ids": [
+            "c1.b0.f0",
+            "c1.b0.f10"
+          ],
+          "geom": "circle",
+          "id": "c1.b0.e20",
+          "length": 1.2566370614359172,
+          "radius": 0.2,
+          "start": null
+        },
+        {
+          "center": [
+            20.0,
+            20.0,
+            1.6
+          ],
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": null,
+          "face_ids": [
+            "c1.b0.f1",
+            "c1.b0.f10"
+          ],
+          "geom": "circle",
+          "id": "c1.b0.e21",
+          "length": 1.2566370614359172,
+          "radius": 0.2,
+          "start": null
+        },
+        {
+          "center": [
+            40.0,
+            20.0,
+            0.0
+          ],
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": null,
+          "face_ids": [
+            "c1.b0.f0",
+            "c1.b0.f11"
+          ],
+          "geom": "circle",
+          "id": "c1.b0.e22",
+          "length": 1.2566370614359172,
+          "radius": 0.2,
+          "start": null
+        },
+        {
+          "center": [
+            40.0,
+            20.0,
+            1.6
+          ],
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": null,
+          "face_ids": [
+            "c1.b0.f1",
+            "c1.b0.f11"
+          ],
+          "geom": "circle",
+          "id": "c1.b0.e23",
+          "length": 1.2566370614359172,
+          "radius": 0.2,
+          "start": null
+        },
+        {
+          "center": [
+            60.0,
+            20.0,
+            0.0
+          ],
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": null,
+          "face_ids": [
+            "c1.b0.f0",
+            "c1.b0.f12"
+          ],
+          "geom": "circle",
+          "id": "c1.b0.e24",
+          "length": 1.2566370614359172,
+          "radius": 0.2,
+          "start": null
+        },
+        {
+          "center": [
+            60.0,
+            20.0,
+            1.6
+          ],
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": null,
+          "face_ids": [
+            "c1.b0.f1",
+            "c1.b0.f12"
+          ],
+          "geom": "circle",
+          "id": "c1.b0.e25",
+          "length": 1.2566370614359172,
+          "radius": 0.2,
+          "start": null
+        },
+        {
+          "center": [
+            20.0,
+            40.0,
+            0.0
+          ],
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": null,
+          "face_ids": [
+            "c1.b0.f0",
+            "c1.b0.f13"
+          ],
+          "geom": "circle",
+          "id": "c1.b0.e26",
+          "length": 1.2566370614359172,
+          "radius": 0.2,
+          "start": null
+        },
+        {
+          "center": [
+            20.0,
+            40.0,
+            1.6
+          ],
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": null,
+          "face_ids": [
+            "c1.b0.f1",
+            "c1.b0.f13"
+          ],
+          "geom": "circle",
+          "id": "c1.b0.e27",
+          "length": 1.2566370614359172,
+          "radius": 0.2,
+          "start": null
+        },
+        {
+          "center": [
+            40.0,
+            40.0,
+            0.0
+          ],
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": null,
+          "face_ids": [
+            "c1.b0.f0",
+            "c1.b0.f14"
+          ],
+          "geom": "circle",
+          "id": "c1.b0.e28",
+          "length": 1.2566370614359172,
+          "radius": 0.2,
+          "start": null
+        },
+        {
+          "center": [
+            40.0,
+            40.0,
+            1.6
+          ],
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": null,
+          "face_ids": [
+            "c1.b0.f1",
+            "c1.b0.f14"
+          ],
+          "geom": "circle",
+          "id": "c1.b0.e29",
+          "length": 1.2566370614359172,
+          "radius": 0.2,
+          "start": null
+        },
+        {
+          "center": [
+            60.0,
+            40.0,
+            0.0
+          ],
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": null,
+          "face_ids": [
+            "c1.b0.f0",
+            "c1.b0.f15"
+          ],
+          "geom": "circle",
+          "id": "c1.b0.e30",
+          "length": 1.2566370614359172,
+          "radius": 0.2,
+          "start": null
+        },
+        {
+          "center": [
+            60.0,
+            40.0,
+            1.6
+          ],
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": null,
+          "face_ids": [
+            "c1.b0.f1",
+            "c1.b0.f15"
+          ],
+          "geom": "circle",
+          "id": "c1.b0.e31",
+          "length": 1.2566370614359172,
+          "radius": 0.2,
+          "start": null
+        }
+      ],
+      "faces": [
+        {
+          "area": 5817.076108990379,
+          "axis_point": null,
+          "bbox": [
+            0.0,
+            0.0,
+            0.0,
+            90.0,
+            65.0,
+            0.0
+          ],
+          "centroid": [
+            45.0282993469509,
+            32.51414967347545,
+            0.0
+          ],
+          "convex": null,
+          "direction": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "edge_ids": [
+            "c1.b0.e0",
+            "c1.b0.e1",
+            "c1.b0.e2",
+            "c1.b0.e3",
+            "c1.b0.e12",
+            "c1.b0.e14",
+            "c1.b0.e16",
+            "c1.b0.e18",
+            "c1.b0.e20",
+            "c1.b0.e22",
+            "c1.b0.e24",
+            "c1.b0.e26",
+            "c1.b0.e28",
+            "c1.b0.e30"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c1.b0.f0",
+          "radius": null
+        },
+        {
+          "area": 5817.076108990379,
+          "axis_point": null,
+          "bbox": [
+            0.0,
+            0.0,
+            1.6,
+            90.0,
+            65.0,
+            1.6
+          ],
+          "centroid": [
+            45.0282993469509,
+            32.51414967347545,
+            1.6
+          ],
+          "convex": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edge_ids": [
+            "c1.b0.e4",
+            "c1.b0.e5",
+            "c1.b0.e6",
+            "c1.b0.e7",
+            "c1.b0.e13",
+            "c1.b0.e15",
+            "c1.b0.e17",
+            "c1.b0.e19",
+            "c1.b0.e21",
+            "c1.b0.e23",
+            "c1.b0.e25",
+            "c1.b0.e27",
+            "c1.b0.e29",
+            "c1.b0.e31"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c1.b0.f1",
+          "radius": null
+        },
+        {
+          "area": 104.0,
+          "axis_point": null,
+          "bbox": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            65.0,
+            1.6
+          ],
+          "centroid": [
+            0.0,
+            32.5,
+            0.8
+          ],
+          "convex": null,
+          "direction": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "edge_ids": [
+            "c1.b0.e0",
+            "c1.b0.e4",
+            "c1.b0.e8",
+            "c1.b0.e9"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c1.b0.f2",
+          "radius": null
+        },
+        {
+          "area": 144.0,
+          "axis_point": null,
+          "bbox": [
+            0.0,
+            0.0,
+            0.0,
+            90.0,
+            0.0,
+            1.6
+          ],
+          "centroid": [
+            45.0,
+            0.0,
+            0.8
+          ],
+          "convex": null,
+          "direction": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "edge_ids": [
+            "c1.b0.e1",
+            "c1.b0.e5",
+            "c1.b0.e9",
+            "c1.b0.e10"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c1.b0.f3",
+          "radius": null
+        },
+        {
+          "area": 104.0,
+          "axis_point": null,
+          "bbox": [
+            90.0,
+            0.0,
+            0.0,
+            90.0,
+            65.0,
+            1.6
+          ],
+          "centroid": [
+            90.0,
+            32.5,
+            0.8
+          ],
+          "convex": null,
+          "direction": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "edge_ids": [
+            "c1.b0.e2",
+            "c1.b0.e6",
+            "c1.b0.e10",
+            "c1.b0.e11"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c1.b0.f4",
+          "radius": null
+        },
+        {
+          "area": 144.0,
+          "axis_point": null,
+          "bbox": [
+            0.0,
+            65.0,
+            0.0,
+            90.0,
+            65.0,
+            1.6
+          ],
+          "centroid": [
+            45.0,
+            65.0,
+            0.8
+          ],
+          "convex": null,
+          "direction": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "edge_ids": [
+            "c1.b0.e3",
+            "c1.b0.e7",
+            "c1.b0.e8",
+            "c1.b0.e11"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c1.b0.f5",
+          "radius": null
+        },
+        {
+          "area": 16.084954386379742,
+          "axis_point": [
+            8.0,
+            8.0,
+            0.0
+          ],
+          "bbox": [
+            6.4,
+            6.4,
+            0.0,
+            9.6,
+            9.6,
+            1.6
+          ],
+          "centroid": [
+            8.0,
+            8.0,
+            0.8
+          ],
+          "convex": false,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edge_ids": [
+            "c1.b0.e12",
+            "c1.b0.e13"
+          ],
+          "geom": "cylinder",
+          "half_angle": null,
+          "id": "c1.b0.f6",
+          "radius": 1.6
+        },
+        {
+          "area": 16.084954386379742,
+          "axis_point": [
+            72.0,
+            8.0,
+            0.0
+          ],
+          "bbox": [
+            70.4,
+            6.4,
+            0.0,
+            73.6,
+            9.6,
+            1.6
+          ],
+          "centroid": [
+            72.0,
+            8.0,
+            0.8
+          ],
+          "convex": false,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edge_ids": [
+            "c1.b0.e14",
+            "c1.b0.e15"
+          ],
+          "geom": "cylinder",
+          "half_angle": null,
+          "id": "c1.b0.f7",
+          "radius": 1.6
+        },
+        {
+          "area": 16.084954386379742,
+          "axis_point": [
+            72.0,
+            52.0,
+            0.0
+          ],
+          "bbox": [
+            70.4,
+            50.4,
+            0.0,
+            73.6,
+            53.6,
+            1.6
+          ],
+          "centroid": [
+            72.0,
+            52.0,
+            0.8
+          ],
+          "convex": false,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edge_ids": [
+            "c1.b0.e16",
+            "c1.b0.e17"
+          ],
+          "geom": "cylinder",
+          "half_angle": null,
+          "id": "c1.b0.f8",
+          "radius": 1.6
+        },
+        {
+          "area": 16.084954386379742,
+          "axis_point": [
+            8.0,
+            52.0,
+            0.0
+          ],
+          "bbox": [
+            6.4,
+            50.4,
+            0.0,
+            9.6,
+            53.6,
+            1.6
+          ],
+          "centroid": [
+            8.0,
+            52.0,
+            0.8
+          ],
+          "convex": false,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edge_ids": [
+            "c1.b0.e18",
+            "c1.b0.e19"
+          ],
+          "geom": "cylinder",
+          "half_angle": null,
+          "id": "c1.b0.f9",
+          "radius": 1.6
+        },
+        {
+          "area": 2.0106192982974678,
+          "axis_point": [
+            20.0,
+            20.0,
+            0.0
+          ],
+          "bbox": [
+            19.8,
+            19.8,
+            0.0,
+            20.2,
+            20.2,
+            1.6
+          ],
+          "centroid": [
+            20.0,
+            20.0,
+            0.8
+          ],
+          "convex": false,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edge_ids": [
+            "c1.b0.e20",
+            "c1.b0.e21"
+          ],
+          "geom": "cylinder",
+          "half_angle": null,
+          "id": "c1.b0.f10",
+          "radius": 0.2
+        },
+        {
+          "area": 2.0106192982974678,
+          "axis_point": [
+            40.0,
+            20.0,
+            0.0
+          ],
+          "bbox": [
+            39.8,
+            19.8,
+            0.0,
+            40.2,
+            20.2,
+            1.6
+          ],
+          "centroid": [
+            40.0,
+            20.0,
+            0.8
+          ],
+          "convex": false,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edge_ids": [
+            "c1.b0.e22",
+            "c1.b0.e23"
+          ],
+          "geom": "cylinder",
+          "half_angle": null,
+          "id": "c1.b0.f11",
+          "radius": 0.2
+        },
+        {
+          "area": 2.0106192982974678,
+          "axis_point": [
+            60.0,
+            20.0,
+            0.0
+          ],
+          "bbox": [
+            59.8,
+            19.8,
+            0.0,
+            60.2,
+            20.2,
+            1.6
+          ],
+          "centroid": [
+            60.0,
+            20.0,
+            0.8
+          ],
+          "convex": false,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edge_ids": [
+            "c1.b0.e24",
+            "c1.b0.e25"
+          ],
+          "geom": "cylinder",
+          "half_angle": null,
+          "id": "c1.b0.f12",
+          "radius": 0.2
+        },
+        {
+          "area": 2.0106192982974678,
+          "axis_point": [
+            20.0,
+            40.0,
+            0.0
+          ],
+          "bbox": [
+            19.8,
+            39.8,
+            0.0,
+            20.2,
+            40.2,
+            1.6
+          ],
+          "centroid": [
+            20.0,
+            40.0,
+            0.8
+          ],
+          "convex": false,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edge_ids": [
+            "c1.b0.e26",
+            "c1.b0.e27"
+          ],
+          "geom": "cylinder",
+          "half_angle": null,
+          "id": "c1.b0.f13",
+          "radius": 0.2
+        },
+        {
+          "area": 2.0106192982974678,
+          "axis_point": [
+            40.0,
+            40.0,
+            0.0
+          ],
+          "bbox": [
+            39.8,
+            39.8,
+            0.0,
+            40.2,
+            40.2,
+            1.6
+          ],
+          "centroid": [
+            40.0,
+            40.0,
+            0.8
+          ],
+          "convex": false,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edge_ids": [
+            "c1.b0.e28",
+            "c1.b0.e29"
+          ],
+          "geom": "cylinder",
+          "half_angle": null,
+          "id": "c1.b0.f14",
+          "radius": 0.2
+        },
+        {
+          "area": 2.0106192982974678,
+          "axis_point": [
+            60.0,
+            40.0,
+            0.0
+          ],
+          "bbox": [
+            59.8,
+            39.8,
+            0.0,
+            60.2,
+            40.2,
+            1.6
+          ],
+          "centroid": [
+            60.0,
+            40.0,
+            0.8
+          ],
+          "convex": false,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edge_ids": [
+            "c1.b0.e30",
+            "c1.b0.e31"
+          ],
+          "geom": "cylinder",
+          "half_angle": null,
+          "id": "c1.b0.f15",
+          "radius": 0.2
+        }
+      ],
+      "id": "c1.b0",
+      "kind": "solid",
+      "volume": 9307.321774384605
+    },
+    {
+      "bbox": [
+        10.0,
+        20.0,
+        1.6,
+        15.0,
+        25.0,
+        4.1
+      ],
+      "component_id": "c2",
+      "edges": [
+        {
+          "center": null,
+          "direction": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            15.0,
+            20.0,
+            1.6
+          ],
+          "face_ids": [
+            "c2.b0.f0",
+            "c2.b0.f2"
+          ],
+          "geom": "line",
+          "id": "c2.b0.e0",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            10.0,
+            20.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "end": [
+            15.0,
+            25.0,
+            1.6
+          ],
+          "face_ids": [
+            "c2.b0.f0",
+            "c2.b0.f3"
+          ],
+          "geom": "line",
+          "id": "c2.b0.e1",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            15.0,
+            20.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            10.0,
+            25.0,
+            1.6
+          ],
+          "face_ids": [
+            "c2.b0.f0",
+            "c2.b0.f4"
+          ],
+          "geom": "line",
+          "id": "c2.b0.e2",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            15.0,
+            25.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "end": [
+            10.0,
+            20.0,
+            1.6
+          ],
+          "face_ids": [
+            "c2.b0.f0",
+            "c2.b0.f5"
+          ],
+          "geom": "line",
+          "id": "c2.b0.e3",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            10.0,
+            25.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            15.0,
+            20.0,
+            4.1
+          ],
+          "face_ids": [
+            "c2.b0.f1",
+            "c2.b0.f2"
+          ],
+          "geom": "line",
+          "id": "c2.b0.e4",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            10.0,
+            20.0,
+            4.1
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "end": [
+            15.0,
+            25.0,
+            4.1
+          ],
+          "face_ids": [
+            "c2.b0.f1",
+            "c2.b0.f3"
+          ],
+          "geom": "line",
+          "id": "c2.b0.e5",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            15.0,
+            20.0,
+            4.1
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            10.0,
+            25.0,
+            4.1
+          ],
+          "face_ids": [
+            "c2.b0.f1",
+            "c2.b0.f4"
+          ],
+          "geom": "line",
+          "id": "c2.b0.e6",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            15.0,
+            25.0,
+            4.1
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "end": [
+            10.0,
+            20.0,
+            4.1
+          ],
+          "face_ids": [
+            "c2.b0.f1",
+            "c2.b0.f5"
+          ],
+          "geom": "line",
+          "id": "c2.b0.e7",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            10.0,
+            25.0,
+            4.1
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": [
+            10.0,
+            20.0,
+            4.1
+          ],
+          "face_ids": [
+            "c2.b0.f2",
+            "c2.b0.f5"
+          ],
+          "geom": "line",
+          "id": "c2.b0.e8",
+          "length": 2.4999999999999996,
+          "radius": null,
+          "start": [
+            10.0,
+            20.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": [
+            15.0,
+            20.0,
+            4.1
+          ],
+          "face_ids": [
+            "c2.b0.f2",
+            "c2.b0.f3"
+          ],
+          "geom": "line",
+          "id": "c2.b0.e9",
+          "length": 2.4999999999999996,
+          "radius": null,
+          "start": [
+            15.0,
+            20.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": [
+            15.0,
+            25.0,
+            4.1
+          ],
+          "face_ids": [
+            "c2.b0.f3",
+            "c2.b0.f4"
+          ],
+          "geom": "line",
+          "id": "c2.b0.e10",
+          "length": 2.4999999999999996,
+          "radius": null,
+          "start": [
+            15.0,
+            25.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": [
+            10.0,
+            25.0,
+            4.1
+          ],
+          "face_ids": [
+            "c2.b0.f4",
+            "c2.b0.f5"
+          ],
+          "geom": "line",
+          "id": "c2.b0.e11",
+          "length": 2.4999999999999996,
+          "radius": null,
+          "start": [
+            10.0,
+            25.0,
+            1.6
+          ]
+        }
+      ],
+      "faces": [
+        {
+          "area": 25.0,
+          "axis_point": null,
+          "bbox": [
+            10.0,
+            20.0,
+            1.6,
+            15.0,
+            25.0,
+            1.6
+          ],
+          "centroid": [
+            12.5,
+            22.5,
+            1.6
+          ],
+          "convex": null,
+          "direction": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "edge_ids": [
+            "c2.b0.e0",
+            "c2.b0.e1",
+            "c2.b0.e2",
+            "c2.b0.e3"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c2.b0.f0",
+          "radius": null
+        },
+        {
+          "area": 25.0,
+          "axis_point": null,
+          "bbox": [
+            10.0,
+            20.0,
+            4.1,
+            15.0,
+            25.0,
+            4.1
+          ],
+          "centroid": [
+            12.5,
+            22.5,
+            4.1
+          ],
+          "convex": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edge_ids": [
+            "c2.b0.e4",
+            "c2.b0.e5",
+            "c2.b0.e6",
+            "c2.b0.e7"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c2.b0.f1",
+          "radius": null
+        },
+        {
+          "area": 12.499999999999998,
+          "axis_point": null,
+          "bbox": [
+            10.0,
+            20.0,
+            1.6,
+            10.0,
+            25.0,
+            4.1
+          ],
+          "centroid": [
+            10.0,
+            22.5,
+            2.8499999999999996
+          ],
+          "convex": null,
+          "direction": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "edge_ids": [
+            "c2.b0.e0",
+            "c2.b0.e4",
+            "c2.b0.e8",
+            "c2.b0.e9"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c2.b0.f2",
+          "radius": null
+        },
+        {
+          "area": 12.499999999999998,
+          "axis_point": null,
+          "bbox": [
+            10.0,
+            20.0,
+            1.6,
+            15.0,
+            20.0,
+            4.1
+          ],
+          "centroid": [
+            12.5,
+            20.0,
+            2.8499999999999996
+          ],
+          "convex": null,
+          "direction": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "edge_ids": [
+            "c2.b0.e1",
+            "c2.b0.e5",
+            "c2.b0.e9",
+            "c2.b0.e10"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c2.b0.f3",
+          "radius": null
+        },
+        {
+          "area": 12.499999999999998,
+          "axis_point": null,
+          "bbox": [
+            15.0,
+            20.0,
+            1.6,
+            15.0,
+            25.0,
+            4.1
+          ],
+          "centroid": [
+            15.0,
+            22.5,
+            2.8499999999999996
+          ],
+          "convex": null,
+          "direction": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "edge_ids": [
+            "c2.b0.e2",
+            "c2.b0.e6",
+            "c2.b0.e10",
+            "c2.b0.e11"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c2.b0.f4",
+          "radius": null
+        },
+        {
+          "area": 12.499999999999998,
+          "axis_point": null,
+          "bbox": [
+            10.0,
+            25.0,
+            1.6,
+            15.0,
+            25.0,
+            4.1
+          ],
+          "centroid": [
+            12.5,
+            25.0,
+            2.8499999999999996
+          ],
+          "convex": null,
+          "direction": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "edge_ids": [
+            "c2.b0.e3",
+            "c2.b0.e7",
+            "c2.b0.e8",
+            "c2.b0.e11"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c2.b0.f5",
+          "radius": null
+        }
+      ],
+      "id": "c2.b0",
+      "kind": "solid",
+      "volume": 62.5
+    },
+    {
+      "bbox": [
+        17.0,
+        20.0,
+        1.6,
+        22.0,
+        25.0,
+        4.1
+      ],
+      "component_id": "c3",
+      "edges": [
+        {
+          "center": null,
+          "direction": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            22.0,
+            20.0,
+            1.6
+          ],
+          "face_ids": [
+            "c3.b0.f0",
+            "c3.b0.f2"
+          ],
+          "geom": "line",
+          "id": "c3.b0.e0",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            17.0,
+            20.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "end": [
+            22.0,
+            25.0,
+            1.6
+          ],
+          "face_ids": [
+            "c3.b0.f0",
+            "c3.b0.f3"
+          ],
+          "geom": "line",
+          "id": "c3.b0.e1",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            22.0,
+            20.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            17.0,
+            25.0,
+            1.6
+          ],
+          "face_ids": [
+            "c3.b0.f0",
+            "c3.b0.f4"
+          ],
+          "geom": "line",
+          "id": "c3.b0.e2",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            22.0,
+            25.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "end": [
+            17.0,
+            20.0,
+            1.6
+          ],
+          "face_ids": [
+            "c3.b0.f0",
+            "c3.b0.f5"
+          ],
+          "geom": "line",
+          "id": "c3.b0.e3",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            17.0,
+            25.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            22.0,
+            20.0,
+            4.1
+          ],
+          "face_ids": [
+            "c3.b0.f1",
+            "c3.b0.f2"
+          ],
+          "geom": "line",
+          "id": "c3.b0.e4",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            17.0,
+            20.0,
+            4.1
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "end": [
+            22.0,
+            25.0,
+            4.1
+          ],
+          "face_ids": [
+            "c3.b0.f1",
+            "c3.b0.f3"
+          ],
+          "geom": "line",
+          "id": "c3.b0.e5",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            22.0,
+            20.0,
+            4.1
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            17.0,
+            25.0,
+            4.1
+          ],
+          "face_ids": [
+            "c3.b0.f1",
+            "c3.b0.f4"
+          ],
+          "geom": "line",
+          "id": "c3.b0.e6",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            22.0,
+            25.0,
+            4.1
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "end": [
+            17.0,
+            20.0,
+            4.1
+          ],
+          "face_ids": [
+            "c3.b0.f1",
+            "c3.b0.f5"
+          ],
+          "geom": "line",
+          "id": "c3.b0.e7",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            17.0,
+            25.0,
+            4.1
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": [
+            17.0,
+            20.0,
+            4.1
+          ],
+          "face_ids": [
+            "c3.b0.f2",
+            "c3.b0.f5"
+          ],
+          "geom": "line",
+          "id": "c3.b0.e8",
+          "length": 2.4999999999999996,
+          "radius": null,
+          "start": [
+            17.0,
+            20.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": [
+            22.0,
+            20.0,
+            4.1
+          ],
+          "face_ids": [
+            "c3.b0.f2",
+            "c3.b0.f3"
+          ],
+          "geom": "line",
+          "id": "c3.b0.e9",
+          "length": 2.4999999999999996,
+          "radius": null,
+          "start": [
+            22.0,
+            20.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": [
+            22.0,
+            25.0,
+            4.1
+          ],
+          "face_ids": [
+            "c3.b0.f3",
+            "c3.b0.f4"
+          ],
+          "geom": "line",
+          "id": "c3.b0.e10",
+          "length": 2.4999999999999996,
+          "radius": null,
+          "start": [
+            22.0,
+            25.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": [
+            17.0,
+            25.0,
+            4.1
+          ],
+          "face_ids": [
+            "c3.b0.f4",
+            "c3.b0.f5"
+          ],
+          "geom": "line",
+          "id": "c3.b0.e11",
+          "length": 2.4999999999999996,
+          "radius": null,
+          "start": [
+            17.0,
+            25.0,
+            1.6
+          ]
+        }
+      ],
+      "faces": [
+        {
+          "area": 25.0,
+          "axis_point": null,
+          "bbox": [
+            17.0,
+            20.0,
+            1.6,
+            22.0,
+            25.0,
+            1.6
+          ],
+          "centroid": [
+            19.5,
+            22.5,
+            1.6
+          ],
+          "convex": null,
+          "direction": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "edge_ids": [
+            "c3.b0.e0",
+            "c3.b0.e1",
+            "c3.b0.e2",
+            "c3.b0.e3"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c3.b0.f0",
+          "radius": null
+        },
+        {
+          "area": 25.0,
+          "axis_point": null,
+          "bbox": [
+            17.0,
+            20.0,
+            4.1,
+            22.0,
+            25.0,
+            4.1
+          ],
+          "centroid": [
+            19.5,
+            22.5,
+            4.1
+          ],
+          "convex": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edge_ids": [
+            "c3.b0.e4",
+            "c3.b0.e5",
+            "c3.b0.e6",
+            "c3.b0.e7"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c3.b0.f1",
+          "radius": null
+        },
+        {
+          "area": 12.499999999999998,
+          "axis_point": null,
+          "bbox": [
+            17.0,
+            20.0,
+            1.6,
+            17.0,
+            25.0,
+            4.1
+          ],
+          "centroid": [
+            17.0,
+            22.5,
+            2.8499999999999996
+          ],
+          "convex": null,
+          "direction": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "edge_ids": [
+            "c3.b0.e0",
+            "c3.b0.e4",
+            "c3.b0.e8",
+            "c3.b0.e9"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c3.b0.f2",
+          "radius": null
+        },
+        {
+          "area": 12.499999999999998,
+          "axis_point": null,
+          "bbox": [
+            17.0,
+            20.0,
+            1.6,
+            22.0,
+            20.0,
+            4.1
+          ],
+          "centroid": [
+            19.5,
+            20.0,
+            2.8499999999999996
+          ],
+          "convex": null,
+          "direction": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "edge_ids": [
+            "c3.b0.e1",
+            "c3.b0.e5",
+            "c3.b0.e9",
+            "c3.b0.e10"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c3.b0.f3",
+          "radius": null
+        },
+        {
+          "area": 12.499999999999998,
+          "axis_point": null,
+          "bbox": [
+            22.0,
+            20.0,
+            1.6,
+            22.0,
+            25.0,
+            4.1
+          ],
+          "centroid": [
+            22.0,
+            22.5,
+            2.8499999999999996
+          ],
+          "convex": null,
+          "direction": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "edge_ids": [
+            "c3.b0.e2",
+            "c3.b0.e6",
+            "c3.b0.e10",
+            "c3.b0.e11"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c3.b0.f4",
+          "radius": null
+        },
+        {
+          "area": 12.499999999999998,
+          "axis_point": null,
+          "bbox": [
+            17.0,
+            25.0,
+            1.6,
+            22.0,
+            25.0,
+            4.1
+          ],
+          "centroid": [
+            19.5,
+            25.0,
+            2.8499999999999996
+          ],
+          "convex": null,
+          "direction": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "edge_ids": [
+            "c3.b0.e3",
+            "c3.b0.e7",
+            "c3.b0.e8",
+            "c3.b0.e11"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c3.b0.f5",
+          "radius": null
+        }
+      ],
+      "id": "c3.b0",
+      "kind": "solid",
+      "volume": 62.5
+    },
+    {
+      "bbox": [
+        57.0,
+        45.0,
+        -2.4,
+        62.0,
+        50.0,
+        0.0
+      ],
+      "component_id": "c4",
+      "edges": [
+        {
+          "center": null,
+          "direction": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            62.0,
+            45.0,
+            -2.4
+          ],
+          "face_ids": [
+            "c4.b0.f0",
+            "c4.b0.f2"
+          ],
+          "geom": "line",
+          "id": "c4.b0.e0",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            57.0,
+            45.0,
+            -2.4
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "end": [
+            62.0,
+            50.0,
+            -2.4
+          ],
+          "face_ids": [
+            "c4.b0.f0",
+            "c4.b0.f3"
+          ],
+          "geom": "line",
+          "id": "c4.b0.e1",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            62.0,
+            45.0,
+            -2.4
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            57.0,
+            50.0,
+            -2.4
+          ],
+          "face_ids": [
+            "c4.b0.f0",
+            "c4.b0.f4"
+          ],
+          "geom": "line",
+          "id": "c4.b0.e2",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            62.0,
+            50.0,
+            -2.4
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "end": [
+            57.0,
+            45.0,
+            -2.4
+          ],
+          "face_ids": [
+            "c4.b0.f0",
+            "c4.b0.f5"
+          ],
+          "geom": "line",
+          "id": "c4.b0.e3",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            57.0,
+            50.0,
+            -2.4
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            62.0,
+            45.0,
+            0.0
+          ],
+          "face_ids": [
+            "c4.b0.f1",
+            "c4.b0.f2"
+          ],
+          "geom": "line",
+          "id": "c4.b0.e4",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            57.0,
+            45.0,
+            0.0
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "end": [
+            62.0,
+            50.0,
+            0.0
+          ],
+          "face_ids": [
+            "c4.b0.f1",
+            "c4.b0.f3"
+          ],
+          "geom": "line",
+          "id": "c4.b0.e5",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            62.0,
+            45.0,
+            0.0
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            57.0,
+            50.0,
+            0.0
+          ],
+          "face_ids": [
+            "c4.b0.f1",
+            "c4.b0.f4"
+          ],
+          "geom": "line",
+          "id": "c4.b0.e6",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            62.0,
+            50.0,
+            0.0
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "end": [
+            57.0,
+            45.0,
+            0.0
+          ],
+          "face_ids": [
+            "c4.b0.f1",
+            "c4.b0.f5"
+          ],
+          "geom": "line",
+          "id": "c4.b0.e7",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            57.0,
+            50.0,
+            0.0
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": [
+            57.0,
+            45.0,
+            0.0
+          ],
+          "face_ids": [
+            "c4.b0.f2",
+            "c4.b0.f5"
+          ],
+          "geom": "line",
+          "id": "c4.b0.e8",
+          "length": 2.4,
+          "radius": null,
+          "start": [
+            57.0,
+            45.0,
+            -2.4
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": [
+            62.0,
+            45.0,
+            0.0
+          ],
+          "face_ids": [
+            "c4.b0.f2",
+            "c4.b0.f3"
+          ],
+          "geom": "line",
+          "id": "c4.b0.e9",
+          "length": 2.4,
+          "radius": null,
+          "start": [
+            62.0,
+            45.0,
+            -2.4
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": [
+            62.0,
+            50.0,
+            0.0
+          ],
+          "face_ids": [
+            "c4.b0.f3",
+            "c4.b0.f4"
+          ],
+          "geom": "line",
+          "id": "c4.b0.e10",
+          "length": 2.4,
+          "radius": null,
+          "start": [
+            62.0,
+            50.0,
+            -2.4
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": [
+            57.0,
+            50.0,
+            0.0
+          ],
+          "face_ids": [
+            "c4.b0.f4",
+            "c4.b0.f5"
+          ],
+          "geom": "line",
+          "id": "c4.b0.e11",
+          "length": 2.4,
+          "radius": null,
+          "start": [
+            57.0,
+            50.0,
+            -2.4
+          ]
+        }
+      ],
+      "faces": [
+        {
+          "area": 25.0,
+          "axis_point": null,
+          "bbox": [
+            57.0,
+            45.0,
+            -2.4,
+            62.0,
+            50.0,
+            -2.4
+          ],
+          "centroid": [
+            59.5,
+            47.5,
+            -2.4
+          ],
+          "convex": null,
+          "direction": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "edge_ids": [
+            "c4.b0.e0",
+            "c4.b0.e1",
+            "c4.b0.e2",
+            "c4.b0.e3"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c4.b0.f0",
+          "radius": null
+        },
+        {
+          "area": 25.0,
+          "axis_point": null,
+          "bbox": [
+            57.0,
+            45.0,
+            0.0,
+            62.0,
+            50.0,
+            0.0
+          ],
+          "centroid": [
+            59.5,
+            47.5,
+            0.0
+          ],
+          "convex": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edge_ids": [
+            "c4.b0.e4",
+            "c4.b0.e5",
+            "c4.b0.e6",
+            "c4.b0.e7"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c4.b0.f1",
+          "radius": null
+        },
+        {
+          "area": 12.0,
+          "axis_point": null,
+          "bbox": [
+            57.0,
+            45.0,
+            -2.4,
+            57.0,
+            50.0,
+            0.0
+          ],
+          "centroid": [
+            57.0,
+            47.5,
+            -1.2
+          ],
+          "convex": null,
+          "direction": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "edge_ids": [
+            "c4.b0.e0",
+            "c4.b0.e4",
+            "c4.b0.e8",
+            "c4.b0.e9"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c4.b0.f2",
+          "radius": null
+        },
+        {
+          "area": 12.0,
+          "axis_point": null,
+          "bbox": [
+            57.0,
+            45.0,
+            -2.4,
+            62.0,
+            45.0,
+            0.0
+          ],
+          "centroid": [
+            59.5,
+            45.0,
+            -1.2
+          ],
+          "convex": null,
+          "direction": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "edge_ids": [
+            "c4.b0.e1",
+            "c4.b0.e5",
+            "c4.b0.e9",
+            "c4.b0.e10"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c4.b0.f3",
+          "radius": null
+        },
+        {
+          "area": 12.0,
+          "axis_point": null,
+          "bbox": [
+            62.0,
+            45.0,
+            -2.4,
+            62.0,
+            50.0,
+            0.0
+          ],
+          "centroid": [
+            62.0,
+            47.5,
+            -1.2
+          ],
+          "convex": null,
+          "direction": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "edge_ids": [
+            "c4.b0.e2",
+            "c4.b0.e6",
+            "c4.b0.e10",
+            "c4.b0.e11"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c4.b0.f4",
+          "radius": null
+        },
+        {
+          "area": 12.0,
+          "axis_point": null,
+          "bbox": [
+            57.0,
+            50.0,
+            -2.4,
+            62.0,
+            50.0,
+            0.0
+          ],
+          "centroid": [
+            59.5,
+            50.0,
+            -1.2
+          ],
+          "convex": null,
+          "direction": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "edge_ids": [
+            "c4.b0.e3",
+            "c4.b0.e7",
+            "c4.b0.e8",
+            "c4.b0.e11"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c4.b0.f5",
+          "radius": null
+        }
+      ],
+      "id": "c4.b0",
+      "kind": "solid",
+      "volume": 60.0
+    },
+    {
+      "bbox": [
+        45.0,
+        45.0,
+        -3.2,
+        53.0,
+        50.0,
+        0.0
+      ],
+      "component_id": "c5",
+      "edges": [
+        {
+          "center": null,
+          "direction": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            53.0,
+            45.0,
+            -3.2
+          ],
+          "face_ids": [
+            "c5.b0.f0",
+            "c5.b0.f2"
+          ],
+          "geom": "line",
+          "id": "c5.b0.e0",
+          "length": 8.0,
+          "radius": null,
+          "start": [
+            45.0,
+            45.0,
+            -3.2
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "end": [
+            53.0,
+            50.0,
+            -3.2
+          ],
+          "face_ids": [
+            "c5.b0.f0",
+            "c5.b0.f3"
+          ],
+          "geom": "line",
+          "id": "c5.b0.e1",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            53.0,
+            45.0,
+            -3.2
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            45.0,
+            50.0,
+            -3.2
+          ],
+          "face_ids": [
+            "c5.b0.f0",
+            "c5.b0.f4"
+          ],
+          "geom": "line",
+          "id": "c5.b0.e2",
+          "length": 8.0,
+          "radius": null,
+          "start": [
+            53.0,
+            50.0,
+            -3.2
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "end": [
+            45.0,
+            45.0,
+            -3.2
+          ],
+          "face_ids": [
+            "c5.b0.f0",
+            "c5.b0.f5"
+          ],
+          "geom": "line",
+          "id": "c5.b0.e3",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            45.0,
+            50.0,
+            -3.2
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            53.0,
+            45.0,
+            0.0
+          ],
+          "face_ids": [
+            "c5.b0.f1",
+            "c5.b0.f2"
+          ],
+          "geom": "line",
+          "id": "c5.b0.e4",
+          "length": 8.0,
+          "radius": null,
+          "start": [
+            45.0,
+            45.0,
+            0.0
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "end": [
+            53.0,
+            50.0,
+            0.0
+          ],
+          "face_ids": [
+            "c5.b0.f1",
+            "c5.b0.f3"
+          ],
+          "geom": "line",
+          "id": "c5.b0.e5",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            53.0,
+            45.0,
+            0.0
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            45.0,
+            50.0,
+            0.0
+          ],
+          "face_ids": [
+            "c5.b0.f1",
+            "c5.b0.f4"
+          ],
+          "geom": "line",
+          "id": "c5.b0.e6",
+          "length": 8.0,
+          "radius": null,
+          "start": [
+            53.0,
+            50.0,
+            0.0
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "end": [
+            45.0,
+            45.0,
+            0.0
+          ],
+          "face_ids": [
+            "c5.b0.f1",
+            "c5.b0.f5"
+          ],
+          "geom": "line",
+          "id": "c5.b0.e7",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            45.0,
+            50.0,
+            0.0
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": [
+            45.0,
+            45.0,
+            0.0
+          ],
+          "face_ids": [
+            "c5.b0.f2",
+            "c5.b0.f5"
+          ],
+          "geom": "line",
+          "id": "c5.b0.e8",
+          "length": 3.2,
+          "radius": null,
+          "start": [
+            45.0,
+            45.0,
+            -3.2
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": [
+            53.0,
+            45.0,
+            0.0
+          ],
+          "face_ids": [
+            "c5.b0.f2",
+            "c5.b0.f3"
+          ],
+          "geom": "line",
+          "id": "c5.b0.e9",
+          "length": 3.2,
+          "radius": null,
+          "start": [
+            53.0,
+            45.0,
+            -3.2
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": [
+            53.0,
+            50.0,
+            0.0
+          ],
+          "face_ids": [
+            "c5.b0.f3",
+            "c5.b0.f4"
+          ],
+          "geom": "line",
+          "id": "c5.b0.e10",
+          "length": 3.2,
+          "radius": null,
+          "start": [
+            53.0,
+            50.0,
+            -3.2
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": [
+            45.0,
+            50.0,
+            0.0
+          ],
+          "face_ids": [
+            "c5.b0.f4",
+            "c5.b0.f5"
+          ],
+          "geom": "line",
+          "id": "c5.b0.e11",
+          "length": 3.2,
+          "radius": null,
+          "start": [
+            45.0,
+            50.0,
+            -3.2
+          ]
+        }
+      ],
+      "faces": [
+        {
+          "area": 40.0,
+          "axis_point": null,
+          "bbox": [
+            45.0,
+            45.0,
+            -3.2,
+            53.0,
+            50.0,
+            -3.2
+          ],
+          "centroid": [
+            49.0,
+            47.5,
+            -3.2
+          ],
+          "convex": null,
+          "direction": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "edge_ids": [
+            "c5.b0.e0",
+            "c5.b0.e1",
+            "c5.b0.e2",
+            "c5.b0.e3"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c5.b0.f0",
+          "radius": null
+        },
+        {
+          "area": 40.0,
+          "axis_point": null,
+          "bbox": [
+            45.0,
+            45.0,
+            0.0,
+            53.0,
+            50.0,
+            0.0
+          ],
+          "centroid": [
+            49.0,
+            47.5,
+            0.0
+          ],
+          "convex": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edge_ids": [
+            "c5.b0.e4",
+            "c5.b0.e5",
+            "c5.b0.e6",
+            "c5.b0.e7"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c5.b0.f1",
+          "radius": null
+        },
+        {
+          "area": 16.0,
+          "axis_point": null,
+          "bbox": [
+            45.0,
+            45.0,
+            -3.2,
+            45.0,
+            50.0,
+            0.0
+          ],
+          "centroid": [
+            45.0,
+            47.5,
+            -1.6
+          ],
+          "convex": null,
+          "direction": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "edge_ids": [
+            "c5.b0.e0",
+            "c5.b0.e4",
+            "c5.b0.e8",
+            "c5.b0.e9"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c5.b0.f2",
+          "radius": null
+        },
+        {
+          "area": 25.6,
+          "axis_point": null,
+          "bbox": [
+            45.0,
+            45.0,
+            -3.2,
+            53.0,
+            45.0,
+            0.0
+          ],
+          "centroid": [
+            49.0,
+            45.0,
+            -1.6
+          ],
+          "convex": null,
+          "direction": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "edge_ids": [
+            "c5.b0.e1",
+            "c5.b0.e5",
+            "c5.b0.e9",
+            "c5.b0.e10"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c5.b0.f3",
+          "radius": null
+        },
+        {
+          "area": 16.0,
+          "axis_point": null,
+          "bbox": [
+            53.0,
+            45.0,
+            -3.2,
+            53.0,
+            50.0,
+            0.0
+          ],
+          "centroid": [
+            53.0,
+            47.5,
+            -1.6
+          ],
+          "convex": null,
+          "direction": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "edge_ids": [
+            "c5.b0.e2",
+            "c5.b0.e6",
+            "c5.b0.e10",
+            "c5.b0.e11"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c5.b0.f4",
+          "radius": null
+        },
+        {
+          "area": 25.6,
+          "axis_point": null,
+          "bbox": [
+            45.0,
+            50.0,
+            -3.2,
+            53.0,
+            50.0,
+            0.0
+          ],
+          "centroid": [
+            49.0,
+            50.0,
+            -1.6
+          ],
+          "convex": null,
+          "direction": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "edge_ids": [
+            "c5.b0.e3",
+            "c5.b0.e7",
+            "c5.b0.e8",
+            "c5.b0.e11"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c5.b0.f5",
+          "radius": null
+        }
+      ],
+      "id": "c5.b0",
+      "kind": "solid",
+      "volume": 128.0
+    },
+    {
+      "bbox": [
+        48.0,
+        12.0,
+        1.6,
+        64.0,
+        26.0,
+        7.6
+      ],
+      "component_id": "c6",
+      "edges": [
+        {
+          "center": null,
+          "direction": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            64.0,
+            12.0,
+            1.6
+          ],
+          "face_ids": [
+            "c6.b0.f0",
+            "c6.b0.f2"
+          ],
+          "geom": "line",
+          "id": "c6.b0.e0",
+          "length": 16.0,
+          "radius": null,
+          "start": [
+            48.0,
+            12.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "end": [
+            64.0,
+            26.0,
+            1.6
+          ],
+          "face_ids": [
+            "c6.b0.f0",
+            "c6.b0.f3"
+          ],
+          "geom": "line",
+          "id": "c6.b0.e1",
+          "length": 14.0,
+          "radius": null,
+          "start": [
+            64.0,
+            12.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            48.0,
+            26.0,
+            1.6
+          ],
+          "face_ids": [
+            "c6.b0.f0",
+            "c6.b0.f4"
+          ],
+          "geom": "line",
+          "id": "c6.b0.e2",
+          "length": 16.0,
+          "radius": null,
+          "start": [
+            64.0,
+            26.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "end": [
+            48.0,
+            12.0,
+            1.6
+          ],
+          "face_ids": [
+            "c6.b0.f0",
+            "c6.b0.f5"
+          ],
+          "geom": "line",
+          "id": "c6.b0.e3",
+          "length": 14.0,
+          "radius": null,
+          "start": [
+            48.0,
+            26.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            64.0,
+            12.0,
+            7.6
+          ],
+          "face_ids": [
+            "c6.b0.f1",
+            "c6.b0.f2"
+          ],
+          "geom": "line",
+          "id": "c6.b0.e4",
+          "length": 16.0,
+          "radius": null,
+          "start": [
+            48.0,
+            12.0,
+            7.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "end": [
+            64.0,
+            26.0,
+            7.6
+          ],
+          "face_ids": [
+            "c6.b0.f1",
+            "c6.b0.f3"
+          ],
+          "geom": "line",
+          "id": "c6.b0.e5",
+          "length": 14.0,
+          "radius": null,
+          "start": [
+            64.0,
+            12.0,
+            7.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            48.0,
+            26.0,
+            7.6
+          ],
+          "face_ids": [
+            "c6.b0.f1",
+            "c6.b0.f4"
+          ],
+          "geom": "line",
+          "id": "c6.b0.e6",
+          "length": 16.0,
+          "radius": null,
+          "start": [
+            64.0,
+            26.0,
+            7.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "end": [
+            48.0,
+            12.0,
+            7.6
+          ],
+          "face_ids": [
+            "c6.b0.f1",
+            "c6.b0.f5"
+          ],
+          "geom": "line",
+          "id": "c6.b0.e7",
+          "length": 14.0,
+          "radius": null,
+          "start": [
+            48.0,
+            26.0,
+            7.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": [
+            48.0,
+            12.0,
+            7.6
+          ],
+          "face_ids": [
+            "c6.b0.f2",
+            "c6.b0.f5"
+          ],
+          "geom": "line",
+          "id": "c6.b0.e8",
+          "length": 6.0,
+          "radius": null,
+          "start": [
+            48.0,
+            12.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": [
+            64.0,
+            12.0,
+            7.6
+          ],
+          "face_ids": [
+            "c6.b0.f2",
+            "c6.b0.f3"
+          ],
+          "geom": "line",
+          "id": "c6.b0.e9",
+          "length": 6.0,
+          "radius": null,
+          "start": [
+            64.0,
+            12.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": [
+            64.0,
+            26.0,
+            7.6
+          ],
+          "face_ids": [
+            "c6.b0.f3",
+            "c6.b0.f4"
+          ],
+          "geom": "line",
+          "id": "c6.b0.e10",
+          "length": 6.0,
+          "radius": null,
+          "start": [
+            64.0,
+            26.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": [
+            48.0,
+            26.0,
+            7.6
+          ],
+          "face_ids": [
+            "c6.b0.f4",
+            "c6.b0.f5"
+          ],
+          "geom": "line",
+          "id": "c6.b0.e11",
+          "length": 6.0,
+          "radius": null,
+          "start": [
+            48.0,
+            26.0,
+            1.6
+          ]
+        }
+      ],
+      "faces": [
+        {
+          "area": 224.0,
+          "axis_point": null,
+          "bbox": [
+            48.0,
+            12.0,
+            1.6,
+            64.0,
+            26.0,
+            1.6
+          ],
+          "centroid": [
+            56.0,
+            19.0,
+            1.6
+          ],
+          "convex": null,
+          "direction": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "edge_ids": [
+            "c6.b0.e0",
+            "c6.b0.e1",
+            "c6.b0.e2",
+            "c6.b0.e3"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c6.b0.f0",
+          "radius": null
+        },
+        {
+          "area": 224.0,
+          "axis_point": null,
+          "bbox": [
+            48.0,
+            12.0,
+            7.6,
+            64.0,
+            26.0,
+            7.6
+          ],
+          "centroid": [
+            56.0,
+            19.0,
+            7.6
+          ],
+          "convex": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edge_ids": [
+            "c6.b0.e4",
+            "c6.b0.e5",
+            "c6.b0.e6",
+            "c6.b0.e7"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c6.b0.f1",
+          "radius": null
+        },
+        {
+          "area": 84.0,
+          "axis_point": null,
+          "bbox": [
+            48.0,
+            12.0,
+            1.6,
+            48.0,
+            26.0,
+            7.6
+          ],
+          "centroid": [
+            48.0,
+            19.0,
+            4.6
+          ],
+          "convex": null,
+          "direction": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "edge_ids": [
+            "c6.b0.e0",
+            "c6.b0.e4",
+            "c6.b0.e8",
+            "c6.b0.e9"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c6.b0.f2",
+          "radius": null
+        },
+        {
+          "area": 96.0,
+          "axis_point": null,
+          "bbox": [
+            48.0,
+            12.0,
+            1.6,
+            64.0,
+            12.0,
+            7.6
+          ],
+          "centroid": [
+            56.0,
+            12.0,
+            4.6
+          ],
+          "convex": null,
+          "direction": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "edge_ids": [
+            "c6.b0.e1",
+            "c6.b0.e5",
+            "c6.b0.e9",
+            "c6.b0.e10"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c6.b0.f3",
+          "radius": null
+        },
+        {
+          "area": 84.0,
+          "axis_point": null,
+          "bbox": [
+            64.0,
+            12.0,
+            1.6,
+            64.0,
+            26.0,
+            7.6
+          ],
+          "centroid": [
+            64.0,
+            19.0,
+            4.6
+          ],
+          "convex": null,
+          "direction": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "edge_ids": [
+            "c6.b0.e2",
+            "c6.b0.e6",
+            "c6.b0.e10",
+            "c6.b0.e11"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c6.b0.f4",
+          "radius": null
+        },
+        {
+          "area": 96.0,
+          "axis_point": null,
+          "bbox": [
+            48.0,
+            26.0,
+            1.6,
+            64.0,
+            26.0,
+            7.6
+          ],
+          "centroid": [
+            56.0,
+            26.0,
+            4.6
+          ],
+          "convex": null,
+          "direction": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "edge_ids": [
+            "c6.b0.e3",
+            "c6.b0.e7",
+            "c6.b0.e8",
+            "c6.b0.e11"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c6.b0.f5",
+          "radius": null
+        }
+      ],
+      "id": "c6.b0",
+      "kind": "solid",
+      "volume": 1344.0
+    },
+    {
+      "bbox": [
+        49.6,
+        13.6,
+        7.6,
+        50.4,
+        14.4,
+        10.6
+      ],
+      "component_id": "c6",
+      "edges": [
+        {
+          "center": [
+            50.0,
+            14.0,
+            10.6
+          ],
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": null,
+          "face_ids": [
+            "c6.b1.f0"
+          ],
+          "geom": "circle",
+          "id": "c6.b1.e0",
+          "length": 2.5132741228718345,
+          "radius": 0.4,
+          "start": null
+        }
+      ],
+      "faces": [
+        {
+          "area": 7.5398223686155035,
+          "axis_point": [
+            50.0,
+            14.0,
+            7.6
+          ],
+          "bbox": [
+            49.6,
+            13.6,
+            7.6,
+            50.4,
+            14.4,
+            10.6
+          ],
+          "centroid": [
+            50.0,
+            14.0,
+            9.1
+          ],
+          "convex": true,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edge_ids": [
+            "c6.b1.e0"
+          ],
+          "geom": "cylinder",
+          "half_angle": null,
+          "id": "c6.b1.f0",
+          "radius": 0.4
+        }
+      ],
+      "id": "c6.b1",
+      "kind": "solid",
+      "volume": 1.5079644737231008
+    },
+    {
+      "bbox": [
+        52.14,
+        13.6,
+        7.6,
+        52.94,
+        14.4,
+        10.6
+      ],
+      "component_id": "c6",
+      "edges": [
+        {
+          "center": [
+            52.54,
+            14.0,
+            10.6
+          ],
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": null,
+          "face_ids": [
+            "c6.b2.f0"
+          ],
+          "geom": "circle",
+          "id": "c6.b2.e0",
+          "length": 2.5132741228718345,
+          "radius": 0.4,
+          "start": null
+        }
+      ],
+      "faces": [
+        {
+          "area": 7.5398223686155035,
+          "axis_point": [
+            52.54,
+            14.0,
+            7.6
+          ],
+          "bbox": [
+            52.14,
+            13.6,
+            7.6,
+            52.94,
+            14.4,
+            10.6
+          ],
+          "centroid": [
+            52.54,
+            14.0,
+            9.1
+          ],
+          "convex": true,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edge_ids": [
+            "c6.b2.e0"
+          ],
+          "geom": "cylinder",
+          "half_angle": null,
+          "id": "c6.b2.f0",
+          "radius": 0.4
+        }
+      ],
+      "id": "c6.b2",
+      "kind": "solid",
+      "volume": 1.5079644737231008
+    },
+    {
+      "bbox": [
+        54.68,
+        13.6,
+        7.6,
+        55.48,
+        14.4,
+        10.6
+      ],
+      "component_id": "c6",
+      "edges": [
+        {
+          "center": [
+            55.08,
+            14.0,
+            10.6
+          ],
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": null,
+          "face_ids": [
+            "c6.b3.f0"
+          ],
+          "geom": "circle",
+          "id": "c6.b3.e0",
+          "length": 2.5132741228718345,
+          "radius": 0.4,
+          "start": null
+        }
+      ],
+      "faces": [
+        {
+          "area": 7.5398223686155035,
+          "axis_point": [
+            55.08,
+            14.0,
+            7.6
+          ],
+          "bbox": [
+            54.68,
+            13.6,
+            7.6,
+            55.48,
+            14.4,
+            10.6
+          ],
+          "centroid": [
+            55.08,
+            14.0,
+            9.1
+          ],
+          "convex": true,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edge_ids": [
+            "c6.b3.e0"
+          ],
+          "geom": "cylinder",
+          "half_angle": null,
+          "id": "c6.b3.f0",
+          "radius": 0.4
+        }
+      ],
+      "id": "c6.b3",
+      "kind": "solid",
+      "volume": 1.5079644737231008
+    },
+    {
+      "bbox": [
+        57.22,
+        13.6,
+        7.6,
+        58.019999999999996,
+        14.4,
+        10.6
+      ],
+      "component_id": "c6",
+      "edges": [
+        {
+          "center": [
+            57.62,
+            14.0,
+            10.6
+          ],
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": null,
+          "face_ids": [
+            "c6.b4.f0"
+          ],
+          "geom": "circle",
+          "id": "c6.b4.e0",
+          "length": 2.5132741228718345,
+          "radius": 0.4,
+          "start": null
+        }
+      ],
+      "faces": [
+        {
+          "area": 7.5398223686155035,
+          "axis_point": [
+            57.62,
+            14.0,
+            7.6
+          ],
+          "bbox": [
+            57.22,
+            13.6,
+            7.6,
+            58.019999999999996,
+            14.4,
+            10.6
+          ],
+          "centroid": [
+            57.62,
+            14.0,
+            9.1
+          ],
+          "convex": true,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edge_ids": [
+            "c6.b4.e0"
+          ],
+          "geom": "cylinder",
+          "half_angle": null,
+          "id": "c6.b4.f0",
+          "radius": 0.4
+        }
+      ],
+      "id": "c6.b4",
+      "kind": "solid",
+      "volume": 1.5079644737231008
+    },
+    {
+      "bbox": [
+        59.76,
+        13.6,
+        7.6,
+        60.559999999999995,
+        14.4,
+        10.6
+      ],
+      "component_id": "c6",
+      "edges": [
+        {
+          "center": [
+            60.16,
+            14.0,
+            10.6
+          ],
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": null,
+          "face_ids": [
+            "c6.b5.f0"
+          ],
+          "geom": "circle",
+          "id": "c6.b5.e0",
+          "length": 2.5132741228718345,
+          "radius": 0.4,
+          "start": null
+        }
+      ],
+      "faces": [
+        {
+          "area": 7.5398223686155035,
+          "axis_point": [
+            60.16,
+            14.0,
+            7.6
+          ],
+          "bbox": [
+            59.76,
+            13.6,
+            7.6,
+            60.559999999999995,
+            14.4,
+            10.6
+          ],
+          "centroid": [
+            60.16,
+            14.0,
+            9.1
+          ],
+          "convex": true,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edge_ids": [
+            "c6.b5.e0"
+          ],
+          "geom": "cylinder",
+          "half_angle": null,
+          "id": "c6.b5.f0",
+          "radius": 0.4
+        }
+      ],
+      "id": "c6.b5",
+      "kind": "solid",
+      "volume": 1.5079644737231008
+    },
+    {
+      "bbox": [
+        49.6,
+        16.14,
+        7.6,
+        50.4,
+        16.939999999999998,
+        10.6
+      ],
+      "component_id": "c6",
+      "edges": [
+        {
+          "center": [
+            50.0,
+            16.54,
+            10.6
+          ],
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": null,
+          "face_ids": [
+            "c6.b6.f0"
+          ],
+          "geom": "circle",
+          "id": "c6.b6.e0",
+          "length": 2.5132741228718345,
+          "radius": 0.4,
+          "start": null
+        }
+      ],
+      "faces": [
+        {
+          "area": 7.5398223686155035,
+          "axis_point": [
+            50.0,
+            16.54,
+            7.6
+          ],
+          "bbox": [
+            49.6,
+            16.14,
+            7.6,
+            50.4,
+            16.939999999999998,
+            10.6
+          ],
+          "centroid": [
+            50.0,
+            16.54,
+            9.1
+          ],
+          "convex": true,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edge_ids": [
+            "c6.b6.e0"
+          ],
+          "geom": "cylinder",
+          "half_angle": null,
+          "id": "c6.b6.f0",
+          "radius": 0.4
+        }
+      ],
+      "id": "c6.b6",
+      "kind": "solid",
+      "volume": 1.5079644737231008
+    },
+    {
+      "bbox": [
+        52.14,
+        16.14,
+        7.6,
+        52.94,
+        16.939999999999998,
+        10.6
+      ],
+      "component_id": "c6",
+      "edges": [
+        {
+          "center": [
+            52.54,
+            16.54,
+            10.6
+          ],
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": null,
+          "face_ids": [
+            "c6.b7.f0"
+          ],
+          "geom": "circle",
+          "id": "c6.b7.e0",
+          "length": 2.5132741228718345,
+          "radius": 0.4,
+          "start": null
+        }
+      ],
+      "faces": [
+        {
+          "area": 7.5398223686155035,
+          "axis_point": [
+            52.54,
+            16.54,
+            7.6
+          ],
+          "bbox": [
+            52.14,
+            16.14,
+            7.6,
+            52.94,
+            16.939999999999998,
+            10.6
+          ],
+          "centroid": [
+            52.54,
+            16.54,
+            9.1
+          ],
+          "convex": true,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edge_ids": [
+            "c6.b7.e0"
+          ],
+          "geom": "cylinder",
+          "half_angle": null,
+          "id": "c6.b7.f0",
+          "radius": 0.4
+        }
+      ],
+      "id": "c6.b7",
+      "kind": "solid",
+      "volume": 1.5079644737231008
+    },
+    {
+      "bbox": [
+        54.68,
+        16.14,
+        7.6,
+        55.48,
+        16.939999999999998,
+        10.6
+      ],
+      "component_id": "c6",
+      "edges": [
+        {
+          "center": [
+            55.08,
+            16.54,
+            10.6
+          ],
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": null,
+          "face_ids": [
+            "c6.b8.f0"
+          ],
+          "geom": "circle",
+          "id": "c6.b8.e0",
+          "length": 2.5132741228718345,
+          "radius": 0.4,
+          "start": null
+        }
+      ],
+      "faces": [
+        {
+          "area": 7.5398223686155035,
+          "axis_point": [
+            55.08,
+            16.54,
+            7.6
+          ],
+          "bbox": [
+            54.68,
+            16.14,
+            7.6,
+            55.48,
+            16.939999999999998,
+            10.6
+          ],
+          "centroid": [
+            55.08,
+            16.54,
+            9.1
+          ],
+          "convex": true,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edge_ids": [
+            "c6.b8.e0"
+          ],
+          "geom": "cylinder",
+          "half_angle": null,
+          "id": "c6.b8.f0",
+          "radius": 0.4
+        }
+      ],
+      "id": "c6.b8",
+      "kind": "solid",
+      "volume": 1.5079644737231008
+    },
+    {
+      "bbox": [
+        57.22,
+        16.14,
+        7.6,
+        58.019999999999996,
+        16.939999999999998,
+        10.6
+      ],
+      "component_id": "c6",
+      "edges": [
+        {
+          "center": [
+            57.62,
+            16.54,
+            10.6
+          ],
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": null,
+          "face_ids": [
+            "c6.b9.f0"
+          ],
+          "geom": "circle",
+          "id": "c6.b9.e0",
+          "length": 2.5132741228718345,
+          "radius": 0.4,
+          "start": null
+        }
+      ],
+      "faces": [
+        {
+          "area": 7.5398223686155035,
+          "axis_point": [
+            57.62,
+            16.54,
+            7.6
+          ],
+          "bbox": [
+            57.22,
+            16.14,
+            7.6,
+            58.019999999999996,
+            16.939999999999998,
+            10.6
+          ],
+          "centroid": [
+            57.62,
+            16.54,
+            9.1
+          ],
+          "convex": true,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edge_ids": [
+            "c6.b9.e0"
+          ],
+          "geom": "cylinder",
+          "half_angle": null,
+          "id": "c6.b9.f0",
+          "radius": 0.4
+        }
+      ],
+      "id": "c6.b9",
+      "kind": "solid",
+      "volume": 1.5079644737231008
+    },
+    {
+      "bbox": [
+        59.76,
+        16.14,
+        7.6,
+        60.559999999999995,
+        16.939999999999998,
+        10.6
+      ],
+      "component_id": "c6",
+      "edges": [
+        {
+          "center": [
+            60.16,
+            16.54,
+            10.6
+          ],
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": null,
+          "face_ids": [
+            "c6.b10.f0"
+          ],
+          "geom": "circle",
+          "id": "c6.b10.e0",
+          "length": 2.5132741228718345,
+          "radius": 0.4,
+          "start": null
+        }
+      ],
+      "faces": [
+        {
+          "area": 7.5398223686155035,
+          "axis_point": [
+            60.16,
+            16.54,
+            7.6
+          ],
+          "bbox": [
+            59.76,
+            16.14,
+            7.6,
+            60.559999999999995,
+            16.939999999999998,
+            10.6
+          ],
+          "centroid": [
+            60.16,
+            16.54,
+            9.1
+          ],
+          "convex": true,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edge_ids": [
+            "c6.b10.e0"
+          ],
+          "geom": "cylinder",
+          "half_angle": null,
+          "id": "c6.b10.f0",
+          "radius": 0.4
+        }
+      ],
+      "id": "c6.b10",
+      "kind": "solid",
+      "volume": 1.5079644737231008
+    },
+    {
+      "bbox": [
+        10.0,
+        30.0,
+        1.6,
+        17.0,
+        35.0,
+        5.6
+      ],
+      "component_id": "c7",
+      "edges": [
+        {
+          "center": null,
+          "direction": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            17.0,
+            30.0,
+            1.6
+          ],
+          "face_ids": [
+            "c7.b0.f0",
+            "c7.b0.f2"
+          ],
+          "geom": "line",
+          "id": "c7.b0.e0",
+          "length": 7.0,
+          "radius": null,
+          "start": [
+            10.0,
+            30.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "end": [
+            17.0,
+            35.0,
+            1.6
+          ],
+          "face_ids": [
+            "c7.b0.f0",
+            "c7.b0.f3"
+          ],
+          "geom": "line",
+          "id": "c7.b0.e1",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            17.0,
+            30.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            10.0,
+            35.0,
+            1.6
+          ],
+          "face_ids": [
+            "c7.b0.f0",
+            "c7.b0.f4"
+          ],
+          "geom": "line",
+          "id": "c7.b0.e2",
+          "length": 7.0,
+          "radius": null,
+          "start": [
+            17.0,
+            35.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "end": [
+            10.0,
+            30.0,
+            1.6
+          ],
+          "face_ids": [
+            "c7.b0.f0",
+            "c7.b0.f5"
+          ],
+          "geom": "line",
+          "id": "c7.b0.e3",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            10.0,
+            35.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            17.0,
+            30.0,
+            5.6
+          ],
+          "face_ids": [
+            "c7.b0.f1",
+            "c7.b0.f2"
+          ],
+          "geom": "line",
+          "id": "c7.b0.e4",
+          "length": 7.0,
+          "radius": null,
+          "start": [
+            10.0,
+            30.0,
+            5.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "end": [
+            17.0,
+            35.0,
+            5.6
+          ],
+          "face_ids": [
+            "c7.b0.f1",
+            "c7.b0.f3"
+          ],
+          "geom": "line",
+          "id": "c7.b0.e5",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            17.0,
+            30.0,
+            5.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            10.0,
+            35.0,
+            5.6
+          ],
+          "face_ids": [
+            "c7.b0.f1",
+            "c7.b0.f4"
+          ],
+          "geom": "line",
+          "id": "c7.b0.e6",
+          "length": 7.0,
+          "radius": null,
+          "start": [
+            17.0,
+            35.0,
+            5.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "end": [
+            10.0,
+            30.0,
+            5.6
+          ],
+          "face_ids": [
+            "c7.b0.f1",
+            "c7.b0.f5"
+          ],
+          "geom": "line",
+          "id": "c7.b0.e7",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            10.0,
+            35.0,
+            5.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": [
+            10.0,
+            30.0,
+            5.6
+          ],
+          "face_ids": [
+            "c7.b0.f2",
+            "c7.b0.f5"
+          ],
+          "geom": "line",
+          "id": "c7.b0.e8",
+          "length": 3.9999999999999996,
+          "radius": null,
+          "start": [
+            10.0,
+            30.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": [
+            17.0,
+            30.0,
+            5.6
+          ],
+          "face_ids": [
+            "c7.b0.f2",
+            "c7.b0.f3"
+          ],
+          "geom": "line",
+          "id": "c7.b0.e9",
+          "length": 3.9999999999999996,
+          "radius": null,
+          "start": [
+            17.0,
+            30.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": [
+            17.0,
+            35.0,
+            5.6
+          ],
+          "face_ids": [
+            "c7.b0.f3",
+            "c7.b0.f4"
+          ],
+          "geom": "line",
+          "id": "c7.b0.e10",
+          "length": 3.9999999999999996,
+          "radius": null,
+          "start": [
+            17.0,
+            35.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": [
+            10.0,
+            35.0,
+            5.6
+          ],
+          "face_ids": [
+            "c7.b0.f4",
+            "c7.b0.f5"
+          ],
+          "geom": "line",
+          "id": "c7.b0.e11",
+          "length": 3.9999999999999996,
+          "radius": null,
+          "start": [
+            10.0,
+            35.0,
+            1.6
+          ]
+        }
+      ],
+      "faces": [
+        {
+          "area": 35.0,
+          "axis_point": null,
+          "bbox": [
+            10.0,
+            30.0,
+            1.6,
+            17.0,
+            35.0,
+            1.6
+          ],
+          "centroid": [
+            13.5,
+            32.5,
+            1.6
+          ],
+          "convex": null,
+          "direction": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "edge_ids": [
+            "c7.b0.e0",
+            "c7.b0.e1",
+            "c7.b0.e2",
+            "c7.b0.e3"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c7.b0.f0",
+          "radius": null
+        },
+        {
+          "area": 35.0,
+          "axis_point": null,
+          "bbox": [
+            10.0,
+            30.0,
+            5.6,
+            17.0,
+            35.0,
+            5.6
+          ],
+          "centroid": [
+            13.5,
+            32.5,
+            5.6
+          ],
+          "convex": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edge_ids": [
+            "c7.b0.e4",
+            "c7.b0.e5",
+            "c7.b0.e6",
+            "c7.b0.e7"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c7.b0.f1",
+          "radius": null
+        },
+        {
+          "area": 19.999999999999996,
+          "axis_point": null,
+          "bbox": [
+            10.0,
+            30.0,
+            1.6,
+            10.0,
+            35.0,
+            5.6
+          ],
+          "centroid": [
+            10.0,
+            32.5,
+            3.5999999999999996
+          ],
+          "convex": null,
+          "direction": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "edge_ids": [
+            "c7.b0.e0",
+            "c7.b0.e4",
+            "c7.b0.e8",
+            "c7.b0.e9"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c7.b0.f2",
+          "radius": null
+        },
+        {
+          "area": 27.999999999999996,
+          "axis_point": null,
+          "bbox": [
+            10.0,
+            30.0,
+            1.6,
+            17.0,
+            30.0,
+            5.6
+          ],
+          "centroid": [
+            13.5,
+            30.0,
+            3.5999999999999996
+          ],
+          "convex": null,
+          "direction": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "edge_ids": [
+            "c7.b0.e1",
+            "c7.b0.e5",
+            "c7.b0.e9",
+            "c7.b0.e10"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c7.b0.f3",
+          "radius": null
+        },
+        {
+          "area": 19.999999999999996,
+          "axis_point": null,
+          "bbox": [
+            17.0,
+            30.0,
+            1.6,
+            17.0,
+            35.0,
+            5.6
+          ],
+          "centroid": [
+            17.0,
+            32.5,
+            3.5999999999999996
+          ],
+          "convex": null,
+          "direction": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "edge_ids": [
+            "c7.b0.e2",
+            "c7.b0.e6",
+            "c7.b0.e10",
+            "c7.b0.e11"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c7.b0.f4",
+          "radius": null
+        },
+        {
+          "area": 27.999999999999996,
+          "axis_point": null,
+          "bbox": [
+            10.0,
+            35.0,
+            1.6,
+            17.0,
+            35.0,
+            5.6
+          ],
+          "centroid": [
+            13.5,
+            35.0,
+            3.5999999999999996
+          ],
+          "convex": null,
+          "direction": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "edge_ids": [
+            "c7.b0.e3",
+            "c7.b0.e7",
+            "c7.b0.e8",
+            "c7.b0.e11"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c7.b0.f5",
+          "radius": null
+        }
+      ],
+      "id": "c7.b0",
+      "kind": "solid",
+      "volume": 140.0
+    },
+    {
+      "bbox": [
+        10.0,
+        10.0,
+        1.6,
+        15.0,
+        15.0,
+        3.6
+      ],
+      "component_id": "c8",
+      "edges": [
+        {
+          "center": null,
+          "direction": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            15.0,
+            10.0,
+            1.6
+          ],
+          "face_ids": [
+            "c8.b0.f0",
+            "c8.b0.f2"
+          ],
+          "geom": "line",
+          "id": "c8.b0.e0",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            10.0,
+            10.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "end": [
+            15.0,
+            15.0,
+            1.6
+          ],
+          "face_ids": [
+            "c8.b0.f0",
+            "c8.b0.f3"
+          ],
+          "geom": "line",
+          "id": "c8.b0.e1",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            15.0,
+            10.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            10.0,
+            15.0,
+            1.6
+          ],
+          "face_ids": [
+            "c8.b0.f0",
+            "c8.b0.f4"
+          ],
+          "geom": "line",
+          "id": "c8.b0.e2",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            15.0,
+            15.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "end": [
+            10.0,
+            10.0,
+            1.6
+          ],
+          "face_ids": [
+            "c8.b0.f0",
+            "c8.b0.f5"
+          ],
+          "geom": "line",
+          "id": "c8.b0.e3",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            10.0,
+            15.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            15.0,
+            10.0,
+            3.6
+          ],
+          "face_ids": [
+            "c8.b0.f1",
+            "c8.b0.f2"
+          ],
+          "geom": "line",
+          "id": "c8.b0.e4",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            10.0,
+            10.0,
+            3.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "end": [
+            15.0,
+            15.0,
+            3.6
+          ],
+          "face_ids": [
+            "c8.b0.f1",
+            "c8.b0.f3"
+          ],
+          "geom": "line",
+          "id": "c8.b0.e5",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            15.0,
+            10.0,
+            3.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            10.0,
+            15.0,
+            3.6
+          ],
+          "face_ids": [
+            "c8.b0.f1",
+            "c8.b0.f4"
+          ],
+          "geom": "line",
+          "id": "c8.b0.e6",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            15.0,
+            15.0,
+            3.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "end": [
+            10.0,
+            10.0,
+            3.6
+          ],
+          "face_ids": [
+            "c8.b0.f1",
+            "c8.b0.f5"
+          ],
+          "geom": "line",
+          "id": "c8.b0.e7",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            10.0,
+            15.0,
+            3.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": [
+            10.0,
+            10.0,
+            3.6
+          ],
+          "face_ids": [
+            "c8.b0.f2",
+            "c8.b0.f5"
+          ],
+          "geom": "line",
+          "id": "c8.b0.e8",
+          "length": 2.0,
+          "radius": null,
+          "start": [
+            10.0,
+            10.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": [
+            15.0,
+            10.0,
+            3.6
+          ],
+          "face_ids": [
+            "c8.b0.f2",
+            "c8.b0.f3"
+          ],
+          "geom": "line",
+          "id": "c8.b0.e9",
+          "length": 2.0,
+          "radius": null,
+          "start": [
+            15.0,
+            10.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": [
+            15.0,
+            15.0,
+            3.6
+          ],
+          "face_ids": [
+            "c8.b0.f3",
+            "c8.b0.f4"
+          ],
+          "geom": "line",
+          "id": "c8.b0.e10",
+          "length": 2.0,
+          "radius": null,
+          "start": [
+            15.0,
+            15.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": [
+            10.0,
+            15.0,
+            3.6
+          ],
+          "face_ids": [
+            "c8.b0.f4",
+            "c8.b0.f5"
+          ],
+          "geom": "line",
+          "id": "c8.b0.e11",
+          "length": 2.0,
+          "radius": null,
+          "start": [
+            10.0,
+            15.0,
+            1.6
+          ]
+        }
+      ],
+      "faces": [
+        {
+          "area": 25.0,
+          "axis_point": null,
+          "bbox": [
+            10.0,
+            10.0,
+            1.6,
+            15.0,
+            15.0,
+            1.6
+          ],
+          "centroid": [
+            12.5,
+            12.5,
+            1.6
+          ],
+          "convex": null,
+          "direction": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "edge_ids": [
+            "c8.b0.e0",
+            "c8.b0.e1",
+            "c8.b0.e2",
+            "c8.b0.e3"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c8.b0.f0",
+          "radius": null
+        },
+        {
+          "area": 25.0,
+          "axis_point": null,
+          "bbox": [
+            10.0,
+            10.0,
+            3.6,
+            15.0,
+            15.0,
+            3.6
+          ],
+          "centroid": [
+            12.5,
+            12.5,
+            3.6
+          ],
+          "convex": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edge_ids": [
+            "c8.b0.e4",
+            "c8.b0.e5",
+            "c8.b0.e6",
+            "c8.b0.e7"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c8.b0.f1",
+          "radius": null
+        },
+        {
+          "area": 10.0,
+          "axis_point": null,
+          "bbox": [
+            10.0,
+            10.0,
+            1.6,
+            10.0,
+            15.0,
+            3.6
+          ],
+          "centroid": [
+            10.0,
+            12.5,
+            2.6
+          ],
+          "convex": null,
+          "direction": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "edge_ids": [
+            "c8.b0.e0",
+            "c8.b0.e4",
+            "c8.b0.e8",
+            "c8.b0.e9"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c8.b0.f2",
+          "radius": null
+        },
+        {
+          "area": 10.0,
+          "axis_point": null,
+          "bbox": [
+            10.0,
+            10.0,
+            1.6,
+            15.0,
+            10.0,
+            3.6
+          ],
+          "centroid": [
+            12.5,
+            10.0,
+            2.6
+          ],
+          "convex": null,
+          "direction": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "edge_ids": [
+            "c8.b0.e1",
+            "c8.b0.e5",
+            "c8.b0.e9",
+            "c8.b0.e10"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c8.b0.f3",
+          "radius": null
+        },
+        {
+          "area": 10.0,
+          "axis_point": null,
+          "bbox": [
+            15.0,
+            10.0,
+            1.6,
+            15.0,
+            15.0,
+            3.6
+          ],
+          "centroid": [
+            15.0,
+            12.5,
+            2.6
+          ],
+          "convex": null,
+          "direction": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "edge_ids": [
+            "c8.b0.e2",
+            "c8.b0.e6",
+            "c8.b0.e10",
+            "c8.b0.e11"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c8.b0.f4",
+          "radius": null
+        },
+        {
+          "area": 10.0,
+          "axis_point": null,
+          "bbox": [
+            10.0,
+            15.0,
+            1.6,
+            15.0,
+            15.0,
+            3.6
+          ],
+          "centroid": [
+            12.5,
+            15.0,
+            2.6
+          ],
+          "convex": null,
+          "direction": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "edge_ids": [
+            "c8.b0.e3",
+            "c8.b0.e7",
+            "c8.b0.e8",
+            "c8.b0.e11"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c8.b0.f5",
+          "radius": null
+        }
+      ],
+      "id": "c8.b0",
+      "kind": "solid",
+      "volume": 50.0
+    },
+    {
+      "bbox": [
+        17.0,
+        10.0,
+        1.6,
+        22.0,
+        15.0,
+        3.6
+      ],
+      "component_id": "c9",
+      "edges": [
+        {
+          "center": null,
+          "direction": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            22.0,
+            10.0,
+            1.6
+          ],
+          "face_ids": [
+            "c9.b0.f0",
+            "c9.b0.f2"
+          ],
+          "geom": "line",
+          "id": "c9.b0.e0",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            17.0,
+            10.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "end": [
+            22.0,
+            15.0,
+            1.6
+          ],
+          "face_ids": [
+            "c9.b0.f0",
+            "c9.b0.f3"
+          ],
+          "geom": "line",
+          "id": "c9.b0.e1",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            22.0,
+            10.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            17.0,
+            15.0,
+            1.6
+          ],
+          "face_ids": [
+            "c9.b0.f0",
+            "c9.b0.f4"
+          ],
+          "geom": "line",
+          "id": "c9.b0.e2",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            22.0,
+            15.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "end": [
+            17.0,
+            10.0,
+            1.6
+          ],
+          "face_ids": [
+            "c9.b0.f0",
+            "c9.b0.f5"
+          ],
+          "geom": "line",
+          "id": "c9.b0.e3",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            17.0,
+            15.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            22.0,
+            10.0,
+            3.6
+          ],
+          "face_ids": [
+            "c9.b0.f1",
+            "c9.b0.f2"
+          ],
+          "geom": "line",
+          "id": "c9.b0.e4",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            17.0,
+            10.0,
+            3.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "end": [
+            22.0,
+            15.0,
+            3.6
+          ],
+          "face_ids": [
+            "c9.b0.f1",
+            "c9.b0.f3"
+          ],
+          "geom": "line",
+          "id": "c9.b0.e5",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            22.0,
+            10.0,
+            3.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            17.0,
+            15.0,
+            3.6
+          ],
+          "face_ids": [
+            "c9.b0.f1",
+            "c9.b0.f4"
+          ],
+          "geom": "line",
+          "id": "c9.b0.e6",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            22.0,
+            15.0,
+            3.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "end": [
+            17.0,
+            10.0,
+            3.6
+          ],
+          "face_ids": [
+            "c9.b0.f1",
+            "c9.b0.f5"
+          ],
+          "geom": "line",
+          "id": "c9.b0.e7",
+          "length": 5.0,
+          "radius": null,
+          "start": [
+            17.0,
+            15.0,
+            3.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": [
+            17.0,
+            10.0,
+            3.6
+          ],
+          "face_ids": [
+            "c9.b0.f2",
+            "c9.b0.f5"
+          ],
+          "geom": "line",
+          "id": "c9.b0.e8",
+          "length": 2.0,
+          "radius": null,
+          "start": [
+            17.0,
+            10.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": [
+            22.0,
+            10.0,
+            3.6
+          ],
+          "face_ids": [
+            "c9.b0.f2",
+            "c9.b0.f3"
+          ],
+          "geom": "line",
+          "id": "c9.b0.e9",
+          "length": 2.0,
+          "radius": null,
+          "start": [
+            22.0,
+            10.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": [
+            22.0,
+            15.0,
+            3.6
+          ],
+          "face_ids": [
+            "c9.b0.f3",
+            "c9.b0.f4"
+          ],
+          "geom": "line",
+          "id": "c9.b0.e10",
+          "length": 2.0,
+          "radius": null,
+          "start": [
+            22.0,
+            15.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": [
+            17.0,
+            15.0,
+            3.6
+          ],
+          "face_ids": [
+            "c9.b0.f4",
+            "c9.b0.f5"
+          ],
+          "geom": "line",
+          "id": "c9.b0.e11",
+          "length": 2.0,
+          "radius": null,
+          "start": [
+            17.0,
+            15.0,
+            1.6
+          ]
+        }
+      ],
+      "faces": [
+        {
+          "area": 25.0,
+          "axis_point": null,
+          "bbox": [
+            17.0,
+            10.0,
+            1.6,
+            22.0,
+            15.0,
+            1.6
+          ],
+          "centroid": [
+            19.5,
+            12.5,
+            1.6
+          ],
+          "convex": null,
+          "direction": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "edge_ids": [
+            "c9.b0.e0",
+            "c9.b0.e1",
+            "c9.b0.e2",
+            "c9.b0.e3"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c9.b0.f0",
+          "radius": null
+        },
+        {
+          "area": 25.0,
+          "axis_point": null,
+          "bbox": [
+            17.0,
+            10.0,
+            3.6,
+            22.0,
+            15.0,
+            3.6
+          ],
+          "centroid": [
+            19.5,
+            12.5,
+            3.6
+          ],
+          "convex": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edge_ids": [
+            "c9.b0.e4",
+            "c9.b0.e5",
+            "c9.b0.e6",
+            "c9.b0.e7"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c9.b0.f1",
+          "radius": null
+        },
+        {
+          "area": 10.0,
+          "axis_point": null,
+          "bbox": [
+            17.0,
+            10.0,
+            1.6,
+            17.0,
+            15.0,
+            3.6
+          ],
+          "centroid": [
+            17.0,
+            12.5,
+            2.6
+          ],
+          "convex": null,
+          "direction": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "edge_ids": [
+            "c9.b0.e0",
+            "c9.b0.e4",
+            "c9.b0.e8",
+            "c9.b0.e9"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c9.b0.f2",
+          "radius": null
+        },
+        {
+          "area": 10.0,
+          "axis_point": null,
+          "bbox": [
+            17.0,
+            10.0,
+            1.6,
+            22.0,
+            10.0,
+            3.6
+          ],
+          "centroid": [
+            19.5,
+            10.0,
+            2.6
+          ],
+          "convex": null,
+          "direction": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "edge_ids": [
+            "c9.b0.e1",
+            "c9.b0.e5",
+            "c9.b0.e9",
+            "c9.b0.e10"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c9.b0.f3",
+          "radius": null
+        },
+        {
+          "area": 10.0,
+          "axis_point": null,
+          "bbox": [
+            22.0,
+            10.0,
+            1.6,
+            22.0,
+            15.0,
+            3.6
+          ],
+          "centroid": [
+            22.0,
+            12.5,
+            2.6
+          ],
+          "convex": null,
+          "direction": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "edge_ids": [
+            "c9.b0.e2",
+            "c9.b0.e6",
+            "c9.b0.e10",
+            "c9.b0.e11"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c9.b0.f4",
+          "radius": null
+        },
+        {
+          "area": 10.0,
+          "axis_point": null,
+          "bbox": [
+            17.0,
+            15.0,
+            1.6,
+            22.0,
+            15.0,
+            3.6
+          ],
+          "centroid": [
+            19.5,
+            15.0,
+            2.6
+          ],
+          "convex": null,
+          "direction": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "edge_ids": [
+            "c9.b0.e3",
+            "c9.b0.e7",
+            "c9.b0.e8",
+            "c9.b0.e11"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c9.b0.f5",
+          "radius": null
+        }
+      ],
+      "id": "c9.b0",
+      "kind": "solid",
+      "volume": 50.0
+    },
+    {
+      "bbox": [
+        27.0,
+        28.0,
+        1.6,
+        41.0,
+        40.0,
+        15.6
+      ],
+      "component_id": "c10",
+      "edges": [
+        {
+          "center": null,
+          "direction": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            41.0,
+            28.0,
+            1.6
+          ],
+          "face_ids": [
+            "c10.b0.f0",
+            "c10.b0.f2"
+          ],
+          "geom": "line",
+          "id": "c10.b0.e0",
+          "length": 14.0,
+          "radius": null,
+          "start": [
+            27.0,
+            28.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "end": [
+            41.0,
+            40.0,
+            1.6
+          ],
+          "face_ids": [
+            "c10.b0.f0",
+            "c10.b0.f3"
+          ],
+          "geom": "line",
+          "id": "c10.b0.e1",
+          "length": 12.0,
+          "radius": null,
+          "start": [
+            41.0,
+            28.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            27.0,
+            40.0,
+            1.6
+          ],
+          "face_ids": [
+            "c10.b0.f0",
+            "c10.b0.f4"
+          ],
+          "geom": "line",
+          "id": "c10.b0.e2",
+          "length": 14.0,
+          "radius": null,
+          "start": [
+            41.0,
+            40.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "end": [
+            27.0,
+            28.0,
+            1.6
+          ],
+          "face_ids": [
+            "c10.b0.f0",
+            "c10.b0.f5"
+          ],
+          "geom": "line",
+          "id": "c10.b0.e3",
+          "length": 12.0,
+          "radius": null,
+          "start": [
+            27.0,
+            40.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            41.0,
+            28.0,
+            15.6
+          ],
+          "face_ids": [
+            "c10.b0.f1",
+            "c10.b0.f2"
+          ],
+          "geom": "line",
+          "id": "c10.b0.e4",
+          "length": 14.0,
+          "radius": null,
+          "start": [
+            27.0,
+            28.0,
+            15.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "end": [
+            41.0,
+            40.0,
+            15.6
+          ],
+          "face_ids": [
+            "c10.b0.f1",
+            "c10.b0.f3"
+          ],
+          "geom": "line",
+          "id": "c10.b0.e5",
+          "length": 12.0,
+          "radius": null,
+          "start": [
+            41.0,
+            28.0,
+            15.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            27.0,
+            40.0,
+            15.6
+          ],
+          "face_ids": [
+            "c10.b0.f1",
+            "c10.b0.f4"
+          ],
+          "geom": "line",
+          "id": "c10.b0.e6",
+          "length": 14.0,
+          "radius": null,
+          "start": [
+            41.0,
+            40.0,
+            15.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "end": [
+            27.0,
+            28.0,
+            15.6
+          ],
+          "face_ids": [
+            "c10.b0.f1",
+            "c10.b0.f5"
+          ],
+          "geom": "line",
+          "id": "c10.b0.e7",
+          "length": 12.0,
+          "radius": null,
+          "start": [
+            27.0,
+            40.0,
+            15.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": [
+            27.0,
+            28.0,
+            15.6
+          ],
+          "face_ids": [
+            "c10.b0.f2",
+            "c10.b0.f5"
+          ],
+          "geom": "line",
+          "id": "c10.b0.e8",
+          "length": 14.0,
+          "radius": null,
+          "start": [
+            27.0,
+            28.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": [
+            41.0,
+            28.0,
+            15.6
+          ],
+          "face_ids": [
+            "c10.b0.f2",
+            "c10.b0.f3"
+          ],
+          "geom": "line",
+          "id": "c10.b0.e9",
+          "length": 14.0,
+          "radius": null,
+          "start": [
+            41.0,
+            28.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": [
+            41.0,
+            40.0,
+            15.6
+          ],
+          "face_ids": [
+            "c10.b0.f3",
+            "c10.b0.f4"
+          ],
+          "geom": "line",
+          "id": "c10.b0.e10",
+          "length": 14.0,
+          "radius": null,
+          "start": [
+            41.0,
+            40.0,
+            1.6
+          ]
+        },
+        {
+          "center": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "end": [
+            27.0,
+            40.0,
+            15.6
+          ],
+          "face_ids": [
+            "c10.b0.f4",
+            "c10.b0.f5"
+          ],
+          "geom": "line",
+          "id": "c10.b0.e11",
+          "length": 14.0,
+          "radius": null,
+          "start": [
+            27.0,
+            40.0,
+            1.6
+          ]
+        }
+      ],
+      "faces": [
+        {
+          "area": 168.0,
+          "axis_point": null,
+          "bbox": [
+            27.0,
+            28.0,
+            1.6,
+            41.0,
+            40.0,
+            1.6
+          ],
+          "centroid": [
+            34.0,
+            34.0,
+            1.6
+          ],
+          "convex": null,
+          "direction": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "edge_ids": [
+            "c10.b0.e0",
+            "c10.b0.e1",
+            "c10.b0.e2",
+            "c10.b0.e3"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c10.b0.f0",
+          "radius": null
+        },
+        {
+          "area": 168.0,
+          "axis_point": null,
+          "bbox": [
+            27.0,
+            28.0,
+            15.6,
+            41.0,
+            40.0,
+            15.6
+          ],
+          "centroid": [
+            34.0,
+            34.0,
+            15.6
+          ],
+          "convex": null,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edge_ids": [
+            "c10.b0.e4",
+            "c10.b0.e5",
+            "c10.b0.e6",
+            "c10.b0.e7"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c10.b0.f1",
+          "radius": null
+        },
+        {
+          "area": 168.0,
+          "axis_point": null,
+          "bbox": [
+            27.0,
+            28.0,
+            1.6,
+            27.0,
+            40.0,
+            15.6
+          ],
+          "centroid": [
+            27.0,
+            34.0,
+            8.6
+          ],
+          "convex": null,
+          "direction": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "edge_ids": [
+            "c10.b0.e0",
+            "c10.b0.e4",
+            "c10.b0.e8",
+            "c10.b0.e9"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c10.b0.f2",
+          "radius": null
+        },
+        {
+          "area": 196.0,
+          "axis_point": null,
+          "bbox": [
+            27.0,
+            28.0,
+            1.6,
+            41.0,
+            28.0,
+            15.6
+          ],
+          "centroid": [
+            34.0,
+            28.0,
+            8.6
+          ],
+          "convex": null,
+          "direction": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "edge_ids": [
+            "c10.b0.e1",
+            "c10.b0.e5",
+            "c10.b0.e9",
+            "c10.b0.e10"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c10.b0.f3",
+          "radius": null
+        },
+        {
+          "area": 168.0,
+          "axis_point": null,
+          "bbox": [
+            41.0,
+            28.0,
+            1.6,
+            41.0,
+            40.0,
+            15.6
+          ],
+          "centroid": [
+            41.0,
+            34.0,
+            8.6
+          ],
+          "convex": null,
+          "direction": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "edge_ids": [
+            "c10.b0.e2",
+            "c10.b0.e6",
+            "c10.b0.e10",
+            "c10.b0.e11"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c10.b0.f4",
+          "radius": null
+        },
+        {
+          "area": 196.0,
+          "axis_point": null,
+          "bbox": [
+            27.0,
+            40.0,
+            1.6,
+            41.0,
+            40.0,
+            15.6
+          ],
+          "centroid": [
+            34.0,
+            40.0,
+            8.6
+          ],
+          "convex": null,
+          "direction": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "edge_ids": [
+            "c10.b0.e3",
+            "c10.b0.e7",
+            "c10.b0.e8",
+            "c10.b0.e11"
+          ],
+          "geom": "plane",
+          "half_angle": null,
+          "id": "c10.b0.f5",
+          "radius": null
+        }
+      ],
+      "id": "c10.b0",
+      "kind": "solid",
+      "volume": 2352.0
+    }
+  ],
+  "components": [
+    {
+      "attributes": {},
+      "id": "c0",
+      "name": "sibling_board_size",
+      "parent_id": null,
+      "part_name": "sibling_board_size",
+      "suppressed": false,
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "attributes": {
+        "REFDES": "PCB1"
+      },
+      "id": "c1",
+      "name": "PCB1",
+      "parent_id": "c0",
+      "part_name": "PCB1",
+      "suppressed": false,
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "attributes": {
+        "REFDES": "C1"
+      },
+      "id": "c2",
+      "name": "C1",
+      "parent_id": "c0",
+      "part_name": "C1_part",
+      "suppressed": false,
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "attributes": {
+        "REFDES": "C2"
+      },
+      "id": "c3",
+      "name": "C2",
+      "parent_id": "c0",
+      "part_name": "C2_part",
+      "suppressed": false,
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "attributes": {
+        "REFDES": "C3"
+      },
+      "id": "c4",
+      "name": "C3",
+      "parent_id": "c0",
+      "part_name": "C3_part",
+      "suppressed": false,
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "attributes": {
+        "REFDES": "D1"
+      },
+      "id": "c5",
+      "name": "D1",
+      "parent_id": "c0",
+      "part_name": "D1_part",
+      "suppressed": false,
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "attributes": {
+        "REFDES": "J1"
+      },
+      "id": "c6",
+      "name": "J1",
+      "parent_id": "c0",
+      "part_name": "J1_part",
+      "suppressed": false,
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "attributes": {
+        "REFDES": "L1"
+      },
+      "id": "c7",
+      "name": "L1",
+      "parent_id": "c0",
+      "part_name": "L1_part",
+      "suppressed": false,
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "attributes": {
+        "REFDES": "R1"
+      },
+      "id": "c8",
+      "name": "R1",
+      "parent_id": "c0",
+      "part_name": "R1_part",
+      "suppressed": false,
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "attributes": {
+        "REFDES": "R2"
+      },
+      "id": "c9",
+      "name": "R2",
+      "parent_id": "c0",
+      "part_name": "R2_part",
+      "suppressed": false,
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "attributes": {
+        "REFDES": "U1"
+      },
+      "id": "c10",
+      "name": "U1",
+      "parent_id": "c0",
+      "part_name": "U1_part",
+      "suppressed": false,
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    }
+  ],
+  "schema": "raw_model/0",
+  "source": {
+    "attributes": {},
+    "extracted_at": "2026-11-16T00:00:00Z",
+    "nx_version": null,
+    "path": "synthetic/pcba/sibling_board_size/model.prt",
+    "synthetic": true,
+    "units": "mm"
+  }
+}

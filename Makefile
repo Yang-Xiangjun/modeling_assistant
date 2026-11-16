@@ -1,4 +1,4 @@
-.PHONY: check lint fmt types test py310 schemas
+.PHONY: check lint fmt types test py310 schemas synthetic
 
 PY310_RUN = uv run --python 3.10 --isolated --no-project --with pytest
 
@@ -26,3 +26,6 @@ py310:
 
 schemas:
 	uv run python tools/export_schemas.py
+
+synthetic:
+	uv run python tools/make_synthetic.py

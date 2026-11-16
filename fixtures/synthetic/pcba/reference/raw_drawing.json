@@ -1,0 +1,1594 @@
+{
+  "schema": "raw_drawing/0",
+  "sheets": [
+    {
+      "dimensions": [
+        {
+          "appended_text": null,
+          "attachments": [
+            {
+              "entity_kind": "edge",
+              "fingerprint": {
+                "bbox": [
+                  80.0,
+                  0.0,
+                  0.0,
+                  80.0,
+                  60.0,
+                  0.0
+                ],
+                "centroid": [
+                  80.0,
+                  30.0,
+                  0.0
+                ],
+                "component_path": "PCB1",
+                "direction": [
+                  0.0,
+                  1.0,
+                  0.0
+                ],
+                "geom": "line",
+                "kind": "edge",
+                "radius": null,
+                "size": 60.0
+              },
+              "index": 0,
+              "point": [
+                80.0,
+                30.0,
+                0.0
+              ],
+              "point_kind": "mid",
+              "trace_note": null,
+              "view_id": "v_top"
+            },
+            {
+              "entity_kind": "edge",
+              "fingerprint": {
+                "bbox": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  60.0,
+                  0.0
+                ],
+                "centroid": [
+                  0.0,
+                  30.0,
+                  0.0
+                ],
+                "component_path": "PCB1",
+                "direction": [
+                  0.0,
+                  -1.0,
+                  0.0
+                ],
+                "geom": "line",
+                "kind": "edge",
+                "radius": null,
+                "size": 60.0
+              },
+              "index": 1,
+              "point": [
+                0.0,
+                30.0,
+                0.0
+              ],
+              "point_kind": "mid",
+              "trace_note": null,
+              "view_id": "v_top"
+            }
+          ],
+          "bbox": [
+            53.75,
+            137.5,
+            66.25,
+            142.5
+          ],
+          "direction": "horizontal",
+          "id": "d00_board_length",
+          "kind": "linear",
+          "origin": [
+            60.0,
+            140.0
+          ],
+          "retained": false,
+          "text": "80.00",
+          "text_overridden": false,
+          "tolerance": null,
+          "value": 80.0,
+          "view_id": "v_top"
+        },
+        {
+          "appended_text": null,
+          "attachments": [
+            {
+              "entity_kind": "edge",
+              "fingerprint": {
+                "bbox": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  80.0,
+                  0.0,
+                  0.0
+                ],
+                "centroid": [
+                  40.0,
+                  0.0,
+                  0.0
+                ],
+                "component_path": "PCB1",
+                "direction": [
+                  1.0,
+                  0.0,
+                  0.0
+                ],
+                "geom": "line",
+                "kind": "edge",
+                "radius": null,
+                "size": 80.0
+              },
+              "index": 0,
+              "point": [
+                40.0,
+                0.0,
+                0.0
+              ],
+              "point_kind": "mid",
+              "trace_note": null,
+              "view_id": "v_top"
+            },
+            {
+              "entity_kind": "edge",
+              "fingerprint": {
+                "bbox": [
+                  0.0,
+                  60.0,
+                  0.0,
+                  80.0,
+                  60.0,
+                  0.0
+                ],
+                "centroid": [
+                  40.0,
+                  60.0,
+                  0.0
+                ],
+                "component_path": "PCB1",
+                "direction": [
+                  -1.0,
+                  0.0,
+                  0.0
+                ],
+                "geom": "line",
+                "kind": "edge",
+                "radius": null,
+                "size": 80.0
+              },
+              "index": 1,
+              "point": [
+                40.0,
+                60.0,
+                0.0
+              ],
+              "point_kind": "mid",
+              "trace_note": null,
+              "view_id": "v_top"
+            }
+          ],
+          "bbox": [
+            103.75,
+            177.5,
+            116.25,
+            182.5
+          ],
+          "direction": "vertical",
+          "id": "d01_board_width",
+          "kind": "linear",
+          "origin": [
+            110.0,
+            180.0
+          ],
+          "retained": false,
+          "text": "60.00",
+          "text_overridden": false,
+          "tolerance": null,
+          "value": 60.0,
+          "view_id": "v_top"
+        },
+        {
+          "appended_text": null,
+          "attachments": [
+            {
+              "entity_kind": "face",
+              "fingerprint": {
+                "bbox": [
+                  0.0,
+                  0.0,
+                  1.6,
+                  80.0,
+                  60.0,
+                  1.6
+                ],
+                "centroid": [
+                  40.0,
+                  30.0,
+                  1.6
+                ],
+                "component_path": "PCB1",
+                "direction": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "geom": "plane",
+                "kind": "face",
+                "radius": null,
+                "size": 4767.076108990379
+              },
+              "index": 0,
+              "point": [
+                40.0,
+                30.0,
+                1.6
+              ],
+              "point_kind": "center",
+              "trace_note": null,
+              "view_id": "v_side"
+            },
+            {
+              "entity_kind": "face",
+              "fingerprint": {
+                "bbox": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  80.0,
+                  60.0,
+                  0.0
+                ],
+                "centroid": [
+                  40.0,
+                  30.0,
+                  0.0
+                ],
+                "component_path": "PCB1",
+                "direction": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "geom": "plane",
+                "kind": "face",
+                "radius": null,
+                "size": 4767.076108990379
+              },
+              "index": 1,
+              "point": [
+                40.0,
+                30.0,
+                0.0
+              ],
+              "point_kind": "center",
+              "trace_note": null,
+              "view_id": "v_side"
+            }
+          ],
+          "bbox": [
+            105.0,
+            52.5,
+            115.0,
+            57.5
+          ],
+          "direction": "vertical",
+          "id": "d02_board_thickness",
+          "kind": "linear",
+          "origin": [
+            110.0,
+            55.0
+          ],
+          "retained": false,
+          "text": "1.60",
+          "text_overridden": false,
+          "tolerance": null,
+          "value": 1.6,
+          "view_id": "v_side"
+        },
+        {
+          "appended_text": null,
+          "attachments": [
+            {
+              "entity_kind": "face",
+              "fingerprint": {
+                "bbox": [
+                  6.4,
+                  6.4,
+                  0.0,
+                  9.6,
+                  9.6,
+                  1.6
+                ],
+                "centroid": [
+                  8.0,
+                  8.0,
+                  0.8
+                ],
+                "component_path": "PCB1",
+                "direction": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "geom": "cylinder",
+                "kind": "face",
+                "radius": 1.6,
+                "size": 16.084954386379742
+              },
+              "index": 0,
+              "point": [
+                8.0,
+                8.0,
+                0.8
+              ],
+              "point_kind": "center",
+              "trace_note": null,
+              "view_id": "v_top"
+            },
+            {
+              "entity_kind": "face",
+              "fingerprint": {
+                "bbox": [
+                  70.4,
+                  6.4,
+                  0.0,
+                  73.6,
+                  9.6,
+                  1.6
+                ],
+                "centroid": [
+                  72.0,
+                  8.0,
+                  0.8
+                ],
+                "component_path": "PCB1",
+                "direction": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "geom": "cylinder",
+                "kind": "face",
+                "radius": 1.6,
+                "size": 16.084954386379742
+              },
+              "index": 1,
+              "point": [
+                72.0,
+                8.0,
+                0.8
+              ],
+              "point_kind": "center",
+              "trace_note": null,
+              "view_id": "v_top"
+            }
+          ],
+          "bbox": [
+            123.75,
+            119.5,
+            136.25,
+            124.5
+          ],
+          "direction": "horizontal",
+          "id": "d03_hole_1_x",
+          "kind": "ordinate",
+          "origin": [
+            130.0,
+            122.0
+          ],
+          "retained": false,
+          "text": "64.00",
+          "text_overridden": false,
+          "tolerance": null,
+          "value": 64.0,
+          "view_id": "v_top"
+        },
+        {
+          "appended_text": null,
+          "attachments": [
+            {
+              "entity_kind": "face",
+              "fingerprint": {
+                "bbox": [
+                  6.4,
+                  6.4,
+                  0.0,
+                  9.6,
+                  9.6,
+                  1.6
+                ],
+                "centroid": [
+                  8.0,
+                  8.0,
+                  0.8
+                ],
+                "component_path": "PCB1",
+                "direction": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "geom": "cylinder",
+                "kind": "face",
+                "radius": 1.6,
+                "size": 16.084954386379742
+              },
+              "index": 0,
+              "point": [
+                8.0,
+                8.0,
+                0.8
+              ],
+              "point_kind": "center",
+              "trace_note": null,
+              "view_id": "v_top"
+            },
+            {
+              "entity_kind": "face",
+              "fingerprint": {
+                "bbox": [
+                  70.4,
+                  6.4,
+                  0.0,
+                  73.6,
+                  9.6,
+                  1.6
+                ],
+                "centroid": [
+                  72.0,
+                  8.0,
+                  0.8
+                ],
+                "component_path": "PCB1",
+                "direction": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "geom": "cylinder",
+                "kind": "face",
+                "radius": 1.6,
+                "size": 16.084954386379742
+              },
+              "index": 1,
+              "point": [
+                72.0,
+                8.0,
+                0.8
+              ],
+              "point_kind": "center",
+              "trace_note": null,
+              "view_id": "v_top"
+            }
+          ],
+          "bbox": [
+            148.0,
+            127.5,
+            158.0,
+            132.5
+          ],
+          "direction": "vertical",
+          "id": "d04_hole_1_y",
+          "kind": "ordinate",
+          "origin": [
+            153.0,
+            130.0
+          ],
+          "retained": false,
+          "text": "0.00",
+          "text_overridden": false,
+          "tolerance": null,
+          "value": 0.0,
+          "view_id": "v_top"
+        },
+        {
+          "appended_text": null,
+          "attachments": [
+            {
+              "entity_kind": "face",
+              "fingerprint": {
+                "bbox": [
+                  6.4,
+                  6.4,
+                  0.0,
+                  9.6,
+                  9.6,
+                  1.6
+                ],
+                "centroid": [
+                  8.0,
+                  8.0,
+                  0.8
+                ],
+                "component_path": "PCB1",
+                "direction": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "geom": "cylinder",
+                "kind": "face",
+                "radius": 1.6,
+                "size": 16.084954386379742
+              },
+              "index": 0,
+              "point": [
+                8.0,
+                8.0,
+                0.8
+              ],
+              "point_kind": "center",
+              "trace_note": null,
+              "view_id": "v_top"
+            },
+            {
+              "entity_kind": "face",
+              "fingerprint": {
+                "bbox": [
+                  70.4,
+                  50.4,
+                  0.0,
+                  73.6,
+                  53.6,
+                  1.6
+                ],
+                "centroid": [
+                  72.0,
+                  52.0,
+                  0.8
+                ],
+                "component_path": "PCB1",
+                "direction": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "geom": "cylinder",
+                "kind": "face",
+                "radius": 1.6,
+                "size": 16.084954386379742
+              },
+              "index": 1,
+              "point": [
+                72.0,
+                52.0,
+                0.8
+              ],
+              "point_kind": "center",
+              "trace_note": null,
+              "view_id": "v_top"
+            }
+          ],
+          "bbox": [
+            123.75,
+            111.5,
+            136.25,
+            116.5
+          ],
+          "direction": "horizontal",
+          "id": "d05_hole_2_x",
+          "kind": "ordinate",
+          "origin": [
+            130.0,
+            114.0
+          ],
+          "retained": false,
+          "text": "64.00",
+          "text_overridden": false,
+          "tolerance": null,
+          "value": 64.0,
+          "view_id": "v_top"
+        },
+        {
+          "appended_text": null,
+          "attachments": [
+            {
+              "entity_kind": "face",
+              "fingerprint": {
+                "bbox": [
+                  6.4,
+                  6.4,
+                  0.0,
+                  9.6,
+                  9.6,
+                  1.6
+                ],
+                "centroid": [
+                  8.0,
+                  8.0,
+                  0.8
+                ],
+                "component_path": "PCB1",
+                "direction": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "geom": "cylinder",
+                "kind": "face",
+                "radius": 1.6,
+                "size": 16.084954386379742
+              },
+              "index": 0,
+              "point": [
+                8.0,
+                8.0,
+                0.8
+              ],
+              "point_kind": "center",
+              "trace_note": null,
+              "view_id": "v_top"
+            },
+            {
+              "entity_kind": "face",
+              "fingerprint": {
+                "bbox": [
+                  70.4,
+                  50.4,
+                  0.0,
+                  73.6,
+                  53.6,
+                  1.6
+                ],
+                "centroid": [
+                  72.0,
+                  52.0,
+                  0.8
+                ],
+                "component_path": "PCB1",
+                "direction": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "geom": "cylinder",
+                "kind": "face",
+                "radius": 1.6,
+                "size": 16.084954386379742
+              },
+              "index": 1,
+              "point": [
+                72.0,
+                52.0,
+                0.8
+              ],
+              "point_kind": "center",
+              "trace_note": null,
+              "view_id": "v_top"
+            }
+          ],
+          "bbox": [
+            154.75,
+            127.5,
+            167.25,
+            132.5
+          ],
+          "direction": "vertical",
+          "id": "d06_hole_2_y",
+          "kind": "ordinate",
+          "origin": [
+            161.0,
+            130.0
+          ],
+          "retained": false,
+          "text": "44.00",
+          "text_overridden": false,
+          "tolerance": null,
+          "value": 44.0,
+          "view_id": "v_top"
+        },
+        {
+          "appended_text": null,
+          "attachments": [
+            {
+              "entity_kind": "face",
+              "fingerprint": {
+                "bbox": [
+                  6.4,
+                  6.4,
+                  0.0,
+                  9.6,
+                  9.6,
+                  1.6
+                ],
+                "centroid": [
+                  8.0,
+                  8.0,
+                  0.8
+                ],
+                "component_path": "PCB1",
+                "direction": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "geom": "cylinder",
+                "kind": "face",
+                "radius": 1.6,
+                "size": 16.084954386379742
+              },
+              "index": 0,
+              "point": [
+                8.0,
+                8.0,
+                0.8
+              ],
+              "point_kind": "center",
+              "trace_note": null,
+              "view_id": "v_top"
+            },
+            {
+              "entity_kind": "face",
+              "fingerprint": {
+                "bbox": [
+                  6.4,
+                  50.4,
+                  0.0,
+                  9.6,
+                  53.6,
+                  1.6
+                ],
+                "centroid": [
+                  8.0,
+                  52.0,
+                  0.8
+                ],
+                "component_path": "PCB1",
+                "direction": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "geom": "cylinder",
+                "kind": "face",
+                "radius": 1.6,
+                "size": 16.084954386379742
+              },
+              "index": 1,
+              "point": [
+                8.0,
+                52.0,
+                0.8
+              ],
+              "point_kind": "center",
+              "trace_note": null,
+              "view_id": "v_top"
+            }
+          ],
+          "bbox": [
+            125.0,
+            103.5,
+            135.0,
+            108.5
+          ],
+          "direction": "horizontal",
+          "id": "d07_hole_3_x",
+          "kind": "ordinate",
+          "origin": [
+            130.0,
+            106.0
+          ],
+          "retained": false,
+          "text": "0.00",
+          "text_overridden": false,
+          "tolerance": null,
+          "value": 0.0,
+          "view_id": "v_top"
+        },
+        {
+          "appended_text": null,
+          "attachments": [
+            {
+              "entity_kind": "face",
+              "fingerprint": {
+                "bbox": [
+                  6.4,
+                  6.4,
+                  0.0,
+                  9.6,
+                  9.6,
+                  1.6
+                ],
+                "centroid": [
+                  8.0,
+                  8.0,
+                  0.8
+                ],
+                "component_path": "PCB1",
+                "direction": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "geom": "cylinder",
+                "kind": "face",
+                "radius": 1.6,
+                "size": 16.084954386379742
+              },
+              "index": 0,
+              "point": [
+                8.0,
+                8.0,
+                0.8
+              ],
+              "point_kind": "center",
+              "trace_note": null,
+              "view_id": "v_top"
+            },
+            {
+              "entity_kind": "face",
+              "fingerprint": {
+                "bbox": [
+                  6.4,
+                  50.4,
+                  0.0,
+                  9.6,
+                  53.6,
+                  1.6
+                ],
+                "centroid": [
+                  8.0,
+                  52.0,
+                  0.8
+                ],
+                "component_path": "PCB1",
+                "direction": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "geom": "cylinder",
+                "kind": "face",
+                "radius": 1.6,
+                "size": 16.084954386379742
+              },
+              "index": 1,
+              "point": [
+                8.0,
+                52.0,
+                0.8
+              ],
+              "point_kind": "center",
+              "trace_note": null,
+              "view_id": "v_top"
+            }
+          ],
+          "bbox": [
+            162.75,
+            127.5,
+            175.25,
+            132.5
+          ],
+          "direction": "vertical",
+          "id": "d08_hole_3_y",
+          "kind": "ordinate",
+          "origin": [
+            169.0,
+            130.0
+          ],
+          "retained": false,
+          "text": "44.00",
+          "text_overridden": false,
+          "tolerance": null,
+          "value": 44.0,
+          "view_id": "v_top"
+        },
+        {
+          "appended_text": {
+            "above": "",
+            "after": "",
+            "before": "4X",
+            "below": ""
+          },
+          "attachments": [
+            {
+              "entity_kind": "face",
+              "fingerprint": {
+                "bbox": [
+                  6.4,
+                  6.4,
+                  0.0,
+                  9.6,
+                  9.6,
+                  1.6
+                ],
+                "centroid": [
+                  8.0,
+                  8.0,
+                  0.8
+                ],
+                "component_path": "PCB1",
+                "direction": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "geom": "cylinder",
+                "kind": "face",
+                "radius": 1.6,
+                "size": 16.084954386379742
+              },
+              "index": 0,
+              "point": [
+                8.0,
+                8.0,
+                0.8
+              ],
+              "point_kind": "center",
+              "trace_note": null,
+              "view_id": "v_top"
+            }
+          ],
+          "bbox": [
+            291.25,
+            200.5,
+            308.75,
+            205.5
+          ],
+          "direction": null,
+          "id": "d09_hole_diameter_3_20",
+          "kind": "diameter",
+          "origin": [
+            300.0,
+            203.0
+          ],
+          "retained": false,
+          "text": "⌀3.20",
+          "text_overridden": false,
+          "tolerance": null,
+          "value": 3.2,
+          "view_id": "v_top"
+        },
+        {
+          "appended_text": null,
+          "attachments": [
+            {
+              "entity_kind": "face",
+              "fingerprint": {
+                "bbox": [
+                  6.4,
+                  6.4,
+                  0.0,
+                  9.6,
+                  9.6,
+                  1.6
+                ],
+                "centroid": [
+                  8.0,
+                  8.0,
+                  0.8
+                ],
+                "component_path": "PCB1",
+                "direction": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "geom": "cylinder",
+                "kind": "face",
+                "radius": 1.6,
+                "size": 16.084954386379742
+              },
+              "index": 0,
+              "point": [
+                8.0,
+                8.0,
+                0.8
+              ],
+              "point_kind": "center",
+              "trace_note": null,
+              "view_id": "v_top"
+            },
+            {
+              "entity_kind": "face",
+              "fingerprint": {
+                "bbox": [
+                  49.6,
+                  13.6,
+                  7.6,
+                  50.4,
+                  14.4,
+                  10.6
+                ],
+                "centroid": [
+                  50.0,
+                  14.0,
+                  9.1
+                ],
+                "component_path": "J1",
+                "direction": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "geom": "cylinder",
+                "kind": "face",
+                "radius": 0.4,
+                "size": 7.5398223686155035
+              },
+              "index": 1,
+              "point": [
+                50.0,
+                14.0,
+                9.1
+              ],
+              "point_kind": "center",
+              "trace_note": null,
+              "view_id": "v_top"
+            }
+          ],
+          "bbox": [
+            263.75,
+            112.5,
+            276.25,
+            117.5
+          ],
+          "direction": "horizontal",
+          "id": "d10_J1_x",
+          "kind": "linear",
+          "origin": [
+            270.0,
+            115.0
+          ],
+          "retained": false,
+          "text": "42.00",
+          "text_overridden": false,
+          "tolerance": null,
+          "value": 42.0,
+          "view_id": "v_top"
+        },
+        {
+          "appended_text": null,
+          "attachments": [
+            {
+              "entity_kind": "face",
+              "fingerprint": {
+                "bbox": [
+                  6.4,
+                  6.4,
+                  0.0,
+                  9.6,
+                  9.6,
+                  1.6
+                ],
+                "centroid": [
+                  8.0,
+                  8.0,
+                  0.8
+                ],
+                "component_path": "PCB1",
+                "direction": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "geom": "cylinder",
+                "kind": "face",
+                "radius": 1.6,
+                "size": 16.084954386379742
+              },
+              "index": 0,
+              "point": [
+                8.0,
+                8.0,
+                0.8
+              ],
+              "point_kind": "center",
+              "trace_note": null,
+              "view_id": "v_top"
+            },
+            {
+              "entity_kind": "face",
+              "fingerprint": {
+                "bbox": [
+                  49.6,
+                  13.6,
+                  7.6,
+                  50.4,
+                  14.4,
+                  10.6
+                ],
+                "centroid": [
+                  50.0,
+                  14.0,
+                  9.1
+                ],
+                "component_path": "J1",
+                "direction": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "geom": "cylinder",
+                "kind": "face",
+                "radius": 0.4,
+                "size": 7.5398223686155035
+              },
+              "index": 1,
+              "point": [
+                50.0,
+                14.0,
+                9.1
+              ],
+              "point_kind": "center",
+              "trace_note": null,
+              "view_id": "v_top"
+            }
+          ],
+          "bbox": [
+            295.0,
+            112.5,
+            305.0,
+            117.5
+          ],
+          "direction": "vertical",
+          "id": "d11_J1_y",
+          "kind": "linear",
+          "origin": [
+            300.0,
+            115.0
+          ],
+          "retained": false,
+          "text": "6.00",
+          "text_overridden": false,
+          "tolerance": null,
+          "value": 6.0,
+          "view_id": "v_top"
+        },
+        {
+          "appended_text": {
+            "above": "",
+            "after": "",
+            "before": "4X",
+            "below": ""
+          },
+          "attachments": [
+            {
+              "entity_kind": "face",
+              "fingerprint": {
+                "bbox": [
+                  49.6,
+                  13.6,
+                  7.6,
+                  50.4,
+                  14.4,
+                  10.6
+                ],
+                "centroid": [
+                  50.0,
+                  14.0,
+                  9.1
+                ],
+                "component_path": "J1",
+                "direction": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "geom": "cylinder",
+                "kind": "face",
+                "radius": 0.4,
+                "size": 7.5398223686155035
+              },
+              "index": 0,
+              "point": [
+                50.0,
+                14.0,
+                9.1
+              ],
+              "point_kind": "center",
+              "trace_note": null,
+              "view_id": "v_top"
+            },
+            {
+              "entity_kind": "face",
+              "fingerprint": {
+                "bbox": [
+                  52.14,
+                  13.6,
+                  7.6,
+                  52.94,
+                  14.4,
+                  10.6
+                ],
+                "centroid": [
+                  52.54,
+                  14.0,
+                  9.1
+                ],
+                "component_path": "J1",
+                "direction": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "geom": "cylinder",
+                "kind": "face",
+                "radius": 0.4,
+                "size": 7.5398223686155035
+              },
+              "index": 1,
+              "point": [
+                52.54,
+                14.0,
+                9.1
+              ],
+              "point_kind": "center",
+              "trace_note": null,
+              "view_id": "v_top"
+            }
+          ],
+          "bbox": [
+            262.5,
+            87.5,
+            277.5,
+            92.5
+          ],
+          "direction": "horizontal",
+          "id": "d12_J1_pitch",
+          "kind": "linear",
+          "origin": [
+            270.0,
+            90.0
+          ],
+          "retained": false,
+          "text": "2.54",
+          "text_overridden": false,
+          "tolerance": null,
+          "value": 2.54,
+          "view_id": "v_top"
+        },
+        {
+          "appended_text": null,
+          "attachments": [
+            {
+              "entity_kind": "face",
+              "fingerprint": {
+                "bbox": [
+                  0.0,
+                  0.0,
+                  1.6,
+                  80.0,
+                  60.0,
+                  1.6
+                ],
+                "centroid": [
+                  40.0,
+                  30.0,
+                  1.6
+                ],
+                "component_path": "PCB1",
+                "direction": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "geom": "plane",
+                "kind": "face",
+                "radius": null,
+                "size": 4767.076108990379
+              },
+              "index": 0,
+              "point": [
+                40.0,
+                30.0,
+                1.6
+              ],
+              "point_kind": "center",
+              "trace_note": null,
+              "view_id": "v_side"
+            },
+            {
+              "entity_kind": "face",
+              "fingerprint": {
+                "bbox": [
+                  27.0,
+                  28.0,
+                  15.6,
+                  41.0,
+                  40.0,
+                  15.6
+                ],
+                "centroid": [
+                  34.0,
+                  34.0,
+                  15.6
+                ],
+                "component_path": "U1",
+                "direction": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "geom": "plane",
+                "kind": "face",
+                "radius": null,
+                "size": 168.0
+              },
+              "index": 1,
+              "point": [
+                34.0,
+                34.0,
+                15.6
+              ],
+              "point_kind": "center",
+              "trace_note": null,
+              "view_id": "v_side"
+            }
+          ],
+          "bbox": [
+            143.75,
+            69.5,
+            156.25,
+            74.5
+          ],
+          "direction": "vertical",
+          "id": "d13_height_above",
+          "kind": "linear",
+          "origin": [
+            150.0,
+            72.0
+          ],
+          "retained": false,
+          "text": "14.00",
+          "text_overridden": false,
+          "tolerance": null,
+          "value": 14.0,
+          "view_id": "v_side"
+        },
+        {
+          "appended_text": null,
+          "attachments": [
+            {
+              "entity_kind": "face",
+              "fingerprint": {
+                "bbox": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  80.0,
+                  60.0,
+                  0.0
+                ],
+                "centroid": [
+                  40.0,
+                  30.0,
+                  0.0
+                ],
+                "component_path": "PCB1",
+                "direction": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "geom": "plane",
+                "kind": "face",
+                "radius": null,
+                "size": 4767.076108990379
+              },
+              "index": 0,
+              "point": [
+                40.0,
+                30.0,
+                0.0
+              ],
+              "point_kind": "center",
+              "trace_note": null,
+              "view_id": "v_side"
+            },
+            {
+              "entity_kind": "face",
+              "fingerprint": {
+                "bbox": [
+                  45.0,
+                  45.0,
+                  -3.2,
+                  53.0,
+                  50.0,
+                  -3.2
+                ],
+                "centroid": [
+                  49.0,
+                  47.5,
+                  -3.2
+                ],
+                "component_path": "D1",
+                "direction": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "geom": "plane",
+                "kind": "face",
+                "radius": null,
+                "size": 40.0
+              },
+              "index": 1,
+              "point": [
+                49.0,
+                47.5,
+                -3.2
+              ],
+              "point_kind": "center",
+              "trace_note": null,
+              "view_id": "v_side"
+            }
+          ],
+          "bbox": [
+            175.0,
+            39.5,
+            185.0,
+            44.5
+          ],
+          "direction": "vertical",
+          "id": "d14_height_below",
+          "kind": "linear",
+          "origin": [
+            180.0,
+            42.0
+          ],
+          "retained": false,
+          "text": "3.20",
+          "text_overridden": false,
+          "tolerance": null,
+          "value": 3.2,
+          "view_id": "v_side"
+        }
+      ],
+      "height": 297.0,
+      "id": "s0",
+      "name": "A3",
+      "notes": [
+        {
+          "has_leader": false,
+          "id": "n0",
+          "origin": [
+            300.0,
+            30.0
+          ],
+          "text": "NOTES: SYNTHETIC FIXTURE",
+          "view_id": null
+        }
+      ],
+      "projection": "first",
+      "scale": 1.0,
+      "standard": "ISO",
+      "tables": [
+        {
+          "id": "t0",
+          "kind": "title_block",
+          "origin": [
+            320.0,
+            255.0
+          ],
+          "rows": [
+            [
+              "TITLE",
+              "reference"
+            ],
+            [
+              "SCALE",
+              "1:1"
+            ]
+          ]
+        }
+      ],
+      "views": [
+        {
+          "bbox": [
+            180.0,
+            150.0,
+            260.0,
+            210.0
+          ],
+          "center": [
+            220.0,
+            180.0
+          ],
+          "id": "v_bottom",
+          "kind": "projected",
+          "model_view": "Bottom",
+          "name": "BOTTOM",
+          "out_of_date": false,
+          "parent_id": "v_top",
+          "representation": "exact",
+          "rotation": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "scale": 1.0
+        },
+        {
+          "bbox": [
+            20.0,
+            51.8,
+            100.0,
+            70.6
+          ],
+          "center": [
+            60.0,
+            61.2
+          ],
+          "id": "v_side",
+          "kind": "projected",
+          "model_view": "Front",
+          "name": "SIDE",
+          "out_of_date": false,
+          "parent_id": "v_top",
+          "representation": "exact",
+          "rotation": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "scale": 1.0
+        },
+        {
+          "bbox": [
+            20.0,
+            150.0,
+            100.0,
+            210.0
+          ],
+          "center": [
+            60.0,
+            180.0
+          ],
+          "id": "v_top",
+          "kind": "base",
+          "model_view": "Top",
+          "name": "TOP",
+          "out_of_date": false,
+          "parent_id": null,
+          "representation": "exact",
+          "rotation": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": 1.0
+        }
+      ],
+      "width": 420.0
+    }
+  ],
+  "source": {
+    "attributes": {},
+    "extracted_at": "2026-11-16T00:00:00Z",
+    "model_part": "synthetic/pcba/reference/model.prt",
+    "nx_version": null,
+    "path": "synthetic/pcba/reference/drawing.prt",
+    "synthetic": true
+  }
+}
