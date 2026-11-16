@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
+.DS_Store
+runs/
+.claude/settings.local.json
+# Real fixtures are committed by default (docs/decisions/005). To keep them local, uncomment:
+# fixtures/real/
