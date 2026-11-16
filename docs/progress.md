@@ -15,7 +15,12 @@ Specification: `HANDOFF.md`. Branch: `p0-setup`. Update this file with every tas
 | P0-H1 NX release, Python version, parts on the seat, recorded journals | HUMAN | todo | |
 | P0-H2 run `ping` through `run_journal`, commit `status.json` | HUMAN | todo | gate G0 |
 
-Also pending for this branch: Claude Code setup (CLAUDE.md, rules, skills, Stop hook).
+Claude Code setup is done: `CLAUDE.md`, `.claude/rules/nx-worker.md`, the skills
+`nx-journal`, `contract-change` and `phase-gate`, and a Stop hook that runs `make gate`.
+
+All `[CC]` tasks of P0 are done. Gate G0 waits for P0-H1 and P0-H2. The exact
+steps for the person on the NX seat are in `nx_worker/README.md` and
+`docs/nx_api_assumptions.md`.
 
 ## Open questions (HANDOFF.md section 16)
 
