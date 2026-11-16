@@ -1,0 +1,219 @@
+{
+  "$defs": {
+    "DimensionCandidate": {
+      "additionalProperties": false,
+      "properties": {
+        "dim_kind": {
+          "enum": [
+            "linear",
+            "diameter",
+            "radius",
+            "angular",
+            "ordinate",
+            "hole_callout",
+            "chamfer",
+            "other"
+          ],
+          "title": "Dim Kind",
+          "type": "string"
+        },
+        "direction": {
+          "anyOf": [
+            {
+              "enum": [
+                "horizontal",
+                "vertical",
+                "parallel",
+                "perpendicular"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Direction"
+        },
+        "expected_value": {
+          "title": "Expected Value",
+          "type": "number"
+        },
+        "feature_refs": {
+          "items": {
+            "$ref": "#/$defs/FeatureRef"
+          },
+          "title": "Feature Refs",
+          "type": "array"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "required": {
+          "title": "Required",
+          "type": "boolean"
+        },
+        "role_signature": {
+          "title": "Role Signature",
+          "type": "string"
+        },
+        "rule_id": {
+          "title": "Rule Id",
+          "type": "string"
+        },
+        "source": {
+          "const": "measured",
+          "default": "measured",
+          "title": "Source",
+          "type": "string"
+        },
+        "view_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "View Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "role_signature",
+        "dim_kind",
+        "direction",
+        "feature_refs",
+        "view_ids",
+        "expected_value",
+        "required",
+        "rule_id"
+      ],
+      "title": "DimensionCandidate",
+      "type": "object"
+    },
+    "FeatureRef": {
+      "additionalProperties": false,
+      "properties": {
+        "entity": {
+          "title": "Entity",
+          "type": "string"
+        },
+        "feature_id": {
+          "title": "Feature Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "feature_id",
+        "entity"
+      ],
+      "title": "FeatureRef",
+      "type": "object"
+    },
+    "ViewCandidate": {
+      "additionalProperties": false,
+      "properties": {
+        "direction_in_frame": {
+          "anyOf": [
+            {
+              "enum": [
+                "+X",
+                "-X",
+                "+Y",
+                "-Y",
+                "+Z",
+                "-Z",
+                "iso"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Direction In Frame"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "base",
+            "projected",
+            "section",
+            "detail",
+            "isometric",
+            "other"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "parent_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Parent Id"
+        },
+        "rule_id": {
+          "title": "Rule Id",
+          "type": "string"
+        },
+        "scale_options": {
+          "items": {
+            "type": "number"
+          },
+          "title": "Scale Options",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "direction_in_frame",
+        "scale_options",
+        "rule_id"
+      ],
+      "title": "ViewCandidate",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "dimensions": {
+      "items": {
+        "$ref": "#/$defs/DimensionCandidate"
+      },
+      "title": "Dimensions",
+      "type": "array"
+    },
+    "schema": {
+      "const": "candidate_set/0",
+      "default": "candidate_set/0",
+      "title": "Schema",
+      "type": "string"
+    },
+    "target_hash": {
+      "title": "Target Hash",
+      "type": "string"
+    },
+    "views": {
+      "items": {
+        "$ref": "#/$defs/ViewCandidate"
+      },
+      "title": "Views",
+      "type": "array"
+    }
+  },
+  "required": [
+    "target_hash",
+    "views",
+    "dimensions"
+  ],
+  "title": "CandidateSet",
+  "type": "object"
+}

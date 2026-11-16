@@ -1,0 +1,385 @@
+{
+  "$defs": {
+    "AddDimension": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_id": {
+          "title": "Candidate Id",
+          "type": "string"
+        },
+        "op": {
+          "const": "add_dimension",
+          "default": "add_dimension",
+          "title": "Op",
+          "type": "string"
+        },
+        "view_id": {
+          "title": "View Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "candidate_id",
+        "view_id"
+      ],
+      "title": "AddDimension",
+      "type": "object"
+    },
+    "AddView": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_id": {
+          "title": "Candidate Id",
+          "type": "string"
+        },
+        "op": {
+          "const": "add_view",
+          "default": "add_view",
+          "title": "Op",
+          "type": "string"
+        }
+      },
+      "required": [
+        "candidate_id"
+      ],
+      "title": "AddView",
+      "type": "object"
+    },
+    "FindingResult": {
+      "additionalProperties": false,
+      "properties": {
+        "edits": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "add_dimension": "#/$defs/AddDimension",
+                "add_view": "#/$defs/AddView",
+                "flag": "#/$defs/Flag",
+                "move_dimension": "#/$defs/MoveDimension",
+                "move_view": "#/$defs/MoveView",
+                "remove_dimension": "#/$defs/RemoveDimension",
+                "set_sheet": "#/$defs/SetSheet",
+                "set_view_scale": "#/$defs/SetViewScale",
+                "switch_view": "#/$defs/SwitchView"
+              },
+              "propertyName": "op"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/MoveDimension"
+              },
+              {
+                "$ref": "#/$defs/MoveView"
+              },
+              {
+                "$ref": "#/$defs/SetViewScale"
+              },
+              {
+                "$ref": "#/$defs/SetSheet"
+              },
+              {
+                "$ref": "#/$defs/AddDimension"
+              },
+              {
+                "$ref": "#/$defs/RemoveDimension"
+              },
+              {
+                "$ref": "#/$defs/SwitchView"
+              },
+              {
+                "$ref": "#/$defs/AddView"
+              },
+              {
+                "$ref": "#/$defs/Flag"
+              }
+            ]
+          },
+          "title": "Edits",
+          "type": "array"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        },
+        "refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Refs",
+          "type": "array"
+        },
+        "rule_id": {
+          "title": "Rule Id",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "pass",
+            "fail",
+            "warn",
+            "review"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "rule_id",
+        "status",
+        "message"
+      ],
+      "title": "FindingResult",
+      "type": "object"
+    },
+    "FindingsSummary": {
+      "additionalProperties": false,
+      "properties": {
+        "fail": {
+          "default": 0,
+          "title": "Fail",
+          "type": "integer"
+        },
+        "pass": {
+          "default": 0,
+          "title": "Pass",
+          "type": "integer"
+        },
+        "review": {
+          "default": 0,
+          "title": "Review",
+          "type": "integer"
+        },
+        "warn": {
+          "default": 0,
+          "title": "Warn",
+          "type": "integer"
+        }
+      },
+      "title": "FindingsSummary",
+      "type": "object"
+    },
+    "Flag": {
+      "additionalProperties": false,
+      "properties": {
+        "message": {
+          "title": "Message",
+          "type": "string"
+        },
+        "op": {
+          "const": "flag",
+          "default": "flag",
+          "title": "Op",
+          "type": "string"
+        },
+        "refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Refs",
+          "type": "array"
+        }
+      },
+      "required": [
+        "message"
+      ],
+      "title": "Flag",
+      "type": "object"
+    },
+    "MoveDimension": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "op": {
+          "const": "move_dimension",
+          "default": "move_dimension",
+          "title": "Op",
+          "type": "string"
+        },
+        "rank": {
+          "title": "Rank",
+          "type": "integer"
+        },
+        "side": {
+          "enum": [
+            "above",
+            "below",
+            "left",
+            "right"
+          ],
+          "title": "Side",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "side",
+        "rank"
+      ],
+      "title": "MoveDimension",
+      "type": "object"
+    },
+    "MoveView": {
+      "additionalProperties": false,
+      "properties": {
+        "center": {
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Center",
+          "type": "array"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "op": {
+          "const": "move_view",
+          "default": "move_view",
+          "title": "Op",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "center"
+      ],
+      "title": "MoveView",
+      "type": "object"
+    },
+    "RemoveDimension": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "op": {
+          "const": "remove_dimension",
+          "default": "remove_dimension",
+          "title": "Op",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "title": "RemoveDimension",
+      "type": "object"
+    },
+    "SetSheet": {
+      "additionalProperties": false,
+      "properties": {
+        "height": {
+          "title": "Height",
+          "type": "number"
+        },
+        "op": {
+          "const": "set_sheet",
+          "default": "set_sheet",
+          "title": "Op",
+          "type": "string"
+        },
+        "width": {
+          "title": "Width",
+          "type": "number"
+        }
+      },
+      "required": [
+        "width",
+        "height"
+      ],
+      "title": "SetSheet",
+      "type": "object"
+    },
+    "SetViewScale": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "op": {
+          "const": "set_view_scale",
+          "default": "set_view_scale",
+          "title": "Op",
+          "type": "string"
+        },
+        "scale": {
+          "title": "Scale",
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "scale"
+      ],
+      "title": "SetViewScale",
+      "type": "object"
+    },
+    "SwitchView": {
+      "additionalProperties": false,
+      "properties": {
+        "dimension_id": {
+          "title": "Dimension Id",
+          "type": "string"
+        },
+        "op": {
+          "const": "switch_view",
+          "default": "switch_view",
+          "title": "Op",
+          "type": "string"
+        },
+        "view_id": {
+          "title": "View Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "dimension_id",
+        "view_id"
+      ],
+      "title": "SwitchView",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "plan_version": {
+      "title": "Plan Version",
+      "type": "integer"
+    },
+    "results": {
+      "items": {
+        "$ref": "#/$defs/FindingResult"
+      },
+      "title": "Results",
+      "type": "array"
+    },
+    "schema": {
+      "const": "findings/0",
+      "default": "findings/0",
+      "title": "Schema",
+      "type": "string"
+    },
+    "summary": {
+      "$ref": "#/$defs/FindingsSummary"
+    }
+  },
+  "required": [
+    "plan_version",
+    "results",
+    "summary"
+  ],
+  "title": "Findings",
+  "type": "object"
+}

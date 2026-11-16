@@ -1,0 +1,382 @@
+{
+  "$defs": {
+    "Placement": {
+      "additionalProperties": false,
+      "properties": {
+        "rank": {
+          "title": "Rank",
+          "type": "integer"
+        },
+        "side": {
+          "enum": [
+            "above",
+            "below",
+            "left",
+            "right"
+          ],
+          "title": "Side",
+          "type": "string"
+        }
+      },
+      "required": [
+        "side",
+        "rank"
+      ],
+      "title": "Placement",
+      "type": "object"
+    },
+    "PlanDimension": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_id": {
+          "title": "Candidate Id",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "placement": {
+          "$ref": "#/$defs/Placement"
+        },
+        "scheme_group": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Scheme Group"
+        },
+        "view_id": {
+          "title": "View Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "candidate_id",
+        "view_id",
+        "placement"
+      ],
+      "title": "PlanDimension",
+      "type": "object"
+    },
+    "PlanNote": {
+      "additionalProperties": false,
+      "properties": {
+        "anchor": {
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Anchor",
+          "type": "array"
+        },
+        "flagged": {
+          "title": "Flagged",
+          "type": "boolean"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "source": {
+          "enum": [
+            "reference_convention",
+            "requirement_doc",
+            "human"
+          ],
+          "title": "Source",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "text",
+        "anchor",
+        "source",
+        "flagged"
+      ],
+      "title": "PlanNote",
+      "type": "object"
+    },
+    "PlanProvenance": {
+      "additionalProperties": false,
+      "properties": {
+        "model": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model"
+        },
+        "planner": {
+          "enum": [
+            "rules",
+            "llm",
+            "human"
+          ],
+          "title": "Planner",
+          "type": "string"
+        },
+        "prompt_hash": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Prompt Hash"
+        }
+      },
+      "required": [
+        "planner"
+      ],
+      "title": "PlanProvenance",
+      "type": "object"
+    },
+    "PlanView": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_id": {
+          "title": "Candidate Id",
+          "type": "string"
+        },
+        "center": {
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Center",
+          "type": "array"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "scale": {
+          "title": "Scale",
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "candidate_id",
+        "scale",
+        "center"
+      ],
+      "title": "PlanView",
+      "type": "object"
+    },
+    "ReviewFlag": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "title": "Kind",
+          "type": "string"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        },
+        "refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Refs",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "message"
+      ],
+      "title": "ReviewFlag",
+      "type": "object"
+    },
+    "SheetSize": {
+      "additionalProperties": false,
+      "properties": {
+        "height": {
+          "title": "Height",
+          "type": "number"
+        },
+        "width": {
+          "title": "Width",
+          "type": "number"
+        }
+      },
+      "required": [
+        "width",
+        "height"
+      ],
+      "title": "SheetSize",
+      "type": "object"
+    },
+    "TitleBlockEntry": {
+      "additionalProperties": false,
+      "properties": {
+        "source": {
+          "title": "Source",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "value",
+        "source"
+      ],
+      "title": "TitleBlockEntry",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "dimensions": {
+      "items": {
+        "$ref": "#/$defs/PlanDimension"
+      },
+      "title": "Dimensions",
+      "type": "array"
+    },
+    "notes": {
+      "items": {
+        "$ref": "#/$defs/PlanNote"
+      },
+      "title": "Notes",
+      "type": "array"
+    },
+    "pack": {
+      "title": "Pack",
+      "type": "string"
+    },
+    "plan_version": {
+      "title": "Plan Version",
+      "type": "integer"
+    },
+    "projection": {
+      "anyOf": [
+        {
+          "enum": [
+            "first",
+            "third"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Projection"
+    },
+    "provenance": {
+      "$ref": "#/$defs/PlanProvenance"
+    },
+    "review_flags": {
+      "items": {
+        "$ref": "#/$defs/ReviewFlag"
+      },
+      "title": "Review Flags",
+      "type": "array"
+    },
+    "schema": {
+      "const": "drawing_plan/0",
+      "default": "drawing_plan/0",
+      "title": "Schema",
+      "type": "string"
+    },
+    "sheet": {
+      "$ref": "#/$defs/SheetSize"
+    },
+    "standard": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Standard"
+    },
+    "target_hash": {
+      "title": "Target Hash",
+      "type": "string"
+    },
+    "template": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Template"
+    },
+    "title_block": {
+      "additionalProperties": {
+        "$ref": "#/$defs/TitleBlockEntry"
+      },
+      "title": "Title Block",
+      "type": "object"
+    },
+    "views": {
+      "items": {
+        "$ref": "#/$defs/PlanView"
+      },
+      "title": "Views",
+      "type": "array"
+    }
+  },
+  "required": [
+    "plan_version",
+    "target_hash",
+    "pack",
+    "template",
+    "sheet",
+    "standard",
+    "projection",
+    "views",
+    "dimensions",
+    "provenance"
+  ],
+  "title": "DrawingPlan",
+  "type": "object"
+}

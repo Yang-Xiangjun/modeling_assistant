@@ -1,0 +1,82 @@
+{
+  "$defs": {
+    "DimensionChoice": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_id": {
+          "title": "Candidate Id",
+          "type": "string"
+        },
+        "view_candidate_id": {
+          "title": "View Candidate Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "candidate_id",
+        "view_candidate_id"
+      ],
+      "title": "DimensionChoice",
+      "type": "object"
+    },
+    "RoleAssignment": {
+      "additionalProperties": false,
+      "properties": {
+        "feature_id": {
+          "title": "Feature Id",
+          "type": "string"
+        },
+        "role": {
+          "title": "Role",
+          "type": "string"
+        }
+      },
+      "required": [
+        "feature_id",
+        "role"
+      ],
+      "title": "RoleAssignment",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "The only thing an LLM may return for planning. IDs only, no numbers.",
+  "properties": {
+    "dimension_choices": {
+      "items": {
+        "$ref": "#/$defs/DimensionChoice"
+      },
+      "title": "Dimension Choices",
+      "type": "array"
+    },
+    "review_notes": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Review Notes",
+      "type": "array"
+    },
+    "role_assignments": {
+      "items": {
+        "$ref": "#/$defs/RoleAssignment"
+      },
+      "title": "Role Assignments",
+      "type": "array"
+    },
+    "schema": {
+      "const": "plan_selection/0",
+      "default": "plan_selection/0",
+      "title": "Schema",
+      "type": "string"
+    },
+    "view_candidate_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "View Candidate Ids",
+      "type": "array"
+    }
+  },
+  "title": "PlanSelection",
+  "type": "object"
+}

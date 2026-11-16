@@ -1,0 +1,335 @@
+{
+  "$defs": {
+    "ExportedFile": {
+      "additionalProperties": false,
+      "properties": {
+        "format": {
+          "enum": [
+            "pdf",
+            "dxf"
+          ],
+          "title": "Format",
+          "type": "string"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        }
+      },
+      "required": [
+        "format",
+        "path"
+      ],
+      "title": "ExportedFile",
+      "type": "object"
+    },
+    "ReportDimension": {
+      "additionalProperties": false,
+      "properties": {
+        "associative": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Associative"
+        },
+        "bbox": {
+          "anyOf": [
+            {
+              "maxItems": 4,
+              "minItems": 4,
+              "prefixItems": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                }
+              ],
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Bbox"
+        },
+        "created": {
+          "title": "Created",
+          "type": "boolean"
+        },
+        "error": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Error"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "retained": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Retained"
+        },
+        "text": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Text"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Value"
+        }
+      },
+      "required": [
+        "id",
+        "created"
+      ],
+      "title": "ReportDimension",
+      "type": "object"
+    },
+    "ReportView": {
+      "additionalProperties": false,
+      "properties": {
+        "bbox": {
+          "anyOf": [
+            {
+              "maxItems": 4,
+              "minItems": 4,
+              "prefixItems": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                }
+              ],
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Bbox"
+        },
+        "created": {
+          "title": "Created",
+          "type": "boolean"
+        },
+        "error": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Error"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Name"
+        },
+        "out_of_date": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Out Of Date"
+        },
+        "scale": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Scale"
+        }
+      },
+      "required": [
+        "id",
+        "created"
+      ],
+      "title": "ReportView",
+      "type": "object"
+    },
+    "UnresolvedAttachment": {
+      "additionalProperties": false,
+      "properties": {
+        "attachment_index": {
+          "title": "Attachment Index",
+          "type": "integer"
+        },
+        "dimension_id": {
+          "title": "Dimension Id",
+          "type": "string"
+        },
+        "reason": {
+          "enum": [
+            "no_match",
+            "ambiguous",
+            "not_visible_in_view"
+          ],
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "dimension_id",
+        "attachment_index",
+        "reason"
+      ],
+      "title": "UnresolvedAttachment",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "dimensions": {
+      "items": {
+        "$ref": "#/$defs/ReportDimension"
+      },
+      "title": "Dimensions",
+      "type": "array"
+    },
+    "drawing_part": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Drawing Part"
+    },
+    "exports": {
+      "items": {
+        "$ref": "#/$defs/ExportedFile"
+      },
+      "title": "Exports",
+      "type": "array"
+    },
+    "nx_version": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Nx Version"
+    },
+    "plan_version": {
+      "title": "Plan Version",
+      "type": "integer"
+    },
+    "saved": {
+      "title": "Saved",
+      "type": "boolean"
+    },
+    "schema": {
+      "const": "execution_report/0",
+      "default": "execution_report/0",
+      "title": "Schema",
+      "type": "string"
+    },
+    "unresolved": {
+      "items": {
+        "$ref": "#/$defs/UnresolvedAttachment"
+      },
+      "title": "Unresolved",
+      "type": "array"
+    },
+    "views": {
+      "items": {
+        "$ref": "#/$defs/ReportView"
+      },
+      "title": "Views",
+      "type": "array"
+    }
+  },
+  "required": [
+    "plan_version",
+    "drawing_part",
+    "nx_version",
+    "saved",
+    "views",
+    "dimensions"
+  ],
+  "title": "ExecutionReport",
+  "type": "object"
+}

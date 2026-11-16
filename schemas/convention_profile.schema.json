@@ -1,0 +1,422 @@
+{
+  "$defs": {
+    "Datum": {
+      "additionalProperties": false,
+      "properties": {
+        "x_from": {
+          "$ref": "#/$defs/Selector"
+        },
+        "y_from": {
+          "$ref": "#/$defs/Selector"
+        }
+      },
+      "required": [
+        "x_from",
+        "y_from"
+      ],
+      "title": "Datum",
+      "type": "object"
+    },
+    "ProfileDimensionRule": {
+      "additionalProperties": false,
+      "properties": {
+        "dim_kind": {
+          "enum": [
+            "linear",
+            "diameter",
+            "radius",
+            "angular",
+            "ordinate",
+            "hole_callout",
+            "chamfer",
+            "other"
+          ],
+          "title": "Dim Kind",
+          "type": "string"
+        },
+        "example_raw_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Example Raw Ids",
+          "type": "array"
+        },
+        "observed": {
+          "title": "Observed",
+          "type": "integer"
+        },
+        "placement_side": {
+          "anyOf": [
+            {
+              "enum": [
+                "above",
+                "below",
+                "left",
+                "right"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Placement Side"
+        },
+        "role_signature": {
+          "title": "Role Signature",
+          "type": "string"
+        },
+        "scheme": {
+          "enum": [
+            "ordinate",
+            "baseline",
+            "chain",
+            "single",
+            "callout",
+            "table"
+          ],
+          "title": "Scheme",
+          "type": "string"
+        },
+        "view_key": {
+          "title": "View Key",
+          "type": "string"
+        }
+      },
+      "required": [
+        "role_signature",
+        "dim_kind",
+        "scheme",
+        "view_key",
+        "placement_side",
+        "observed"
+      ],
+      "title": "ProfileDimensionRule",
+      "type": "object"
+    },
+    "ProfileNote": {
+      "additionalProperties": false,
+      "properties": {
+        "anchor": {
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Anchor",
+          "type": "array"
+        },
+        "carry": {
+          "const": "flag",
+          "default": "flag",
+          "title": "Carry",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "text",
+        "anchor"
+      ],
+      "title": "ProfileNote",
+      "type": "object"
+    },
+    "ProfileView": {
+      "additionalProperties": false,
+      "properties": {
+        "anchor": {
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Anchor",
+          "type": "array"
+        },
+        "direction_in_frame": {
+          "anyOf": [
+            {
+              "enum": [
+                "+X",
+                "-X",
+                "+Y",
+                "-Y",
+                "+Z",
+                "-Z",
+                "iso"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Direction In Frame"
+        },
+        "key": {
+          "title": "Key",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "base",
+            "projected",
+            "section",
+            "detail",
+            "isometric",
+            "other"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "parent_key": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Parent Key"
+        },
+        "scale": {
+          "title": "Scale",
+          "type": "number"
+        }
+      },
+      "required": [
+        "key",
+        "kind",
+        "direction_in_frame",
+        "scale",
+        "anchor"
+      ],
+      "title": "ProfileView",
+      "type": "object"
+    },
+    "RawTolerance": {
+      "additionalProperties": false,
+      "properties": {
+        "lower": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lower"
+        },
+        "type": {
+          "title": "Type",
+          "type": "string"
+        },
+        "upper": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Upper"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "title": "RawTolerance",
+      "type": "object"
+    },
+    "Selector": {
+      "additionalProperties": false,
+      "description": "Picks one coordinate source by role and entity, for example role + \"min_x\".",
+      "properties": {
+        "entity": {
+          "title": "Entity",
+          "type": "string"
+        },
+        "role": {
+          "title": "Role",
+          "type": "string"
+        }
+      },
+      "required": [
+        "role",
+        "entity"
+      ],
+      "title": "Selector",
+      "type": "object"
+    },
+    "SheetSize": {
+      "additionalProperties": false,
+      "properties": {
+        "height": {
+          "title": "Height",
+          "type": "number"
+        },
+        "width": {
+          "title": "Width",
+          "type": "number"
+        }
+      },
+      "required": [
+        "width",
+        "height"
+      ],
+      "title": "SheetSize",
+      "type": "object"
+    },
+    "ToleranceSeen": {
+      "additionalProperties": false,
+      "description": "Recorded from the reference, never applied automatically (rule 2).",
+      "properties": {
+        "role_signature": {
+          "title": "Role Signature",
+          "type": "string"
+        },
+        "tolerance": {
+          "$ref": "#/$defs/RawTolerance"
+        }
+      },
+      "required": [
+        "role_signature",
+        "tolerance"
+      ],
+      "title": "ToleranceSeen",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "datum": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Datum"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "dimension_rules": {
+      "items": {
+        "$ref": "#/$defs/ProfileDimensionRule"
+      },
+      "title": "Dimension Rules",
+      "type": "array"
+    },
+    "notes": {
+      "items": {
+        "$ref": "#/$defs/ProfileNote"
+      },
+      "title": "Notes",
+      "type": "array"
+    },
+    "pack": {
+      "title": "Pack",
+      "type": "string"
+    },
+    "projection": {
+      "anyOf": [
+        {
+          "enum": [
+            "first",
+            "third"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Projection"
+    },
+    "reference_hash": {
+      "title": "Reference Hash",
+      "type": "string"
+    },
+    "schema": {
+      "const": "convention_profile/0",
+      "default": "convention_profile/0",
+      "title": "Schema",
+      "type": "string"
+    },
+    "sheet": {
+      "$ref": "#/$defs/SheetSize"
+    },
+    "standard": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Standard"
+    },
+    "template": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Template"
+    },
+    "tolerances_seen": {
+      "items": {
+        "$ref": "#/$defs/ToleranceSeen"
+      },
+      "title": "Tolerances Seen",
+      "type": "array"
+    },
+    "unlinked_count": {
+      "title": "Unlinked Count",
+      "type": "integer"
+    },
+    "views": {
+      "items": {
+        "$ref": "#/$defs/ProfileView"
+      },
+      "title": "Views",
+      "type": "array"
+    }
+  },
+  "required": [
+    "reference_hash",
+    "pack",
+    "template",
+    "sheet",
+    "standard",
+    "projection",
+    "views",
+    "datum",
+    "dimension_rules",
+    "unlinked_count"
+  ],
+  "title": "ConventionProfile",
+  "type": "object"
+}

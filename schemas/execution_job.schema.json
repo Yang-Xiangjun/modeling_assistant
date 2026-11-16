@@ -1,0 +1,529 @@
+{
+  "$defs": {
+    "Fingerprint": {
+      "additionalProperties": false,
+      "description": "Re-finds one face or edge in the same model across sessions.",
+      "properties": {
+        "bbox": {
+          "maxItems": 6,
+          "minItems": 6,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Bbox",
+          "type": "array"
+        },
+        "centroid": {
+          "maxItems": 3,
+          "minItems": 3,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Centroid",
+          "type": "array"
+        },
+        "component_path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Component Path"
+        },
+        "direction": {
+          "anyOf": [
+            {
+              "maxItems": 3,
+              "minItems": 3,
+              "prefixItems": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                }
+              ],
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Direction"
+        },
+        "geom": {
+          "enum": [
+            "plane",
+            "cylinder",
+            "cone",
+            "sphere",
+            "torus",
+            "line",
+            "circle",
+            "arc",
+            "other"
+          ],
+          "title": "Geom",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "face",
+            "edge"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "radius": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Radius"
+        },
+        "size": {
+          "title": "Size",
+          "type": "number"
+        }
+      },
+      "required": [
+        "kind",
+        "geom",
+        "size",
+        "centroid",
+        "bbox"
+      ],
+      "title": "Fingerprint",
+      "type": "object"
+    },
+    "JobAttachment": {
+      "additionalProperties": false,
+      "properties": {
+        "fingerprint": {
+          "$ref": "#/$defs/Fingerprint"
+        },
+        "point_kind": {
+          "anyOf": [
+            {
+              "enum": [
+                "end",
+                "mid",
+                "center",
+                "tangent",
+                "intersection"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Point Kind"
+        }
+      },
+      "required": [
+        "fingerprint"
+      ],
+      "title": "JobAttachment",
+      "type": "object"
+    },
+    "JobDimension": {
+      "additionalProperties": false,
+      "properties": {
+        "attachments": {
+          "items": {
+            "$ref": "#/$defs/JobAttachment"
+          },
+          "title": "Attachments",
+          "type": "array"
+        },
+        "dim_kind": {
+          "enum": [
+            "linear",
+            "diameter",
+            "radius",
+            "angular",
+            "ordinate",
+            "hole_callout",
+            "chamfer",
+            "other"
+          ],
+          "title": "Dim Kind",
+          "type": "string"
+        },
+        "direction": {
+          "anyOf": [
+            {
+              "enum": [
+                "horizontal",
+                "vertical",
+                "parallel",
+                "perpendicular"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Direction"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "origin": {
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Origin",
+          "type": "array"
+        },
+        "scheme_group": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Scheme Group"
+        },
+        "view_id": {
+          "title": "View Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "view_id",
+        "dim_kind",
+        "direction",
+        "attachments",
+        "origin"
+      ],
+      "title": "JobDimension",
+      "type": "object"
+    },
+    "JobNote": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "origin": {
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Origin",
+          "type": "array"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "text",
+        "origin"
+      ],
+      "title": "JobNote",
+      "type": "object"
+    },
+    "JobSheet": {
+      "additionalProperties": false,
+      "properties": {
+        "height": {
+          "title": "Height",
+          "type": "number"
+        },
+        "projection": {
+          "anyOf": [
+            {
+              "enum": [
+                "first",
+                "third"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Projection"
+        },
+        "scale": {
+          "title": "Scale",
+          "type": "number"
+        },
+        "standard": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Standard"
+        },
+        "width": {
+          "title": "Width",
+          "type": "number"
+        }
+      },
+      "required": [
+        "width",
+        "height",
+        "scale",
+        "projection",
+        "standard"
+      ],
+      "title": "JobSheet",
+      "type": "object"
+    },
+    "JobView": {
+      "additionalProperties": false,
+      "properties": {
+        "center": {
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Center",
+          "type": "array"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "base",
+            "projected",
+            "section",
+            "detail",
+            "isometric",
+            "other"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "parent_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Parent Id"
+        },
+        "representation": {
+          "const": "exact",
+          "default": "exact",
+          "title": "Representation",
+          "type": "string"
+        },
+        "rotation": {
+          "maxItems": 9,
+          "minItems": 9,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Rotation",
+          "type": "array"
+        },
+        "scale": {
+          "title": "Scale",
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "rotation",
+        "scale",
+        "center"
+      ],
+      "title": "JobView",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "dimensions": {
+      "items": {
+        "$ref": "#/$defs/JobDimension"
+      },
+      "title": "Dimensions",
+      "type": "array"
+    },
+    "export": {
+      "items": {
+        "enum": [
+          "pdf",
+          "dxf"
+        ],
+        "type": "string"
+      },
+      "title": "Export",
+      "type": "array"
+    },
+    "notes": {
+      "items": {
+        "$ref": "#/$defs/JobNote"
+      },
+      "title": "Notes",
+      "type": "array"
+    },
+    "output_drawing": {
+      "title": "Output Drawing",
+      "type": "string"
+    },
+    "plan_version": {
+      "title": "Plan Version",
+      "type": "integer"
+    },
+    "schema": {
+      "const": "execution_job/0",
+      "default": "execution_job/0",
+      "title": "Schema",
+      "type": "string"
+    },
+    "sheet": {
+      "$ref": "#/$defs/JobSheet"
+    },
+    "target_part": {
+      "title": "Target Part",
+      "type": "string"
+    },
+    "template": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Template"
+    },
+    "title_block": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Title Block",
+      "type": "object"
+    },
+    "views": {
+      "items": {
+        "$ref": "#/$defs/JobView"
+      },
+      "title": "Views",
+      "type": "array"
+    }
+  },
+  "required": [
+    "plan_version",
+    "target_part",
+    "template",
+    "output_drawing",
+    "sheet",
+    "views",
+    "dimensions"
+  ],
+  "title": "ExecutionJob",
+  "type": "object"
+}

@@ -39,7 +39,7 @@ select = ["E", "F", "W", "I", "UP", "B", "SIM", "C4", "PIE", "RUF"]
 [tool.mypy]
 strict = true
 python_version = "3.12"
-files = ["src", "shared", "nx_worker", "tests"]
+files = ["src", "shared", "nx_worker", "tools", "tests"]
 mypy_path = ["src", "shared", "."]
 explicit_package_bases = true
 plugins = ["pydantic.mypy"]

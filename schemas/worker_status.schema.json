@@ -1,0 +1,107 @@
+{
+  "$defs": {
+    "WorkerError": {
+      "additionalProperties": false,
+      "properties": {
+        "message": {
+          "title": "Message",
+          "type": "string"
+        },
+        "traceback": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Traceback"
+        },
+        "type": {
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "message"
+      ],
+      "title": "WorkerError",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "status.json: written on every path, including failure.",
+  "properties": {
+    "command": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Command"
+    },
+    "duration_s": {
+      "title": "Duration S",
+      "type": "number"
+    },
+    "error": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/WorkerError"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "log": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Log",
+      "type": "array"
+    },
+    "nx_version": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Nx Version"
+    },
+    "ok": {
+      "title": "Ok",
+      "type": "boolean"
+    },
+    "python_version": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Python Version"
+    }
+  },
+  "required": [
+    "ok",
+    "command",
+    "duration_s"
+  ],
+  "title": "WorkerStatus",
+  "type": "object"
+}

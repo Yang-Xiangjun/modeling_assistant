@@ -1,0 +1,42 @@
+{
+  "$defs": {
+    "ExportedFile": {
+      "additionalProperties": false,
+      "properties": {
+        "format": {
+          "enum": [
+            "pdf",
+            "dxf"
+          ],
+          "title": "Format",
+          "type": "string"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        }
+      },
+      "required": [
+        "format",
+        "path"
+      ],
+      "title": "ExportedFile",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "exports": {
+      "items": {
+        "$ref": "#/$defs/ExportedFile"
+      },
+      "title": "Exports",
+      "type": "array"
+    }
+  },
+  "required": [
+    "exports"
+  ],
+  "title": "ExportResult",
+  "type": "object"
+}

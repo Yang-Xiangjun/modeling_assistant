@@ -7,7 +7,7 @@ Specification: `HANDOFF.md`. Branch: `p0-setup`. Update this file with every tas
 | Task | Owner | Status | Notes |
 |---|---|---|---|
 | P0-T1 scaffold, tooling, `make check`, CI workflow | CC | done | CI workflow targets GitHub Actions (decision 007); no remote yet |
-| P0-T2 contracts as pydantic models, schema export, NFR-02 test | CC | in progress | |
+| P0-T2 contracts as pydantic models, schema export, NFR-02 test | CC | done | refinements in decision 009; NFR-02 enforced by `tests/contract/test_nfr02.py` |
 | P0-T3 `drawgen_shared` | CC | todo | |
 | P0-T4 synthetic generator and fixtures | CC | todo | |
 | P0-T5 worker skeleton, `ping`, backends, `drawgen ping` | CC | todo | |

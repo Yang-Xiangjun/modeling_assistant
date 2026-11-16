@@ -1,0 +1,44 @@
+{
+  "additionalProperties": false,
+  "description": "job.json",
+  "properties": {
+    "command": {
+      "enum": [
+        "ping",
+        "extract_model",
+        "extract_drawing",
+        "execute_plan",
+        "measure",
+        "export"
+      ],
+      "title": "Command",
+      "type": "string"
+    },
+    "inputs": {
+      "additionalProperties": true,
+      "title": "Inputs",
+      "type": "object"
+    },
+    "options": {
+      "additionalProperties": true,
+      "title": "Options",
+      "type": "object"
+    },
+    "output_dir": {
+      "title": "Output Dir",
+      "type": "string"
+    },
+    "protocol": {
+      "const": "1",
+      "default": "1",
+      "title": "Protocol",
+      "type": "string"
+    }
+  },
+  "required": [
+    "command",
+    "output_dir"
+  ],
+  "title": "WorkerJob",
+  "type": "object"
+}

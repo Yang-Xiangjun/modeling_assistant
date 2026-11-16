@@ -1,0 +1,679 @@
+{
+  "$defs": {
+    "AppendedText": {
+      "additionalProperties": false,
+      "properties": {
+        "above": {
+          "default": "",
+          "title": "Above",
+          "type": "string"
+        },
+        "after": {
+          "default": "",
+          "title": "After",
+          "type": "string"
+        },
+        "before": {
+          "default": "",
+          "title": "Before",
+          "type": "string"
+        },
+        "below": {
+          "default": "",
+          "title": "Below",
+          "type": "string"
+        }
+      },
+      "title": "AppendedText",
+      "type": "object"
+    },
+    "FeatureRef": {
+      "additionalProperties": false,
+      "properties": {
+        "entity": {
+          "title": "Entity",
+          "type": "string"
+        },
+        "feature_id": {
+          "title": "Feature Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "feature_id",
+        "entity"
+      ],
+      "title": "FeatureRef",
+      "type": "object"
+    },
+    "GDimension": {
+      "additionalProperties": false,
+      "properties": {
+        "appended_text": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AppendedText"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "direction": {
+          "anyOf": [
+            {
+              "enum": [
+                "horizontal",
+                "vertical",
+                "parallel",
+                "perpendicular"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Direction"
+        },
+        "feature_refs": {
+          "items": {
+            "$ref": "#/$defs/FeatureRef"
+          },
+          "title": "Feature Refs",
+          "type": "array"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "linear",
+            "diameter",
+            "radius",
+            "angular",
+            "ordinate",
+            "hole_callout",
+            "chamfer",
+            "other"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "placement": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ObservedPlacement"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "raw_id": {
+          "title": "Raw Id",
+          "type": "string"
+        },
+        "role_signature": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Role Signature"
+        },
+        "tolerance": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RawTolerance"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        },
+        "view_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "View Id"
+        }
+      },
+      "required": [
+        "id",
+        "raw_id",
+        "view_id",
+        "kind",
+        "value"
+      ],
+      "title": "GDimension",
+      "type": "object"
+    },
+    "GSheet": {
+      "additionalProperties": false,
+      "properties": {
+        "dimensions": {
+          "items": {
+            "$ref": "#/$defs/GDimension"
+          },
+          "title": "Dimensions",
+          "type": "array"
+        },
+        "height": {
+          "title": "Height",
+          "type": "number"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "notes": {
+          "items": {
+            "$ref": "#/$defs/RawNote"
+          },
+          "title": "Notes",
+          "type": "array"
+        },
+        "projection": {
+          "anyOf": [
+            {
+              "enum": [
+                "first",
+                "third"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Projection"
+        },
+        "scale": {
+          "title": "Scale",
+          "type": "number"
+        },
+        "standard": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Standard"
+        },
+        "tables": {
+          "items": {
+            "$ref": "#/$defs/RawTable"
+          },
+          "title": "Tables",
+          "type": "array"
+        },
+        "views": {
+          "items": {
+            "$ref": "#/$defs/GView"
+          },
+          "title": "Views",
+          "type": "array"
+        },
+        "width": {
+          "title": "Width",
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "width",
+        "height",
+        "scale"
+      ],
+      "title": "GSheet",
+      "type": "object"
+    },
+    "GView": {
+      "additionalProperties": false,
+      "properties": {
+        "bbox": {
+          "maxItems": 4,
+          "minItems": 4,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Bbox",
+          "type": "array"
+        },
+        "center": {
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Center",
+          "type": "array"
+        },
+        "direction_in_frame": {
+          "anyOf": [
+            {
+              "enum": [
+                "+X",
+                "-X",
+                "+Y",
+                "-Y",
+                "+Z",
+                "-Z",
+                "iso"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Direction In Frame"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "base",
+            "projected",
+            "section",
+            "detail",
+            "isometric",
+            "other"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "model_view": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model View"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "out_of_date": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Out Of Date"
+        },
+        "parent_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Parent Id"
+        },
+        "representation": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Representation"
+        },
+        "rotation": {
+          "anyOf": [
+            {
+              "maxItems": 9,
+              "minItems": 9,
+              "prefixItems": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                }
+              ],
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rotation"
+        },
+        "scale": {
+          "title": "Scale",
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "kind",
+        "scale",
+        "center",
+        "bbox"
+      ],
+      "title": "GView",
+      "type": "object"
+    },
+    "ObservedPlacement": {
+      "additionalProperties": false,
+      "description": "Placement as observed on a reference drawing; the side may be undeterminable.",
+      "properties": {
+        "rank": {
+          "title": "Rank",
+          "type": "integer"
+        },
+        "side": {
+          "anyOf": [
+            {
+              "enum": [
+                "above",
+                "below",
+                "left",
+                "right"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Side"
+        }
+      },
+      "required": [
+        "side",
+        "rank"
+      ],
+      "title": "ObservedPlacement",
+      "type": "object"
+    },
+    "RawNote": {
+      "additionalProperties": false,
+      "properties": {
+        "has_leader": {
+          "default": false,
+          "title": "Has Leader",
+          "type": "boolean"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "origin": {
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Origin",
+          "type": "array"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "view_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "View Id"
+        }
+      },
+      "required": [
+        "id",
+        "text",
+        "origin"
+      ],
+      "title": "RawNote",
+      "type": "object"
+    },
+    "RawTable": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "hole_table",
+            "parts_list",
+            "tabular_note",
+            "title_block",
+            "other"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "origin": {
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Origin",
+          "type": "array"
+        },
+        "rows": {
+          "items": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "title": "Rows",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "origin",
+        "rows"
+      ],
+      "title": "RawTable",
+      "type": "object"
+    },
+    "RawTolerance": {
+      "additionalProperties": false,
+      "properties": {
+        "lower": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lower"
+        },
+        "type": {
+          "title": "Type",
+          "type": "string"
+        },
+        "upper": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Upper"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "title": "RawTolerance",
+      "type": "object"
+    },
+    "UnlinkedDimension": {
+      "additionalProperties": false,
+      "properties": {
+        "dimension_id": {
+          "title": "Dimension Id",
+          "type": "string"
+        },
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "dimension_id",
+        "reason"
+      ],
+      "title": "UnlinkedDimension",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "drawing_hash": {
+      "title": "Drawing Hash",
+      "type": "string"
+    },
+    "model_hash": {
+      "title": "Model Hash",
+      "type": "string"
+    },
+    "schema": {
+      "const": "drawing_graph/0",
+      "default": "drawing_graph/0",
+      "title": "Schema",
+      "type": "string"
+    },
+    "sheets": {
+      "items": {
+        "$ref": "#/$defs/GSheet"
+      },
+      "title": "Sheets",
+      "type": "array"
+    },
+    "unlinked": {
+      "items": {
+        "$ref": "#/$defs/UnlinkedDimension"
+      },
+      "title": "Unlinked",
+      "type": "array"
+    }
+  },
+  "required": [
+    "drawing_hash",
+    "model_hash",
+    "sheets"
+  ],
+  "title": "DrawingGraph",
+  "type": "object"
+}

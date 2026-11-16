@@ -1,0 +1,234 @@
+{
+  "$defs": {
+    "Artifact": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "sha256": {
+          "title": "Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "title": "Artifact",
+      "type": "object"
+    },
+    "LlmCall": {
+      "additionalProperties": false,
+      "properties": {
+        "model": {
+          "title": "Model",
+          "type": "string"
+        },
+        "node": {
+          "title": "Node",
+          "type": "string"
+        },
+        "prompt_hash": {
+          "title": "Prompt Hash",
+          "type": "string"
+        },
+        "response_hash": {
+          "title": "Response Hash",
+          "type": "string"
+        }
+      },
+      "required": [
+        "node",
+        "model",
+        "prompt_hash",
+        "response_hash"
+      ],
+      "title": "LlmCall",
+      "type": "object"
+    },
+    "RunConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "backend": {
+          "title": "Backend",
+          "type": "string"
+        },
+        "pack": {
+          "title": "Pack",
+          "type": "string"
+        },
+        "rules_only": {
+          "title": "Rules Only",
+          "type": "boolean"
+        },
+        "tolerances": {
+          "$ref": "#/$defs/Tolerances"
+        }
+      },
+      "required": [
+        "backend",
+        "pack",
+        "rules_only"
+      ],
+      "title": "RunConfig",
+      "type": "object"
+    },
+    "RunInputs": {
+      "additionalProperties": false,
+      "properties": {
+        "reference_drawing": {
+          "title": "Reference Drawing",
+          "type": "string"
+        },
+        "reference_model": {
+          "title": "Reference Model",
+          "type": "string"
+        },
+        "target": {
+          "title": "Target",
+          "type": "string"
+        }
+      },
+      "required": [
+        "target",
+        "reference_model",
+        "reference_drawing"
+      ],
+      "title": "RunInputs",
+      "type": "object"
+    },
+    "RunStep": {
+      "additionalProperties": false,
+      "properties": {
+        "ended": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ended"
+        },
+        "node": {
+          "title": "Node",
+          "type": "string"
+        },
+        "started": {
+          "title": "Started",
+          "type": "string"
+        },
+        "status": {
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "node",
+        "started",
+        "status"
+      ],
+      "title": "RunStep",
+      "type": "object"
+    },
+    "Tolerances": {
+      "additionalProperties": false,
+      "description": "The one tolerance config object (HANDOFF.md sections 7 and 8.1).",
+      "properties": {
+        "angular_deg": {
+          "default": 0.01,
+          "title": "Angular Deg",
+          "type": "number"
+        },
+        "fingerprint_centroid_mm": {
+          "default": 0.001,
+          "title": "Fingerprint Centroid Mm",
+          "type": "number"
+        },
+        "fingerprint_direction_rad": {
+          "default": 0.0001,
+          "title": "Fingerprint Direction Rad",
+          "type": "number"
+        },
+        "fingerprint_radius_mm": {
+          "default": 0.001,
+          "title": "Fingerprint Radius Mm",
+          "type": "number"
+        },
+        "fingerprint_size_abs": {
+          "default": 0.0001,
+          "title": "Fingerprint Size Abs",
+          "type": "number"
+        },
+        "fingerprint_size_rel": {
+          "default": 1e-06,
+          "title": "Fingerprint Size Rel",
+          "type": "number"
+        },
+        "linear_mm": {
+          "default": 0.001,
+          "title": "Linear Mm",
+          "type": "number"
+        }
+      },
+      "title": "Tolerances",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "artifacts": {
+      "additionalProperties": {
+        "$ref": "#/$defs/Artifact"
+      },
+      "title": "Artifacts",
+      "type": "object"
+    },
+    "config": {
+      "$ref": "#/$defs/RunConfig"
+    },
+    "created_at": {
+      "title": "Created At",
+      "type": "string"
+    },
+    "inputs": {
+      "$ref": "#/$defs/RunInputs"
+    },
+    "llm_calls": {
+      "items": {
+        "$ref": "#/$defs/LlmCall"
+      },
+      "title": "Llm Calls",
+      "type": "array"
+    },
+    "run_id": {
+      "title": "Run Id",
+      "type": "string"
+    },
+    "schema": {
+      "const": "run_manifest/0",
+      "default": "run_manifest/0",
+      "title": "Schema",
+      "type": "string"
+    },
+    "steps": {
+      "items": {
+        "$ref": "#/$defs/RunStep"
+      },
+      "title": "Steps",
+      "type": "array"
+    }
+  },
+  "required": [
+    "run_id",
+    "created_at",
+    "inputs",
+    "config"
+  ],
+  "title": "RunManifest",
+  "type": "object"
+}

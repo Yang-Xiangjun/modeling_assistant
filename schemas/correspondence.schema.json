@@ -1,0 +1,85 @@
+{
+  "$defs": {
+    "FeaturePair": {
+      "additionalProperties": false,
+      "properties": {
+        "confidence": {
+          "title": "Confidence",
+          "type": "number"
+        },
+        "method": {
+          "enum": [
+            "attribute",
+            "geometry",
+            "pattern",
+            "llm",
+            "human"
+          ],
+          "title": "Method",
+          "type": "string"
+        },
+        "reference_id": {
+          "title": "Reference Id",
+          "type": "string"
+        },
+        "target_id": {
+          "title": "Target Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "target_id",
+        "reference_id",
+        "method",
+        "confidence"
+      ],
+      "title": "FeaturePair",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "pairs": {
+      "items": {
+        "$ref": "#/$defs/FeaturePair"
+      },
+      "title": "Pairs",
+      "type": "array"
+    },
+    "reference_hash": {
+      "title": "Reference Hash",
+      "type": "string"
+    },
+    "reference_only": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Reference Only",
+      "type": "array"
+    },
+    "schema": {
+      "const": "correspondence/0",
+      "default": "correspondence/0",
+      "title": "Schema",
+      "type": "string"
+    },
+    "target_hash": {
+      "title": "Target Hash",
+      "type": "string"
+    },
+    "target_only": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Target Only",
+      "type": "array"
+    }
+  },
+  "required": [
+    "target_hash",
+    "reference_hash",
+    "pairs"
+  ],
+  "title": "Correspondence",
+  "type": "object"
+}
