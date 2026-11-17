@@ -1,4 +1,4 @@
-# HANDOFF: AI drawing harness (NX-first, PCBA MVP)
+# HANDOFF: AI drawing harness and NX chat assistant (NX-first, PCBA MVP)
 
 This file is the complete brief for implementing the project with Claude Code.
 Put it at the repository root. It is self-contained: requirements, architecture,
@@ -9,12 +9,28 @@ data contracts, repository layout, and a phased task list with acceptance checks
 Teamcenter, an external LLM for the MVP, and no NX access for Claude Code for
 now are settled. Section 16 lists what is still open.
 
-**Suggested first prompt**
+**Revision 2026-11-16, second:** the MVP now has two parts. Drawing
+generation is unchanged. A chat assistant docked beside NX is added: it answers
+questions about the user's live NX session and runs a fixed set of basic
+operations. What changed in this file:
 
-> Read HANDOFF.md in full. Create `docs/progress.md` with the task checklist for
-> phase P0. List any open question from section 16 that blocks P0. Then do the
-> P0 tasks marked `[CC]` in order. Stop when they pass `uv run pytest` and tell
-> me exactly what the `[HUMAN]` tasks need from me.
+- Sections 1 to 16 keep their numbers. Section 17 is new and specifies the
+  assistant.
+- Assistant items were added to sections 2 (rules 7 and 8), 3, 4 (FR-19 to
+  FR-29, NFR-11 to NFR-16, AC-8 to AC-13, assumptions A9 to A13), 5, 6, 7, 13,
+  14 (phases C0 to C3), 15 and 16.
+- The `[CC]` tasks of P0 are built. Gate G0 waits for P0-H1 and P0-H2.
+- Assumptions A9 to A13 are **not confirmed**. Section 4.5 gives the default
+  for each. Do not start a task that depends on one of them before the owner
+  answers; section 14 names the dependency per task.
+
+**Suggested next prompt**
+
+> Read HANDOFF.md in full and `docs/progress.md`. Add the task checklist for
+> the phase I name (P1 or C0) to `docs/progress.md`. List any open question
+> from section 16 that blocks it. Then do its tasks marked `[CC]` in order.
+> Stop when they pass `make check` and tell me exactly what the `[HUMAN]`
+> tasks need from me.
 
 ---
 
@@ -28,12 +44,27 @@ learning the conventions of a similar reference model and its existing drawing.
   sheet and verifies the result.
 - **Siemens NX** creates the native, associative drawing through NXOpen journals
   run in batch.
+- A **chat assistant** in a window docked beside NX reads the user's live
+  session and current selection, answers inspection questions, and runs a
+  fixed list of model and drawing operations through tools (section 17).
 
 **MVP:** one reference PCBA assembly and its drawing (both native NX part
 files), three sibling PCBAs as targets, output as a native NX drawing part plus
 PDF and DXF. PCBA is only the first product family. The design must extend to other
 automotive actuator parts (housings, gears, shafts, motors, connectors, complete
 actuators) by adding product packs, without changing the core.
+
+The MVP has two parts that share contracts, fingerprints, the LLM client and
+the product packs:
+
+| Part | Runs NX how | Phases |
+|---|---|---|
+| Drawing generation | A batch NX process per command, started by the worker | P0 to P5 |
+| Chat assistant | A bridge add-in inside the user's interactive NX session | C0 to C3 |
+
+The batch worker cannot serve the assistant: it starts its own NX process and
+never sees the user's session or selection. The bridge is the one new runtime
+component.
 
 ---
 
@@ -52,6 +83,12 @@ If a task conflicts with one of these, stop and ask.
    saved.
 6. Core, harness and worker never name a product type. Product knowledge lives
    in packs.
+7. The assistant acts on NX only through listed tools. It never runs NXOpen
+   code written by a model.
+8. A tool that changes a part runs only after the user confirms, sets an undo
+   mark first, and never saves on its own.
+
+For rules 4 and 6 the assistant counts as harness and the bridge as worker.
 
 ---
 
@@ -80,10 +117,19 @@ The project owner confirmed the points below (status as of 2026-11-16).
      `docs/nx_api_assumptions.md` with what needs recording.
   When you need a call that is not available, write the request for a recording
   into `docs/nx_api_assumptions.md` and continue with other work.
+- **The same rule holds for the bridge** (`nx_bridge/`), in whatever language
+  C0 chooses. NX records journals in several languages: ask for the recording
+  in the bridge's language. You cannot compile or load the bridge here. A
+  person builds it against the installed NX and loads it, so keep it thin
+  (transport, main-thread dispatch, commands) and keep every decision in
+  Python, where it is tested.
+- **Never execute model-written code against NX** (rule 7). The assistant's
+  LLM returns tool names and typed arguments, nothing else.
 - **Do not fabricate real data.** Synthetic fixtures are fine and must carry
   `"synthetic": true`. Never create a file under `fixtures/real/`.
 - **Real fixtures may be confidential.** Never paste their content into prompts
-  used in tests, logs or documentation.
+  used in tests, logs or documentation. Assistant session logs hold part names
+  and measured values: they stay under `runs/`, which version control ignores.
 - **No CAD libraries in this repository** (no pythonOCC, FreeCAD, CadQuery) for
   the MVP. Geometry comes from the worker as JSON.
 - Work one phase at a time. At each gate, summarise what passed, what is left
@@ -118,6 +164,22 @@ The project owner confirmed the points below (status as of 2026-11-16).
 | FR-17 | Load product packs through a registry, so a new pack needs no change to core, harness or worker. | P1 interface, P5 proof |
 | FR-18 | Run the whole pipeline on recorded fixtures with a mock backend. | P1 |
 
+Chat assistant:
+
+| ID | Requirement | Phase |
+|---|---|---|
+| FR-19 | Run a bridge inside the user's interactive NX session that serves requests from a local process, with every NXOpen call on NX's main thread and NX staying usable. | C0 |
+| FR-20 | Report the session context: work part, displayed part, application, active sheet and view. | C1 |
+| FR-21 | Report the current selection. For each selected object give its type, owning component, fingerprint and measured properties, read from the selected object itself. | C0, C1 |
+| FR-22 | Provide inspection tools: area, length, radius, diameter, distance and angle; attributes, expressions, features, components, sheets, views and dimensions; and the feature and role of a selected entity from the feature graph. | C1 |
+| FR-23 | Provide model operation tools: open and switch parts, orient and fit the view, show, hide and isolate, highlight an entity, edit an attribute, edit an expression value and update. | C2 |
+| FR-24 | Provide drawing operation tools: create a sheet from a template, add base and projected views, add a dimension on the selected entities, add a note, update views, export PDF and DXF. | C2 |
+| FR-25 | Show a chat panel docked beside the NX window on the same screen, with messages, tool calls, results and confirmation prompts. | C1 |
+| FR-26 | Turn a user message into calls to tools from the fixed list, and ask the user to select or clarify when the target is missing or ambiguous. | C1 |
+| FR-27 | For every tool that changes a part: show what it will do, wait for confirmation, set an undo mark, and save only when asked. | C2 |
+| FR-28 | Start the drawing pipeline for the work part from chat and show the review package in the panel. | C3 |
+| FR-29 | Log every message, tool call and result per session. | C1 |
+
 ### 4.2 Quality
 
 | ID | Requirement | Measure |
@@ -133,6 +195,17 @@ The project owner confirmed the points below (status as of 2026-11-16).
 | NFR-09 | Traceability | Every annotation links to a feature, a rule and a run. |
 | NFR-10 | Performance (proposed) | One MVP PCBA runs end to end in under 15 minutes on the seat. |
 
+Chat assistant:
+
+| ID | Requirement | Measure |
+|---|---|---|
+| NFR-11 | Responsiveness (times proposed) | NX accepts mouse and keyboard input while the assistant waits for the LLM. A read tool returns within 2 seconds. |
+| NFR-12 | No invented numbers | Every number in an answer appears in a tool result of the same turn. A checker enforces this before the answer is shown. |
+| NFR-13 | Closed tool set | The LLM can call only listed tools with typed arguments. No model-written NXOpen code is executed. |
+| NFR-14 | Reversibility | One Undo in NX reverts each changing tool call. |
+| NFR-15 | Local-only bridge | The bridge listens on the loopback address only and requires a per-session token. |
+| NFR-16 | Testable without NX | Assistant and tools pass in CI against a mock live backend with scripted selections. |
+
 ### 4.3 Acceptance criteria
 
 | ID | Criterion | Gate |
@@ -144,6 +217,20 @@ The project owner confirmed the points below (status as of 2026-11-16).
 | AC-5 | An unattended run reaches the review gate on every target in at most three repair rounds. | G4 |
 | AC-6 | All service and harness tests pass in CI without NX. | Every gate |
 | AC-7 | A second product pack runs end to end with no edits outside its own folder. | G5 |
+
+Chat assistant. The set sizes and the 90% are proposed thresholds:
+
+| ID | Criterion | Gate |
+|---|---|---|
+| AC-8 | With a face selected in NX, "what is the area of this surface?" returns the value NX's own measure command shows, for every face in a 20-item selection set. | GC0 for one face, GC1 for the set |
+| AC-9 | On the inspection question set, at least 90% of answers are correct, and no answer contains a number that is not in a tool result. | GC1 |
+| AC-10 | Each listed operation completes from chat after confirmation, and one Undo in NX reverts it. | GC2 |
+| AC-11 | The chat panel and NX are both fully visible on one 1920 by 1080 display, and NX stays usable while the assistant is working. | GC1 |
+| AC-12 | All assistant tests pass in CI without NX. | Every assistant gate |
+| AC-13 | "Generate the drawing for this part" in chat reaches the review gate and shows the review package in the panel. | GC3 |
+
+The drawing part of the MVP is accepted on AC-1 to AC-6, the assistant on AC-8
+to AC-12. AC-13 joins the two.
 
 ### 4.4 Confirmed context (project owner, status as of 2026-11-16)
 
@@ -158,18 +245,36 @@ The project owner confirmed the points below (status as of 2026-11-16).
 | A7 | Claude Code runs without NX for now and may run on an NX machine later. | See section 3. |
 | A8 | The team is 2 to 3 engineers, one with NX drafting experience. | That engineer does the `[HUMAN]` recordings and runs. |
 
+### 4.5 Assumptions for the assistant: not yet confirmed
+
+The owner has not answered these. The second column is the working default.
+Treat each as an open question (section 16) until it is confirmed.
+
+| ID | Assumed | If it is false | Decides |
+|---|---|---|---|
+| A9 | "Same screen" means a chat window docked beside the NX window on one monitor, not a panel inside the NX window. | A panel inside NX needs user-interface integration that has not been investigated. Add a spike before C1. | C0 panel, C1-T7 |
+| A10 | "Basic operations" means the lists in FR-23 and FR-24. Creating or editing geometry by chat is not in the MVP. | Each geometry command is one more tool with its own recorded journal and tests. | C2 scope |
+| A11 | The live bridge may be a compiled .NET add-in loaded into NX and built on the NX seat. | A Python journal runs on NX's main thread and blocks the interface while it runs. Rethink the bridge in C0. | C0-T2 |
+| A12 | Tool results sent to the external LLM may include part names, attribute text and measured values. | The assistant needs the locally deployed model from C1. | C1-T4 |
+| A13 | The assistant runs on the same Windows machine as NX, for one user at a time. | Remote use needs authentication and a network transport. | Section 17.2 |
+
 ---
 
 ## 5. Architecture
 
-Four layers. Dependencies point downward only.
+Four layers. Dependencies point downward only. The harness and the assistant
+sit side by side in the top layer and do not import each other, except that
+the assistant starts a harness run in C3.
 
 ```
 AI harness            run state, planner, repair loop, review gate        (P4)
+Chat assistant        agent, tool layer, number checker, panel, log       (C1 to C3)
 Domain services       generic core + product packs; pure Python; no NX
 JSON contracts        versioned schemas; the only thing layers share
 CAD backend           CadBackend interface -> MockBackend | NxBackend
                       NxBackend launches nx_worker (NXOpen journals) in batch
+                      LiveBackend interface -> MockLiveBackend | BridgeBackend
+                      BridgeBackend talks to nx_bridge inside the user's NX session
 ```
 
 Import rules (enforced by tests, see P0-T6):
@@ -182,10 +287,14 @@ Import rules (enforced by tests, see P0-T6):
 | `drawgen.packs.*` | `core`, `contracts`, `drawgen_shared` |
 | `drawgen.backends` | `contracts`, `drawgen_shared`, standard library |
 | `drawgen.harness` | `core`, `backends`, `contracts`, the pack registry, the LLM client |
+| `drawgen.assistant` | `core`, `backends`, `contracts`, the pack registry, the LLM client; `harness` only in the C3 tool that starts a run |
 | `nx_worker` | standard library, `drawgen_shared`, `NXOpen` |
+| `nx_bridge` | the NXOpen API of its language and that language's standard library; `drawgen_shared` if it is Python |
 
 Nothing under `src/` may import `NXOpen`. Nothing outside `drawgen/packs/` may
-contain a pack name such as `pcba`.
+contain a pack name such as `pcba`. `drawgen.harness` never imports
+`drawgen.assistant`. Extend the architecture tests when the assistant packages
+appear (C1-T8).
 
 ### Pipeline
 
@@ -204,6 +313,17 @@ contain a pack name such as `pcba`.
 12 verify                                core+pack -> Findings
 13 repair (max 3 rounds), back to 9      harness
 14 review gate, export, package          harness + backend
+```
+
+### How a chat message reaches NX
+
+```
+ 1 the chat panel sends the message            panel     -> assistant agent
+ 2 the agent picks tools from the fixed list   LLM       -> AssistantStep (names and typed arguments)
+ 3 the tool layer validates the arguments      assistant -> for a change: preview, wait for the user
+ 4 the live backend sends a JSON request       backend   -> bridge, loopback address, session token
+ 5 the bridge runs it on NX's main thread      bridge    -> JSON result, read from the objects themselves
+ 6 the number checker passes or rejects        assistant -> answer shown in the panel, turn logged
 ```
 
 ---
@@ -240,21 +360,34 @@ src/drawgen/
     base.py                 CadBackend protocol
     mock.py                 replays fixtures, simulates execution, fault injection
     nx.py                   subprocess driver for run_journal
+    live.py                 LiveBackend protocol (C0)
+    live_mock.py            scripted context and selections, fault injection (C0)
+    bridge.py               loopback client for nx_bridge (C0)
   harness/                  P4: state graph, nodes, llm client, review gate
+  assistant/                C1 to C3: chat assistant, see section 17
+    tools/                  tool registry; one module per tool group; read and change tools
+    agent.py                turn loop: message -> AssistantStep -> tool calls -> answer
+    checker.py              number checker (NFR-12)
+    log.py                  session log (FR-29)
+    panel/                  chat panel docked beside NX (FR-25)
   cli.py
 nx_worker/                  runs inside NX's Python; never imported by src/
   main.py                   reads job.json, dispatches, always writes status.json
   commands/                 ping, extract_model, extract_drawing, execute_plan, measure, export
   nxutil/                   thin NXOpen helpers, each traceable to a recording
   recorded/                 journals recorded by a human in NX (source of truth for API calls)
+nx_bridge/                  add-in loaded into the user's interactive NX session; language set in C0
+  README.md                 how to build it against the installed NX and load it
+  recorded/                 journals recorded in the bridge's language
 fixtures/
   synthetic/                generated by tools/make_synthetic.py
+    live/                   scripted sessions and selections for MockLiveBackend
   real/                     committed by the human from the NX seat
 tools/
   make_synthetic.py
   export_schemas.py
 tests/
-  unit/  contract/  golden/  arch/
+  unit/  contract/  golden/  arch/  assistant/
 ```
 
 ---
@@ -288,6 +421,13 @@ tests/
   with the task ID, for example `P1-T3: generic hole recognition`.
 - **CLI:** `drawgen <command>`; every command works against `MockBackend` by
   default and takes `--backend nx` on the seat.
+- **Assistant (C1 on):** a plain turn loop in Python, no LangGraph. It uses
+  the `LlmClient` of section 12 with a JSON schema for its step, so it depends
+  on no provider's tool-calling feature. Live CLI commands work against
+  `MockLiveBackend` by default and take `--backend bridge` on the seat.
+- **Bridge and panel technology** are decided in C0 and recorded in
+  `docs/decisions/`. Do not add a language toolchain, a user-interface
+  framework or a web framework before that decision.
 
 ---
 
@@ -594,7 +734,9 @@ The worker always writes two files into `output_dir`, even on failure:
 
 Worker rules:
 
-- No user-interface calls of any kind; batch mode has no dialogs.
+- No user-interface calls of any kind; batch mode has no dialogs. Reading the
+  interactive selection belongs to the bridge (section 17), never to the
+  worker.
 - Native mode only: open and save parts by file path. No Teamcenter calls.
 - Open source parts and never save them (NFR-07). Only `execute_plan` saves,
   and only the new drawing part.
@@ -758,6 +900,9 @@ ambiguous items remain and `rules_only` is false), `static_check`, `compile`,
   review flags, provenance, and the diff between plan versions. It resumes on a
   human decision: accept, or a list of edits from the closed set.
 
+The assistant (section 17) uses the same `LlmClient`, adapters, `FakeLlm` and
+record and replay wrapper. It is not a node of this state graph.
+
 ---
 
 ## 13. NXOpen calls seen in published journals
@@ -795,12 +940,58 @@ orientation, creating linear, diameter and ordinate dimensions on model edges
 in a drafting view, reading a dimension's computed value and retained state,
 annotation bounding boxes, title-block fields, and PDF and DXF export.
 
+### For the bridge
+
+Published sources describe the points below. None was tested here, and none
+replaces a recording made on the seat in the bridge's language.
+
+- The current selection is read through the user-interface object's selection
+  manager: the cited journal asks it for the number of selected objects and
+  then for each selected object by index. The Python reference lists these
+  methods on `NXOpen.Selection` with no license named. Take the exact call
+  names from the recording, not from this paragraph.
+- Siemens staff state that NXOpen is not thread-safe: every call must come
+  from NX's main thread.
+- A Python journal bridge blocks the NX interface while it runs, and one
+  author reports a 91-second stall behind an open dialog.
+- One open-source bridge uses a sidecar process, a token-protected loopback
+  channel and a C# add-in for interactive sessions. Its authors validated it
+  on NX 2206 only.
+- NX ships a remoting sample that lets another program control a session. It
+  needs the author license.
+
+Sources: [NXOpen Python reference, Selection class](https://docs.plm.automation.siemens.com/data_services/resources/nx/12/nx_api/custom/en_US/nxopen_python_ref/NXOpen.Selection.html),
+[NX Journaling: journal reading preselected objects](https://nxjournaling.com/node/252),
+[Siemens community: threading](https://community.plm.automation.siemens.com/t5/NX-Programming-Customization-Forum/Threading/td-p/296586),
+[NX_MCP](https://github.com/dreamending/nx_mcp),
+[nx-agent](https://github.com/LT60/nx-agent),
+[NX Journaling: remoting](https://nxjournaling.com/content/bi-directional-data-flow-using-nx-open-external-program).
+
+Everything the bridge does needs a recording, in particular: loading an add-in
+at NX start, running work on the main thread from a listener, reading the
+selection, measuring a selected face or edge, reading the work part, displayed
+part, application and active sheet, setting an undo mark, highlighting an
+object, and every operation in FR-23 and FR-24.
+
 ---
 
 ## 14. Phases and tasks
 
 Each phase ends at a gate. Do the `[CC]` tasks, prepare the `[HUMAN]` tasks,
 then stop and report.
+
+There are two tracks. Drawing generation runs P0 to P5 in order. The assistant
+runs C0 to C3. What each assistant phase needs from the other track:
+
+| Phase | Needs |
+|---|---|
+| C0 Bridge spike | P0. A9 and A11 answered. May run beside P1. |
+| C1 Inspect | GC0. A12 answered. P1 only for the feature and role tool (C1-T2b). |
+| C2 Operate | GC1. A10 answered. P2 for the view and dimension tools. |
+| C3 Connect | GC2 and G4. |
+
+Status on 2026-11-16: the `[CC]` tasks of P0 are done. P0-H1 and P0-H2 are
+open.
 
 ### P0 Setup (gate G0: a journal runs in batch on the reference files)
 
@@ -965,11 +1156,120 @@ then stop and report.
 - **P5-H1 `[HUMAN]` `[EXPERT]`** Provide a real housing and its drawing and
   review the result.
 
+### C0 Bridge spike (gate GC0: an outside process reads a selected face's area)
+
+C0 is a spike. Its output is two decisions and the smallest bridge that proves
+them, not finished code.
+
+- **C0-H1 `[HUMAN]`** Answer A9 to A13 (section 4.5). Report which build tools
+  are on the NX seat and which language NX can record journals in. Record, in
+  the bridge's language, and commit under `nx_bridge/recorded/`: read the
+  current selection; measure the area of a selected face with NX's own measure
+  command; read the work part and the displayed part.
+- **C0-T1 `[CC]`** Contracts of section 17.3 for the bridge request and
+  response, `SessionContext` and `Selection`; the `LiveBackend` protocol;
+  `MockLiveBackend` with scripted contexts and selections under
+  `fixtures/synthetic/live/`. Round-trip tests and schema export as for the
+  other contracts. Needs no answer from C0-H1. (NFR-16)
+- **C0-T2 `[CC]`** The bridge spike in `nx_bridge/`: listen on the loopback
+  address only, require the session token, run each request on NX's main
+  thread, and serve `ping` and `get_selection` with the measured area of a
+  face. Written from the C0-H1 recordings; tag every other call. Write
+  `nx_bridge/README.md` with the build and load steps. Needs A11 and the
+  recordings. (FR-19, FR-21, NFR-15)
+- **C0-T3 `[CC]`** `BridgeBackend` in `backends/bridge.py` with timeouts and no
+  automatic replay, tested against a fake bridge process. CLI commands
+  `drawgen live ping` and `drawgen live selection`. A bare panel window that
+  shows the selection, to settle A9 early. (FR-19)
+- **C0-H2 `[HUMAN]`** Build and load the bridge. With one face selected, run
+  `drawgen live selection --backend bridge` and compare the area with NX's
+  measure command. Repeat while rotating the model, and once with an NX dialog
+  open. Report the values, the response times and whether NX stayed usable.
+- **C0-T4 `[CC]`** Record two decisions in `docs/decisions/` from the C0-H2
+  report: the bridge language, and whether live commands can call the worker's
+  existing Python commands or must be written again in the bridge. In both
+  cases the JSON command contract stays one for worker and bridge.
+- **Gate GC0:** with one face selected, an outside process gets its area,
+  equal to NX's measure within NFR-01, while NX stays usable. If no bridge
+  keeps NX usable, stop the assistant track and report before C1.
+
+### C1 Inspect (gate GC1: AC-8, AC-9, AC-11)
+
+- **C1-T1 `[CC]`** Bridge commands and tools for context and selection:
+  `get_context`, and `get_selection` for every entity kind in section 17.3,
+  each object with its fingerprint from `drawgen_shared`. (FR-20, FR-21)
+- **C1-T2 `[CC]`** Inspection tools and their bridge commands: area, length,
+  radius, diameter, distance and angle; attributes, expressions, features,
+  components, sheets, views and dimensions. (FR-22)
+- **C1-T2b `[CC]`** The feature and role tool: match the selected entity's
+  fingerprint against the work part's `FeatureGraph`. Needs P1. Until then
+  the tool is listed as unavailable and the agent says so. (FR-22)
+- **C1-T3 `[CC]`** Tool registry and tool layer in `assistant/tools/`: typed
+  arguments and results, validation, and the rule that nothing outside the
+  registry can be called. (NFR-13, rule 7)
+- **C1-T4 `[CC]`** The agent in `assistant/agent.py`: the turn loop of section
+  17.5 on `LlmClient`, with `FakeLlm` scripts, and a clarifying question when
+  the target is missing or ambiguous. Needs A12 before a hosted provider is
+  used. (FR-26)
+- **C1-T5 `[CC]`** The number checker of section 17.5. Tests include answers
+  with a number that no tool returned. (NFR-12)
+- **C1-T6 `[CC]`** The session log. (FR-29)
+- **C1-T7 `[CC]`** The chat panel: messages, tool calls, results and
+  confirmation prompts, docked beside NX. Needs A9. (FR-25)
+- **C1-T8 `[CC]`** A runner for question sets, `drawgen assistant eval`, that
+  reports correct answers, wrong answers by cause, and checker rejections.
+  Extend the architecture tests to the assistant packages. (NFR-16, AC-12)
+- **C1-H1 `[EXPERT]`** Write the 20-face selection set and the inspection
+  question set with expected answers.
+- **C1-H2 `[HUMAN]`** Record the journals C1-T1 and C1-T2 request. Rebuild
+  the bridge. Run both sets on the seat and commit the reports. Check AC-11
+  on a 1920 by 1080 display.
+- **Gate GC1:** AC-8 on the full set, AC-9 and AC-11. Sort wrong answers by
+  cause (tool missing, wrong tool chosen, wrong object). That fixes the C2
+  tool list.
+
+### C2 Operate (gate GC2: AC-10)
+
+- **C2-T1 `[CC]`** The change-tool path of section 17.6: preview,
+  confirmation, undo mark, no save. Test with `MockLiveBackend` that a change
+  never runs without a confirmation and never saves. (FR-27, NFR-14, rule 8)
+- **C2-T2 `[CC]`** Model operation tools: open and switch parts, orient and
+  fit the view, show, hide and isolate, highlight an entity, edit an
+  attribute, edit an expression value and update. (FR-23)
+- **C2-T3 `[CC]`** Drawing operation tools: create a sheet from a template,
+  add base and projected views, add a dimension on the selected entities, add
+  a note, update views, export PDF and DXF. Reuse the P2 worker commands if
+  C0-T4 decided that is possible. Needs P2. (FR-24)
+- **C2-T4 `[CC]`** Extend the eval runner to operation sets: each case names
+  the message, the expected tool calls and the expected state after the
+  change and after one Undo.
+- **C2-H1 `[HUMAN]`** Record one journal per operation, each with its undo
+  mark. Rebuild the bridge.
+- **C2-H2 `[HUMAN]` `[EXPERT]`** The expert writes the operation set. Run it
+  on the seat: each operation from chat, then one Undo in NX.
+- **Gate GC2:** AC-10. The assistant part of the MVP is done. Geometry tools
+  are considered only after this gate.
+
+### C3 Connect (gate GC3: AC-13)
+
+- **C3-T1 `[CC]`** A tool that starts the drawing pipeline for the work part
+  and reports progress. If the work part has unsaved changes, the tool says
+  so and asks; it never saves on its own. (FR-28, rule 8)
+- **C3-T2 `[CC]`** Show the review package in the panel: drawing and export
+  paths, findings, review flags and unresolved items. (FR-28)
+- **C3-T3 `[CC]`** End-to-end test with `MockLiveBackend`, `MockBackend` and
+  `FakeLlm`: a chat message reaches the review gate.
+- **C3-H1 `[HUMAN]`** Run "Generate the drawing for this part" on the seat for
+  each target.
+- **Gate GC3:** AC-13. The two parts work as one product.
+
 ### Later, out of scope for this handoff
 
 STEP and IDX targets, references that exist only as PDF or DXF, section and
 detail views, parts lists and balloons, GD&T, an independent OCCT cross-check,
-a second CAD backend, Teamcenter-managed mode.
+a second CAD backend, Teamcenter-managed mode. For the assistant: creating or
+editing geometry by chat, a panel inside the NX window, screenshot or voice
+input, more than one user per session, remote use.
 
 ---
 
@@ -983,6 +1283,11 @@ a second CAD backend, Teamcenter-managed mode.
   in `docs/nx_api_assumptions.md`.
 - For worker code: the journal is runnable by the human with one documented
   command, and its failure modes write a useful `status.json`.
+- For bridge code: `nx_bridge/README.md` gives the build and load steps, and
+  every failure returns a status with a useful error instead of hanging.
+- For a tool: it is in the registry with typed arguments and a typed result,
+  it has tests against `MockLiveBackend`, and a change tool has a test that
+  it does nothing without confirmation.
 
 ---
 
@@ -1004,3 +1309,215 @@ network (section 4.4).
    assemblies follow?
 7. Where does the repository live, and which CI system should the workflow
    target?
+
+For the assistant. Items 8 to 12 are assumptions A9 to A13 of section 4.5:
+
+8. A9: is a chat window docked beside NX acceptable, or must the panel be
+   inside the NX window?
+9. A10: are the lists in FR-23 and FR-24 the complete set of basic operations?
+10. A11: may the bridge be a compiled .NET add-in built on the NX seat?
+11. A12: may tool results with part names, attribute text and measured values
+    go to the external LLM?
+12. A13: one user, on the same Windows machine as NX?
+13. Which build tools are installed on the NX seat, and in which languages can
+    this NX release record journals?
+14. Who writes the selection set, the question set and the operation set, and
+    when?
+
+---
+
+## 17. Chat assistant (phases C0 to C3)
+
+Read this section before any work in `src/drawgen/assistant/`, `nx_bridge/`
+or the live backends. The contracts here are v0 specifications, refined the
+same way as section 8.
+
+### 17.1 Parts
+
+| Part | Where | Role |
+|---|---|---|
+| Chat panel | `assistant/panel/` | Shows messages, tool calls, results and confirmation prompts. Holds no logic. |
+| Agent | `assistant/agent.py` | Runs one turn: asks the LLM for a step, calls tools, checks the answer. |
+| Tool layer | `assistant/tools/` | The fixed tool list. Validates arguments. Runs the change path. |
+| Live backend | `backends/live.py`, `live_mock.py`, `bridge.py` | One protocol, a mock and the loopback client. |
+| Bridge | `nx_bridge/` | Runs inside the user's NX session. Executes commands on the main thread. |
+
+Only the bridge touches NXOpen. The assistant never imports it (rule 4) and
+never names a product type (rule 6): roles reach it through the pack registry
+and the feature graph.
+
+### 17.2 Bridge protocol
+
+One JSON command contract serves worker and bridge: the same `command`,
+`inputs` and `options` as `job.json` in section 9, and the same status fields.
+Only the transport differs.
+
+```
+BridgeRequest
+  protocol: "1"
+  id: str                       # unique per request, echoed in the response
+  token: str                    # per-session secret
+  command: str
+  inputs: {}
+  options: {timeout_s: float | null}
+
+BridgeResponse
+  id: str
+  status: {ok, command, error: null | {type, message, traceback}, duration_s, nx_version, log: [str]}
+  result: {} | null             # the contract payload for the command, null on failure
+```
+
+Bridge rules:
+
+- Listen on the loopback address only. Reject a request without the session
+  token (NFR-15). The bridge creates the token and the port when it starts
+  and writes them to a file only the current user can read; C0 fixes the
+  location. One user, one NX session, one client (A13).
+- Every NXOpen call runs on NX's main thread. The listener thread only
+  queues requests and returns responses.
+- Work in short slices so NX keeps accepting input (NFR-11). A request that
+  exceeds its timeout returns an error status.
+- The client never replays a request automatically. After a timeout on a
+  change command it reports "outcome unknown" and the agent asks the user to
+  look at NX.
+- Read each value from the object itself. For a selection, measure the
+  selected objects; never look an object up from a description.
+- A read command changes nothing. A change command sets an undo mark before
+  its first modification and returns the mark's name. No command saves a
+  part except `save`, which the tool layer calls only when the user asked.
+- The bridge holds no decision logic and no product knowledge.
+
+| Command | Kind | Inputs | Result | Phase |
+|---|---|---|---|---|
+| `ping` | read | none | `{nx_version, bridge_version}` | C0 |
+| `get_selection` | read | `include_properties: bool` | Selection | C0, C1 |
+| `get_context` | read | none | SessionContext | C1 |
+| `measure` | read | `requests: [{id, kind: "area" \| "length" \| "radius" \| "diameter" \| "distance" \| "angle", a: handle, b: handle \| null}]` | `{results: [{id, value \| null, unit, error \| null}]}` | C1 |
+| `list` | read | `what: "attributes" \| "expressions" \| "features" \| "components" \| "sheets" \| "views" \| "dimensions"`, `of: handle \| null` | `{items: [...]}`, one typed item per kind | C1 |
+| the operations of FR-23 and FR-24, one command each | change, or session for view and display operations | typed per command | `{undo_mark: str \| null, ...}` | C2 |
+| `save` | change | `part: handle` | `{saved: bool}` | C2 |
+
+The exact command list for C2 is fixed at gate GC1. Adding a command needs a
+recorded journal and a test first.
+
+### 17.3 Live contracts
+
+```
+SessionContext
+  schema: "session_context/0"
+  work_part:      {name, path: str | null, modified: bool | null} | null
+  displayed_part: {name, path: str | null, modified: bool | null} | null
+  application: str | null            # for example "modeling", "drafting"
+  active_sheet: str | null
+  active_view: str | null
+
+Selection
+  schema: "selection/0"
+  items: [SelectedObject]            # in selection order
+
+SelectedObject
+  handle: str                        # issued by the bridge, valid for this NX session only
+  entity_kind: "face" | "edge" | "body" | "component" | "feature" | "dimension" | "view" | "note" | "other"
+  object_type: str                   # as NX reports it, for display only
+  component_path: str | null         # owning component, null in the work part itself
+  fingerprint: Fingerprint | null    # for faces and edges, built by drawgen_shared rules (8.1)
+  properties: {str: float | str | bool}   # measured on this object: area, length, radius, ...
+```
+
+Units are millimetres, square millimetres and degrees. A `handle` is the only
+NX-side identifier in these contracts; it is a hint for the current session
+and never stored in a drawing-generation contract (NFR-06). `LiveBackend`
+mirrors the bridge commands the way `CadBackend` mirrors the worker's.
+
+`MockLiveBackend` plays a scripted session: a context, a sequence of
+selections, canned results per command, and switchable faults (timeout, wrong
+token, empty selection, ambiguous selection, a dialog stall, a failed change)
+so the agent and the change path are tested without NX.
+
+### 17.4 Tools
+
+```
+ToolSpec
+  name: str
+  kind: "read" | "session" | "change"
+  description: str                   # shown to the LLM
+  args: pydantic model               # typed; no free-form code or script field
+  result: pydantic model
+```
+
+- `read` returns data. `session` changes only what NX shows (open or switch a
+  part, orient, fit, highlight) and needs no confirmation. `change` modifies
+  a part and takes the path in 17.6. The kind of each tool is recorded in
+  `docs/decisions/` when it is added; when in doubt it is `change`.
+- A tool takes its target as a `handle` from a selection or a list result of
+  the same session. A tool never takes a description of an object.
+- No tool takes NXOpen code, a journal, a file to execute or a shell command
+  (rule 7, NFR-13).
+- The feature and role tool matches the selected fingerprint against the work
+  part's `FeatureGraph`. If the part changed since the graph was built, the
+  tool says the graph is stale and does not answer from it.
+
+### 17.5 Agent turn, number checker and log
+
+```
+AssistantStep                        # the only thing the LLM may return
+  tool_calls: [{tool: str, args: {}}]      # or
+  answer: str                               # or
+  ask_user: str
+```
+
+One turn:
+
+1. Build the prompt from the conversation, the tool list and the session
+   context. No file contents, no raw geometry dumps.
+2. Ask `LlmClient.select` for an `AssistantStep`. Reject an unknown tool or
+   invalid arguments, retry at most twice, then tell the user it failed.
+3. Run the tool calls. Read tools run directly. A change tool goes through
+   17.6.
+4. Feed the results back and repeat from 2, for at most a configured number
+   of rounds (start at 8).
+5. Run the number checker on the answer. Show the answer only if it passes.
+
+Number checker (NFR-12): every numeric token in the answer must equal a
+number in a tool result of the same turn, or that number rounded to the
+decimals the answer shows. Counts and converted values must come from a tool
+result too; the agent does no arithmetic. On failure, retry once with the
+failure named, then show the tool results without prose. Record the exact
+matching rule in `docs/decisions/` when implementing.
+
+A number the LLM puts into a tool argument, such as a new expression value,
+must appear in a user message of the conversation or in a tool result.
+Otherwise the tool layer rejects the call and the agent asks.
+
+Session log (FR-29): one JSON-lines file per session under
+`runs/assistant/<session_id>/`, one record per user message, step, tool call,
+tool result, confirmation, checker verdict and answer, with model name and
+prompt hash for each LLM call. Logs stay local (section 3).
+
+### 17.6 The change path (rule 8, FR-27, NFR-14)
+
+1. The tool layer builds a preview: the tool, the target objects by name, and
+   the old and new values where they exist.
+2. The target is highlighted in NX.
+3. The panel shows the preview and waits. Only an explicit confirmation by
+   the user in the panel continues. Text from the LLM, from a tool result or
+   from a part attribute is never a confirmation.
+4. The bridge sets an undo mark, runs the command and returns the mark.
+5. The result and the note "one Undo in NX reverts this" are shown.
+6. Nothing is saved. `save` runs only on a direct request by the user and is
+   itself confirmed.
+
+One change tool call is one undo mark. A request that needs several changes
+is shown as a list and confirmed once per change unless the user confirms the
+list as a whole.
+
+### 17.7 Chat panel
+
+- A window docked beside the NX window on the same screen (A9). Both are
+  fully visible on a 1920 by 1080 display (AC-11).
+- It shows messages, each tool call with its arguments, each result, and
+  confirmation prompts.
+- It runs in its own process and never blocks NX.
+- The technology is chosen in C0-T3 and recorded in `docs/decisions/`. Keep
+  the panel free of logic so that everything it shows is tested in CI
+  through the agent.

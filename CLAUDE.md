@@ -1,8 +1,10 @@
 # drawgen
 
-AI drawing harness: plans a 2D drawing for a target 3D model from a reference
-model and drawing. Deterministic code measures and verifies; Siemens NX draws
-through NXOpen journals run in batch.
+Two parts. Drawing generation plans a 2D drawing for a target 3D model from a
+reference model and drawing; deterministic code measures and verifies, and NX
+draws through NXOpen journals run in batch (phases P0 to P5). A chat assistant
+docked beside NX reads the live session and runs a fixed list of tools through
+a bridge add-in inside NX (phases C0 to C3).
 
 The specification is `HANDOFF.md` at the repository root. It is long: read only
 the sections listed below for the work at hand. Task status is in
@@ -37,12 +39,19 @@ If a task conflicts with one of these, stop and ask.
 4. `src/` never imports a CAD API. Backends run as separate processes.
 5. A failed check leaves the drawing unreleased and reported, never silently saved.
 6. Core, harness and worker never name a product type. Product knowledge lives in packs.
+7. The assistant acts on NX only through listed tools. It never runs NXOpen code
+   written by a model.
+8. A tool that changes a part runs only after the user confirms, sets an undo
+   mark first, and never saves on its own.
 
 ## Working limits
 
 - NX is not installed here. Check with `uv run drawgen ping --backend nx`. Tasks
   tagged `[HUMAN]` or `[EXPERT]` are prepared, not done: write the instructions and stop.
-- Never invent an NXOpen call. Use the `nx-journal` skill for any worker change.
+- Never invent an NXOpen call, in the worker or the bridge. Use the `nx-journal`
+  skill for any worker change.
+- Assumptions A9 to A13 (HANDOFF.md 4.5) are unconfirmed. Do not start a task
+  that depends on one. No bridge or panel toolchain before the C0 decisions.
 - Never create a file under `fixtures/real/`. Synthetic data carries `"synthetic": true`.
 - Real fixtures may be confidential: never paste their content into tests, logs or docs.
 - No CAD libraries in this repository (no pythonOCC, FreeCAD, CadQuery).
@@ -67,6 +76,7 @@ If a task conflicts with one of these, stop and ask.
 | Verification rules S-01 to S-06 and V-01 to V-07 | 11 |
 | The harness, LLM client, repair loop, review gate (P4) | 12 |
 | Requirements and acceptance criteria by ID (FR, NFR, AC) | 4 |
+| The chat assistant, tools, live backends, the bridge (`nx_bridge/`) | 17, 13, 4.5 |
 | Questions still open: ask, do not assume | 16 |
 
 ## Where things are
@@ -78,6 +88,7 @@ If a task conflicts with one of these, stop and ask.
 - `tools/` schema export and the synthetic generator. `fixtures/synthetic/` its output.
 - `tests/` `unit/`, `contract/` (round-trip, NFR-02), `arch/`, `tools/`, `golden/`.
 - `docs/nx_api_assumptions.md` every NXOpen call or runtime behaviour not yet verified.
+- Not created yet: `src/drawgen/assistant/`, `backends/live.py`, `nx_bridge/` (C0 on).
 
 ## Delegating to Codex
 
