@@ -196,7 +196,8 @@ def test_create_box_with_hole_passes_requested_center_offsets() -> None:
     )
 
     result = AssistantAgent(backend, harness).run(
-        "Create the box with the hole center 10 mm from the left and bottom boundaries.",
+        "Create a 100 x 60 x 20 box with a 10 mm hole whose center is 10 mm from the left "
+        "and bottom boundaries.",
         confirm=lambda _: True,
     )
 
@@ -214,3 +215,39 @@ def test_create_box_with_hole_passes_requested_center_offsets() -> None:
             },
         )
     ]
+
+
+def test_change_with_a_number_the_user_never_gave_is_not_run() -> None:
+    backend = MockLiveBackend()
+    result = AssistantAgent(backend, FakeHarness()).run(
+        "Create a box with a through-hole.", confirm=lambda _: True
+    )
+    assert result.ask_user is not None
+    assert "create_box_with_hole" in result.ask_user
+    assert backend.executed == []
+
+
+def test_rejected_answer_is_retried_once_then_raw_results_are_shown() -> None:
+    backend = MockLiveBackend(
+        measurements={"m0": LiveMeasureResult(id="m0", value=12.5, unit="mm2")}
+    )
+    measure = AssistantStep(
+        tool_calls=[
+            {"tool": "measure", "args": {"requests": [{"id": "m0", "kind": "area", "a": "h"}]}}
+        ]
+    )
+    retried = FakeHarness(
+        [measure, AssistantStep(answer="It is 99 mm2."), AssistantStep(answer="It is 12.5 mm2.")]
+    )
+    assert (
+        AssistantAgent(backend, retried).run("What is the area of the face?").answer
+        == "It is 12.5 mm2."
+    )
+
+    stubborn = FakeHarness(
+        [measure, AssistantStep(answer="It is 99 mm2."), AssistantStep(answer="Still 98 mm2.")]
+    )
+    answer = AssistantAgent(backend, stubborn).run("What is the area of the face?").answer
+    assert answer is not None
+    assert "could not be verified" in answer
+    assert "12.5" in answer

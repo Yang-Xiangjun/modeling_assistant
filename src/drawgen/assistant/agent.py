@@ -6,7 +6,7 @@ import json
 from collections.abc import Callable
 from typing import Any
 
-from drawgen.assistant.checker import check_answer
+from drawgen.assistant.checker import check_answer, ungrounded_arguments
 from drawgen.assistant.contracts import HarnessRequest, TurnResult
 from drawgen.assistant.harness import HarnessAdapter
 from drawgen.assistant.log import SessionLog
@@ -50,8 +50,14 @@ class AssistantAgent:
             )
         results: list[Any] = []
         sources: list[Any] = [user_message]
+        # Numeric tool arguments may come from anything the user said in this
+        # conversation or from a tool result of this turn (HANDOFF 17.5).
+        argument_sources: list[Any] = [
+            item["content"] for item in self.conversation if item["role"] == "user"
+        ]
         issued_calls: set[str] = set()
         failed_calls: set[str] = set()
+        checker_retried = False
         while True:
             context = self.backend.get_context().model_dump(mode="json")
             request = HarnessRequest(
@@ -74,9 +80,21 @@ class AssistantAgent:
                     self.log.append("checker", accepted=accepted, unsupported=unsupported)
                 if accepted:
                     return TurnResult(answer=step.answer, tool_results=results)
-                return TurnResult(
-                    answer="I can only report values returned by NX tools.", tool_results=results
-                )
+                if not checker_retried:
+                    # One retry with the failure named, then raw results only.
+                    checker_retried = True
+                    self.conversation.append(
+                        {
+                            "role": "checker",
+                            "content": (
+                                "The answer was rejected because these numbers are not in "
+                                f"the tool results: {unsupported}. Answer again using only "
+                                "values returned by the tools, at their shown precision."
+                            ),
+                        }
+                    )
+                    continue
+                return TurnResult(answer=_raw_results(results), tool_results=results)
             for call in step.tool_calls:
                 call_key = json.dumps(
                     {"tool": call.tool, "args": call.args}, sort_keys=True, separators=(",", ":")
@@ -89,6 +107,18 @@ class AssistantAgent:
                         ),
                         tool_results=results,
                     )
+                if self.registry.kind(call.tool) in {"session", "change"}:
+                    ungrounded = ungrounded_arguments(call.args, [*argument_sources, *sources[1:]])
+                    if ungrounded:
+                        values = ", ".join(f"{value:g}" for value in ungrounded)
+                        return TurnResult(
+                            ask_user=(
+                                f"The assistant proposed {call.tool} with {values}, which you "
+                                "did not give and NX did not return. Please state the value(s) "
+                                "you want."
+                            ),
+                            tool_results=results,
+                        )
                 semantic_key = _semantic_call_key(call.tool, call.args)
                 if semantic_key in failed_calls:
                     return TurnResult(
@@ -127,6 +157,16 @@ class AssistantAgent:
                     self.log.append(
                         "tool_result", tool=call.tool, result=outcome.model_dump(mode="json")
                     )
+
+
+def _raw_results(results: list[Any]) -> str:
+    """Tool results without prose, shown when the answer failed the checker twice."""
+
+    if not results:
+        return "NX returned no tool results for this request."
+    lines = ["The answer could not be verified. NX returned:"]
+    lines += [json.dumps(item.get("result"), sort_keys=True) for item in results]
+    return "\n".join(lines)
 
 
 def _semantic_call_key(tool: str, args: dict[str, Any]) -> str:

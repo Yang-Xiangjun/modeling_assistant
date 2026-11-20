@@ -348,6 +348,12 @@ class ToolRegistry:
         ):
             self._register(name, "change", description, drawing_args_model, command=drawing_command)
 
+    def kind(self, name: str) -> str | None:
+        """The tool's kind (read, session, change), or None when it is not registered."""
+
+        definition = self._tools.get(name)
+        return definition.spec.kind if definition is not None else None
+
     def specs(self) -> list[dict[str, Any]]:
         return [tool.spec.model_dump(mode="json") for tool in self._tools.values()]
 
