@@ -1,0 +1,76 @@
+{
+  "additionalProperties": false,
+  "description": "Execution evidence returned after a composed pipeline runs.",
+  "properties": {
+    "completed_steps": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Completed Steps",
+      "type": "array"
+    },
+    "error": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Error"
+    },
+    "failed_candidate_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Failed Candidate Ids",
+      "type": "array"
+    },
+    "outputs": {
+      "additionalProperties": true,
+      "title": "Outputs",
+      "type": "object"
+    },
+    "pipeline_id": {
+      "title": "Pipeline Id",
+      "type": "string"
+    },
+    "plan_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Plan Id"
+    },
+    "schema": {
+      "const": "pipeline_result/0",
+      "default": "pipeline_result/0",
+      "title": "Schema",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "pending",
+        "running",
+        "succeeded",
+        "failed",
+        "needs_clarification"
+      ],
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "pipeline_id",
+    "status"
+  ],
+  "title": "PipelineResult",
+  "type": "object"
+}

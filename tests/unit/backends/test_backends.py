@@ -1,4 +1,5 @@
 import json
+import os
 import shlex
 import stat
 import sys
@@ -19,12 +20,19 @@ def make_executable(tmp_path: Path, body: str, name: str = "fake.py") -> Path:
     script = tmp_path / name
     script.write_text(textwrap.dedent(body), encoding="utf-8")
     script.chmod(script.stat().st_mode | stat.S_IXUSR)
-    runner = tmp_path / f"{name}.sh"
-    runner.write_text(
-        f'#!/bin/sh\nexec {shlex.quote(sys.executable)} {shlex.quote(str(script))} "$@"\n',
-        encoding="utf-8",
-    )
-    runner.chmod(runner.stat().st_mode | stat.S_IXUSR)
+    if os.name == "nt":
+        runner = tmp_path / f"{name}.cmd"
+        runner.write_text(
+            f'@echo off\n"{sys.executable}" "{script}" %*\n',
+            encoding="utf-8",
+        )
+    else:
+        runner = tmp_path / f"{name}.sh"
+        runner.write_text(
+            f'#!/bin/sh\nexec {shlex.quote(sys.executable)} {shlex.quote(str(script))} "$@"\n',
+            encoding="utf-8",
+        )
+        runner.chmod(runner.stat().st_mode | stat.S_IXUSR)
     return runner
 
 

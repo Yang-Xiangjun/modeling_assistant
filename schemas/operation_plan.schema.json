@@ -1,0 +1,305 @@
+{
+  "$defs": {
+    "ApiCandidate": {
+      "additionalProperties": false,
+      "description": "Evidence for one API or property considered for a plan step.",
+      "properties": {
+        "assembly": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Assembly"
+        },
+        "full_name": {
+          "title": "Full Name",
+          "type": "string"
+        },
+        "guid": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Guid"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "class",
+            "constructor",
+            "method",
+            "property",
+            "field",
+            "enumeration",
+            "structure",
+            "interface"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "nx_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Nx Version"
+        },
+        "query": {
+          "title": "Query",
+          "type": "string"
+        },
+        "signature": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Signature"
+        },
+        "source": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source"
+        },
+        "status": {
+          "default": "unvalidated",
+          "enum": [
+            "unvalidated",
+            "validated",
+            "rejected",
+            "unavailable"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "summary": {
+          "default": "",
+          "title": "Summary",
+          "type": "string"
+        },
+        "validation_message": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Validation Message"
+        }
+      },
+      "required": [
+        "id",
+        "query",
+        "kind",
+        "full_name"
+      ],
+      "title": "ApiCandidate",
+      "type": "object"
+    },
+    "PlanStep": {
+      "additionalProperties": false,
+      "description": "One ordered, deterministic step in an assistant operation plan.",
+      "properties": {
+        "action": {
+          "title": "Action",
+          "type": "string"
+        },
+        "api_candidate_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Api Candidate Ids",
+          "type": "array"
+        },
+        "api_queries": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Api Queries",
+          "type": "array"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "entity_requirements": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Entity Requirements",
+          "type": "array"
+        },
+        "expected_outputs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Expected Outputs",
+          "type": "array"
+        },
+        "fallback_step_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Fallback Step Ids",
+          "type": "array"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "preconditions": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Preconditions",
+          "type": "array"
+        },
+        "status": {
+          "default": "pending",
+          "enum": [
+            "pending",
+            "ready",
+            "running",
+            "completed",
+            "failed",
+            "skipped"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Unit"
+        }
+      },
+      "required": [
+        "id",
+        "action",
+        "description"
+      ],
+      "title": "PlanStep",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "The clarified goal and ordered work required for one assistant turn.",
+  "properties": {
+    "api_candidates": {
+      "items": {
+        "$ref": "#/$defs/ApiCandidate"
+      },
+      "title": "Api Candidates",
+      "type": "array"
+    },
+    "assumptions": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Assumptions",
+      "type": "array"
+    },
+    "clarification_questions": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Clarification Questions",
+      "type": "array"
+    },
+    "clarification_required": {
+      "default": false,
+      "title": "Clarification Required",
+      "type": "boolean"
+    },
+    "complexity": {
+      "enum": [
+        "simple",
+        "complex",
+        "ambiguous"
+      ],
+      "title": "Complexity",
+      "type": "string"
+    },
+    "expected_outputs": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Expected Outputs",
+      "type": "array"
+    },
+    "goal": {
+      "title": "Goal",
+      "type": "string"
+    },
+    "request": {
+      "title": "Request",
+      "type": "string"
+    },
+    "schema": {
+      "const": "operation_plan/0",
+      "default": "operation_plan/0",
+      "title": "Schema",
+      "type": "string"
+    },
+    "steps": {
+      "items": {
+        "$ref": "#/$defs/PlanStep"
+      },
+      "title": "Steps",
+      "type": "array"
+    },
+    "units": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Units",
+      "type": "array"
+    }
+  },
+  "required": [
+    "request",
+    "goal",
+    "complexity"
+  ],
+  "title": "OperationPlan",
+  "type": "object"
+}

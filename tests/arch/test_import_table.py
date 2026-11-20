@@ -20,7 +20,7 @@ def _group(path: Path) -> tuple[str, set[str]] | None:
     parts = relative.parts
     if parts == ("__init__.py",) or parts == ("cli.py",):
         return "composition root", set()
-    if parts[0] in {"contracts", "core", "packs", "backends", "harness"}:
+    if parts[0] in {"contracts", "core", "packs", "backends", "harness", "assistant"}:
         allowed = {
             "contracts": {"pydantic", "drawgen_shared", "drawgen.contracts"},
             "core": {"drawgen.contracts", "drawgen_shared", "drawgen.core"},
@@ -39,6 +39,14 @@ def _group(path: Path) -> tuple[str, set[str]] | None:
                 "drawgen.contracts",
                 "drawgen_shared",
                 "drawgen.harness",
+            },
+            "assistant": {
+                "pydantic",
+                "drawgen.core",
+                "drawgen.backends",
+                "drawgen.contracts",
+                "drawgen_shared",
+                "drawgen.assistant",
             },
         }[parts[0]]
         return parts[0], allowed

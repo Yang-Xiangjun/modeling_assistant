@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Branch C - NX Assistant</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap');
+    :root { --bg:#0d1117; --panel:#141a22; --panel-2:#1a222d; --line:#293442; --text:#edf2f7; --muted:#93a4b5; --accent:#f59e0b; --good:#39d98a; --bad:#ff7373; }
+    * { box-sizing: border-box; }
+    body { margin:0; min-height:100vh; background:radial-gradient(circle at 100% 0,#1c2a37 0,#0d1117 42%); color:var(--text); font:14px Inter,system-ui,sans-serif; }
+    .shell { min-height:100vh; display:flex; flex-direction:column; }
+    header { display:flex; align-items:center; justify-content:space-between; padding:18px 28px; border-bottom:1px solid var(--line); background:rgba(13,17,23,.88); }
+    .brand { display:flex; gap:12px; align-items:center; }
+    .mark { width:34px; height:34px; display:grid; place-items:center; border-radius:10px; color:#111820; background:var(--accent); font-weight:800; }
+    h1 { margin:0; font-size:16px; letter-spacing:.01em; }
+    .subtitle { margin-top:4px; color:var(--muted); font-size:12px; }
+    .status { display:flex; gap:8px; align-items:center; color:var(--muted); font-size:12px; }
+    .dot { width:8px; height:8px; border-radius:50%; background:var(--muted); }
+    .dot.good { background:var(--good); box-shadow:0 0 12px rgba(57,217,138,.6); }
+    .dot.bad { background:var(--bad); }
+    main { flex:1; display:grid; grid-template-columns:1fr 1.05fr; gap:18px; padding:18px; min-height:0; }
+    .card { min-height:0; display:flex; flex-direction:column; overflow:hidden; border:1px solid var(--line); border-radius:16px; background:rgba(20,26,34,.92); box-shadow:0 18px 50px rgba(0,0,0,.2); }
+    .card-head { display:flex; justify-content:space-between; align-items:center; padding:15px 18px; border-bottom:1px solid var(--line); }
+    .card-title { font-weight:600; }
+    .eyebrow { color:var(--muted); font:11px 'DM Mono',monospace; text-transform:uppercase; letter-spacing:.08em; }
+    .viewport { flex:1; min-height:360px; display:flex; align-items:center; justify-content:center; padding:22px; background:linear-gradient(135deg,#101720,#111c28); }
+    .viewport-inner { width:min(520px,100%); aspect-ratio:1.45; position:relative; border:1px solid #3b5268; border-radius:10px; background:linear-gradient(145deg,#1d3443,#0e1922); box-shadow:inset 0 0 55px rgba(75,151,190,.08); }
+    .viewport-inner:before { content:''; position:absolute; inset:18%; border:1px solid rgba(142,191,211,.32); transform:skewY(-12deg) rotate(-8deg); box-shadow:0 0 0 18px rgba(56,113,143,.05); }
+    .viewport-inner:after { content:'NX native window'; position:absolute; left:18px; bottom:15px; color:#7892a5; font:11px 'DM Mono',monospace; }
+    .native-note { padding:14px 18px; border-top:1px solid var(--line); color:var(--muted); font-size:12px; line-height:1.5; }
+    .checks { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; padding:14px 18px; border-top:1px solid var(--line); }
+    .check { padding:9px 10px; border:1px solid var(--line); border-radius:9px; background:rgba(255,255,255,.02); }
+    .check-label { color:var(--muted); font-size:11px; margin-bottom:4px; }
+    .check-value { font-weight:600; font-size:12px; }
+    .chat-log { flex:1; overflow:auto; padding:20px; display:flex; flex-direction:column; gap:14px; }
+    .message { max-width:88%; padding:12px 14px; border:1px solid var(--line); border-radius:12px 12px 12px 4px; background:var(--panel-2); line-height:1.55; white-space:pre-wrap; }
+    .message.user { align-self:flex-end; border-color:#735215; border-radius:12px 12px 4px 12px; background:#342813; }
+    .message.system { color:var(--muted); font-size:12px; background:transparent; }
+    .composer { display:flex; gap:10px; padding:14px; border-top:1px solid var(--line); }
+    textarea { flex:1; min-height:54px; max-height:150px; resize:vertical; border:1px solid var(--line); border-radius:10px; padding:12px; color:var(--text); background:#0e141b; font:14px Inter,system-ui,sans-serif; outline:none; }
+    textarea:focus { border-color:#9a701c; box-shadow:0 0 0 3px rgba(245,158,11,.1); }
+    button { border:0; border-radius:10px; padding:0 18px; color:#17120a; background:var(--accent); font-weight:700; cursor:pointer; }
+    button:disabled { opacity:.5; cursor:wait; }
+    .hint { padding:0 14px 14px; color:var(--muted); font:11px 'DM Mono',monospace; }
+    @media (max-width:900px) { main { grid-template-columns:1fr; } .viewport { min-height:280px; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <div class="brand"><div class="mark">C</div><div><h1>Branch C - NX Assistant</h1><div class="subtitle">Pi chat harness - NXOpen bridge</div></div></div>
+      <div class="status"><span id="overallDot" class="dot"></span><span id="overallText">Checking local services...</span></div>
+    </header>
+    <main>
+      <section class="card">
+        <div class="card-head"><div><div class="eyebrow">Workspace</div><div class="card-title">NX session</div></div><div class="eyebrow" id="backendLabel">bridge</div></div>
+        <div class="viewport"><div class="viewport-inner"></div></div>
+        <div class="native-note">The live NX window is native and is tiled to the left by the launcher. Use this panel for the model view, selection, and journal results.</div>
+        <div class="checks">
+          <div class="check"><div class="check-label">NX process</div><div class="check-value" id="nxValue">-</div></div>
+          <div class="check"><div class="check-label">NX bridge</div><div class="check-value" id="bridgeValue">-</div></div>
+          <div class="check"><div class="check-label">Pi command</div><div class="check-value" id="piValue">-</div></div>
+        </div>
+      </section>
+      <section class="card">
+        <div class="card-head"><div><div class="eyebrow">Conversation</div><div class="card-title">Chat assistant</div></div><div class="eyebrow">Pi</div></div>
+        <div class="chat-log" id="chatLog"><div class="message system">Ready for a Branch C operation. Try "Create a 100 x 60 x 20 box with a 10 mm through-hole".</div></div>
+        <div class="composer"><textarea id="message" placeholder="Describe the NX operation..." aria-label="Message"></textarea><button id="send">Send</button></div>
+        <div class="hint">Enter sends - Shift+Enter adds a line</div>
+      </section>
+    </main>
+  </div>
+  <script>
+    const $ = (id) => document.getElementById(id);
+    const log = $('chatLog');
+    const addMessage = (text, kind) => { const node = document.createElement('div'); node.className = `message ${kind}`; node.textContent = text; log.appendChild(node); log.scrollTop = log.scrollHeight; return node; };
+    const label = (value) => value ? 'Ready' : 'Unavailable';
+    async function refreshHealth() {
+      try {
+        const response = await fetch('/api/health', { cache:'no-store' });
+        const data = await response.json();
+        $('nxValue').textContent = label(data.nx_running);
+        $('bridgeValue').textContent = label(data.bridge_ready);
+        $('bridgeValue').title = data.bridge_error || '';
+        $('piValue').textContent = data.pi_available ? data.pi_command : 'Missing';
+        $('backendLabel').textContent = data.backend;
+        const ready = data.pi_available && (data.backend === 'mock' || data.bridge_ready);
+        $('overallDot').className = `dot ${ready ? 'good' : 'bad'}`;
+        $('overallText').textContent = ready ? 'Assistant ready' : (data.bridge_error ? 'Load NX bridge journal' : 'Setup required');
+      } catch (error) { $('overallDot').className = 'dot bad'; $('overallText').textContent = 'UI server unavailable'; }
+    }
+    async function sendMessage() {
+      const input = message; const text = input.value.trim(); if (!text) return;
+      input.value = ''; addMessage(text, 'user'); const pending = addMessage('Pi is working...', 'system'); send.disabled = true;
+      try {
+        const response = await fetch('/api/chat', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({message:text}) });
+        const data = await response.json(); pending.remove(); addMessage(data.ok ? (data.answer || 'Completed.') : `Error: ${data.error}`, data.ok ? 'assistant' : 'system');
+      } catch (error) { pending.remove(); addMessage(`Request failed: ${error}`, 'system'); }
+      finally { $('send').disabled = false; refreshHealth(); input.focus(); }
+    }
+    $('send').addEventListener('click', sendMessage);
+    $('message').addEventListener('keydown', (event) => { if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); sendMessage(); } });
+    refreshHealth(); setInterval(refreshHealth, 5000);
+  </script>
+</body>
+</html>

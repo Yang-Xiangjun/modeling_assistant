@@ -25,3 +25,17 @@ steps for the person on the NX seat are in `nx_worker/README.md` and
 ## Open questions (HANDOFF.md section 16)
 
 None blocks P0. Defaults taken are in `docs/decisions/001` to `007`.
+
+## Branch C assistant track
+
+Implementation plan: [docs/branch-c-implementation-plan.md](branch-c-implementation-plan.md). No C0 implementation is marked done; C0-H1/C0-H2 and assumptions A9-A13 remain the entry gate.
+
+Owner update: C# NXOpen is the selected bridge direction. Before C0-T2, confirm the NX release/.NET target/build and add-in load path, NX main-thread dispatch API, panel placement, transport/token policy, and the fixed operation list. Before C1-T4, confirm the first supported harness CLI and the provider-neutral adapter contract described in decision 014.
+
+Implementation started: live contracts, MockLiveBackend, BridgeBackend, Codex Responses adapter, pi JSON-mode adapter, CLI chat/panel, typed tools, confirmation/undo policy, and a buildable NX2506 C# bridge scaffold are present. The MVP planning slice now classifies requests, asks for clarification before complex execution, attaches local NXOpen API candidates through synonym search, and passes the plan and evidence into every harness turn. Area and volume measurement, including the NX2506 C# volume adapter, are covered by the offline tests. Real NX selection/operation dispatch remains a seat recording task.
+
+Current offline validation is 289 Python tests, Ruff, strict mypy, and exported-schema checks. The C# bridge builds with `NX_ROOT=D:\softwares\NX2506`. The remaining human gate is to load the journal in interactive NX and verify live selection, measurement, and box-with-hole behavior.
+
+Manual startup is consolidated in `tools/start_branch_c_manual_test.ps1`. It builds the bridge, starts NX and the browser assistant, and enables the deterministic smoke fixture before the journal is loaded.
+
+The interactive journal is now a reference-only loader. `tools/build_branch_c.ps1` also runs `tools/check_branch_c_journal.ps1`, which catches NX journal compiler reference errors before a manual test starts.

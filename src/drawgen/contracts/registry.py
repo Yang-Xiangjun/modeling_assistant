@@ -9,7 +9,9 @@ from drawgen.contracts.drawing_plan import DrawingPlan, PlanSelection
 from drawgen.contracts.execution import ExecutionJob, ExecutionReport
 from drawgen.contracts.feature_graph import FeatureGraph
 from drawgen.contracts.findings import Findings
+from drawgen.contracts.live import Selection, SessionContext
 from drawgen.contracts.manifest import RunManifest
+from drawgen.contracts.operation_plan import OperationPlan, PipelineResult
 from drawgen.contracts.raw_drawing import RawDrawing
 from drawgen.contracts.raw_model import RawModel
 from drawgen.contracts.worker import (
@@ -35,6 +37,10 @@ VERSIONED: dict[str, type[Contract]] = {
     "execution_report": ExecutionReport,
     "findings": Findings,
     "run_manifest": RunManifest,
+    "session_context": SessionContext,
+    "selection": Selection,
+    "operation_plan": OperationPlan,
+    "pipeline_result": PipelineResult,
 }
 
 # Worker protocol messages, versioned by the `protocol` field of job.json.

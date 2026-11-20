@@ -8,9 +8,20 @@ __pycache__/
 htmlcov/
 dist/
 build/
+nx_bridge/bin/
+nx_bridge/obj/
 *.egg-info/
 .DS_Store
 runs/
+tmp/
+work/
+.uv-cache/
+.pi-agent/
+!.pi-agent/
+.pi-agent/*
+!.pi-agent/skills/
+!.pi-agent/skills/nxopen-cad/
+!.pi-agent/skills/nxopen-cad/SKILL.md
 .claude/settings.local.json
 # Real fixtures are committed by default (docs/decisions/005). To keep them local, uncomment:
 # fixtures/real/

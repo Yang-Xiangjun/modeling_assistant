@@ -1,0 +1,231 @@
+{
+  "$defs": {
+    "Fingerprint": {
+      "additionalProperties": false,
+      "description": "Re-finds one face or edge in the same model across sessions.",
+      "properties": {
+        "bbox": {
+          "maxItems": 6,
+          "minItems": 6,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Bbox",
+          "type": "array"
+        },
+        "centroid": {
+          "maxItems": 3,
+          "minItems": 3,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Centroid",
+          "type": "array"
+        },
+        "component_path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Component Path"
+        },
+        "direction": {
+          "anyOf": [
+            {
+              "maxItems": 3,
+              "minItems": 3,
+              "prefixItems": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                }
+              ],
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Direction"
+        },
+        "geom": {
+          "enum": [
+            "plane",
+            "cylinder",
+            "cone",
+            "sphere",
+            "torus",
+            "line",
+            "circle",
+            "arc",
+            "other"
+          ],
+          "title": "Geom",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "face",
+            "edge"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "radius": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Radius"
+        },
+        "size": {
+          "title": "Size",
+          "type": "number"
+        }
+      },
+      "required": [
+        "kind",
+        "geom",
+        "size",
+        "centroid",
+        "bbox"
+      ],
+      "title": "Fingerprint",
+      "type": "object"
+    },
+    "SelectedObject": {
+      "additionalProperties": false,
+      "properties": {
+        "component_path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Component Path"
+        },
+        "entity_kind": {
+          "enum": [
+            "face",
+            "edge",
+            "body",
+            "component",
+            "feature",
+            "dimension",
+            "view",
+            "note",
+            "other"
+          ],
+          "title": "Entity Kind",
+          "type": "string"
+        },
+        "fingerprint": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Fingerprint"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "handle": {
+          "title": "Handle",
+          "type": "string"
+        },
+        "object_type": {
+          "title": "Object Type",
+          "type": "string"
+        },
+        "properties": {
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "boolean"
+              }
+            ]
+          },
+          "title": "Properties",
+          "type": "object"
+        }
+      },
+      "required": [
+        "handle",
+        "entity_kind",
+        "object_type"
+      ],
+      "title": "SelectedObject",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "items": {
+      "items": {
+        "$ref": "#/$defs/SelectedObject"
+      },
+      "title": "Items",
+      "type": "array"
+    },
+    "schema": {
+      "const": "selection/0",
+      "default": "selection/0",
+      "title": "Schema",
+      "type": "string"
+    }
+  },
+  "title": "Selection",
+  "type": "object"
+}

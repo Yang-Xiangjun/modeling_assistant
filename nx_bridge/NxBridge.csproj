@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>Drawgen.NxBridgeBranchC</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="BranchCSmokeLauncher.cs" />
+    <Compile Remove="BranchCSmokeJournal.cs" />
+    <Reference Include="NXOpen">
+      <HintPath>$(NX_ROOT)\NXBIN\managed\NXOpen.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="NXOpenUI">
+      <HintPath>$(NX_ROOT)\NXBIN\managed\NXOpenUI.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="NXOpen.UF">
+      <HintPath>$(NX_ROOT)\NXBIN\managed\NXOpen.UF.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="NXOpen.Utilities">
+      <HintPath>$(NX_ROOT)\NXBIN\managed\NXOpen.Utilities.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+</Project>
