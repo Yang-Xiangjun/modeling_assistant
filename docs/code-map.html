@@ -1,0 +1,4921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>modeling_assistant · code map</title>
+<style>
+  :root {
+    --bg: #f6f6f3; --panel: #ffffff; --ink: #1d1d1b; --muted: #6a6a64; --line: #d8d8d1;
+    --accent: #2b62d9; --accent-soft: #e6eefc; --seen: #55554f; --inferred: #b8791f;
+    --flag: #c43c3c; --note: #2c9a5a; --shadow: 0 1px 2px rgba(0,0,0,.06);
+    --node: #ffffff; --node-fn: #fbfbf7; --node-mod: #f4f7ff; --node-stage: #fff8ec;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #151514; --panel: #1e1e1c; --ink: #ebebe6; --muted: #9a9a92; --line: #33332f;
+      --accent: #7ea2f0; --accent-soft: #24324f; --seen: #b5b5ad; --inferred: #d9a04a;
+      --flag: #e26b6b; --note: #5cc484; --shadow: none;
+      --node: #262624; --node-fn: #262624; --node-mod: #23272f; --node-stage: #2c2820;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; display: flex; flex-direction: column; height: 100vh; }
+  header { background: var(--panel); border-bottom: 1px solid var(--line); padding: 10px 16px; display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; }
+  #title { font-size: 17px; font-weight: 650; margin: 0; }
+  #meta { color: var(--muted); font-size: 12px; }
+  #scope { color: var(--muted); font-size: 12px; flex-basis: 100%; }
+  #scope details { display: inline; }
+  #scope summary { cursor: pointer; color: var(--accent); display: inline; }
+  .tabs { display: flex; gap: 4px; }
+  .tab { border: 1px solid var(--line); background: transparent; color: var(--ink); padding: 5px 12px; border-radius: 6px; cursor: pointer; font: inherit; }
+  .tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .search-wrap { position: relative; flex: 1 1 260px; max-width: 460px; }
+  #search { width: 100%; padding: 6px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--ink); font: inherit; }
+  #results { position: absolute; top: 100%; left: 0; right: 0; z-index: 20; background: var(--panel); border: 1px solid var(--line); border-radius: 6px; box-shadow: 0 6px 20px rgba(0,0,0,.15); max-height: 60vh; overflow: auto; margin-top: 4px; }
+  .result { display: flex; gap: 8px; align-items: baseline; width: 100%; text-align: left; border: 0; background: transparent; color: var(--ink); padding: 6px 10px; cursor: pointer; font: inherit; }
+  .result:hover, .result:focus { background: var(--accent-soft); outline: none; }
+  .result-name { font-family: ui-monospace, Consolas, monospace; }
+  .result-empty { padding: 8px 10px; }
+  .zoom { display: flex; gap: 2px; }
+  .zoom button { border: 1px solid var(--line); background: transparent; color: var(--ink); min-width: 30px; height: 28px; border-radius: 6px; cursor: pointer; font: inherit; }
+  .legend { display: flex; gap: 12px; align-items: center; color: var(--muted); font-size: 12px; flex-wrap: wrap; }
+  .legend .sw { display: inline-block; width: 22px; height: 0; border-top: 2px solid var(--seen); vertical-align: middle; margin-right: 4px; }
+  .legend .sw.inferred { border-top-style: dashed; border-top-color: var(--inferred); }
+  .legend .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; vertical-align: middle; margin-right: 4px; }
+  main { flex: 1; display: grid; grid-template-columns: minmax(0, 1fr) 390px; min-height: 0; }
+  #view { overflow: auto; padding: 12px 16px 24px; }
+  #detail { overflow: auto; border-left: 1px solid var(--line); background: var(--panel); padding: 14px 16px 24px; }
+  @media (max-width: 900px) {
+    main { grid-template-columns: 1fr; grid-template-rows: 1fr auto; }
+    #detail { border-left: 0; border-top: 1px solid var(--line); max-height: 45vh; }
+  }
+  h2 { font-size: 15px; margin: 6px 0 8px; }
+  h3 { font-size: 12px; margin: 14px 0 6px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+  .block { margin-bottom: 18px; }
+  .prose { max-width: 72ch; margin: 0 0 8px; }
+  .muted { color: var(--muted); }
+  .small { font-size: 12px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+  .card { text-align: left; border: 1px solid var(--line); background: var(--panel); color: var(--ink); border-radius: 8px; padding: 10px 12px; cursor: pointer; font: inherit; box-shadow: var(--shadow); }
+  .card:hover, .card.selected, .card.match { border-color: var(--accent); }
+  .card.dim, .stage.dim { opacity: .35; }
+  .card-title { font-weight: 650; }
+  .card-sub { color: var(--muted); font-size: 12px; margin-bottom: 4px; }
+  .card-body { margin: 0; font-size: 13px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 8px; }
+  .chip { border: 1px solid var(--line); background: transparent; color: var(--ink); padding: 3px 10px; border-radius: 999px; cursor: pointer; font: inherit; font-size: 12px; }
+  .chip.active { background: var(--accent-soft); border-color: var(--accent); }
+  .graph-box { overflow: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); max-height: 72vh; }
+  svg.graph { display: block; }
+  .node rect { fill: var(--node); stroke: var(--line); stroke-width: 1; cursor: pointer; }
+  .node.kind-module rect { fill: var(--node-mod); }
+  .node.kind-function rect { fill: var(--node-fn); }
+  .node.kind-stage rect { fill: var(--node-stage); }
+  .node:hover rect, .node:focus rect { stroke: var(--accent); }
+  .node:focus { outline: none; }
+  .node.selected rect { stroke: var(--accent); stroke-width: 2; }
+  .node.match rect { stroke: var(--accent); stroke-width: 2; fill: var(--accent-soft); }
+  .node.dim, .edge.dim { opacity: .22; }
+  .node.faded { opacity: .55; }
+  .label { font: 12px ui-monospace, Consolas, monospace; fill: var(--ink); pointer-events: none; }
+  .edge { fill: none; stroke: var(--seen); stroke-width: 1.3; }
+  .edge.inferred { stroke: var(--inferred); stroke-dasharray: 5 4; }
+  .edge.hot, .edge.match { stroke-width: 2.4; }
+  .edge.hot { stroke: var(--accent); }
+  .arrow.seen { fill: var(--seen); }
+  .arrow.inferred { fill: var(--inferred); }
+  .flag-dot { fill: var(--flag); }
+  .note-dot { fill: var(--note); }
+  .flow { display: flex; align-items: stretch; gap: 6px; overflow-x: auto; padding: 6px 2px 10px; }
+  .stage { flex: 0 0 200px; text-align: left; border: 1px solid var(--line); background: var(--node-stage); color: var(--ink); border-radius: 8px; padding: 8px 10px; cursor: pointer; font: inherit; box-shadow: var(--shadow); }
+  .stage:hover, .stage.selected, .stage.match { border-color: var(--accent); }
+  .stage.expanded { border-width: 2px; border-color: var(--accent); }
+  .stage-idx { font-size: 11px; color: var(--muted); }
+  .stage-name { font-weight: 650; }
+  .stage-io { font: 11px ui-monospace, Consolas, monospace; color: var(--muted); margin-top: 2px; word-break: break-all; }
+  .arrow { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--seen); min-width: 60px; padding: 0 4px; }
+  .arrow.inferred { color: var(--inferred); }
+  .arrow-type { font: 11px ui-monospace, Consolas, monospace; max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .arrow-line { font-size: 20px; line-height: 1; }
+  .drawer { border-top: 1px dashed var(--line); padding-top: 10px; }
+  .flag-row { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+  .badge { display: inline-block; font-size: 11px; padding: 1px 6px; border-radius: 999px; border: 1px solid var(--flag); color: var(--flag); }
+  .kind { display: inline-block; font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+  .detail-title { font-family: ui-monospace, Consolas, monospace; font-size: 16px; margin: 2px 0 8px; word-break: break-all; }
+  .sig { background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; overflow-x: auto; margin: 0 0 8px; font-size: 12px; }
+  .loc { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 8px; }
+  .open { background: var(--accent); color: #fff; text-decoration: none; padding: 4px 10px; border-radius: 6px; font-size: 13px; }
+  .loc-text { font-size: 12px; color: var(--muted); }
+  .linkish { border: 0; background: transparent; color: var(--accent); cursor: pointer; font: inherit; padding: 0; text-align: left; }
+  .copy { font-size: 12px; border: 1px solid var(--line); border-radius: 4px; padding: 1px 6px; color: var(--muted); background: transparent; cursor: pointer; }
+  .dsec { margin-bottom: 8px; }
+  table.io { border-collapse: collapse; width: 100%; font-size: 13px; }
+  table.io td { padding: 3px 6px 3px 0; vertical-align: top; border-bottom: 1px solid var(--line); }
+  .io-name { font-family: ui-monospace, Consolas, monospace; white-space: nowrap; }
+  .inferred-tag { display: inline-block; font-size: 10px; color: var(--inferred); border: 1px solid var(--inferred); border-radius: 999px; padding: 0 5px; margin-left: 6px; vertical-align: middle; }
+  ul.flags, ul.rel { list-style: none; padding: 0; margin: 0; }
+  ul.rel li, ul.flags li { padding: 2px 0; }
+  .notes { width: 100%; font-family: inherit; font-size: 13px; line-height: 1.4; border: 1px solid var(--line); border-radius: 6px; padding: 8px; background: var(--bg); color: var(--ink); resize: vertical; }
+  .hint { padding-top: 20px; }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1 id="title">modeling_assistant</h1>
+    <div id="meta"></div>
+  </div>
+  <nav class="tabs" aria-label="Layers">
+    <button class="tab active" data-layer="overview">Overview</button>
+    <button class="tab" data-layer="modules">Modules</button>
+    <button class="tab" data-layer="pipeline">Pipeline</button>
+  </nav>
+  <div class="search-wrap">
+    <input id="search" type="search" placeholder="Search symbol or file  ( / )" autocomplete="off" aria-label="Search nodes">
+    <div id="results" hidden></div>
+  </div>
+  <div class="zoom" aria-label="Zoom">
+    <button id="zoom-out" title="Zoom out">−</button>
+    <button id="zoom-reset" title="Reset zoom">1:1</button>
+    <button id="zoom-in" title="Zoom in">+</button>
+  </div>
+  <div class="legend">
+    <span><span class="sw"></span>seen</span>
+    <span><span class="sw inferred"></span>inferred</span>
+    <span><span class="dot" style="background:var(--flag)"></span>hotspot</span>
+    <span><span class="dot" style="background:var(--note)"></span>has note</span>
+  </div>
+  <div id="scope"></div>
+</header>
+<main>
+  <div id="view"></div>
+  <aside id="detail"></aside>
+</main>
+<script id="code-map-data" type="application/json">{
+ "meta": {
+  "repo": "modeling_assistant",
+  "repoRoot": "/Users/young/Desktop/code/modeling_assistant",
+  "project": "modeling_assistant",
+  "editorScheme": "vscode://file/{abs_path}:{line}:{col}",
+  "generated": "2026-11-20",
+  "lang": "English",
+  "scope": {
+   "focus": null,
+   "entry": "fn:src/drawgen/cli.py#main",
+   "kept": "The `drawgen assistant chat` path from argv through planning, the LLM harness, typed tools and the live NX bridge to a checked answer, plus every module of src/drawgen, shared/, nx_worker/, the C# bridge and the UI server.",
+   "cut": [
+    "tests/ (unit, contract, arch, tools, golden)",
+    "tools/make_synthetic.py (synthetic fixture generator, 1254 lines)",
+    "tools/export_schemas.py",
+    "tools/*.ps1 (Windows build and manual-test scripts)",
+    "web/branch_c_chat.html (browser chat page served by tools/branch_c_ui_server.py)",
+    "nx_bridge/BranchCSmokeJournal.cs, nx_bridge/BranchCSmokeLauncher.cs, nx_bridge/src/BranchCSmokeRuntime.cs (seat smoke journal: duplicate dispatcher for manual tests)",
+    "schemas/*.json (generated from contracts)",
+    "fixtures/ (data)",
+    "empty package stubs: src/drawgen/core, src/drawgen/harness, src/drawgen/packs (P1-P5 not implemented yet)",
+    "empty __init__.py files (assistant, assistant/panel, contracts, shared, nx_worker, nx_worker/commands, nx_worker/nxutil)",
+    "secondary pipeline functions: `drawgen ping` -> get_backend -> NxBackend._run -> nx_worker.main.run_job (modules mapped, functions listed by name only)",
+    "drawgen_shared function bodies (vec, frame, fingerprint, tolerances): not reached by the chat pipeline",
+    "HANDOFF.md, docs/, .claude/, .pi-agent/ (specification and agent configuration)"
+   ]
+  }
+ },
+ "overview": "drawgen (package `drawgen`, repo modeling_assistant) has two planned halves: batch drawing generation (P0-P5), where deterministic code measures a 3D model and NX draws via journals, and a chat assistant docked beside NX (C0-C3). Today only the scaffolding of the first half exists: the pydantic data contracts for every pipeline artifact, the CadBackend/NxBackend that runs nx_worker/main.py inside NX's run_journal, and the `drawgen ping` command; src/drawgen/core, harness and packs are still empty. The working path is the Branch C assistant: `drawgen assistant chat` builds an AssistantAgent that classifies the request, attaches local NXOpen API evidence, then loops an LLM harness (fake, OpenAI Responses, or the pi CLI) over a closed, typed tool registry. Tools reach NX only through the LiveBackend protocol, which is either a scripted mock or a TCP client for the C# add-in in nx_bridge/; change tools need user confirmation, and the final answer is rejected if it contains a number no tool returned. src/ never imports NXOpen: NX code lives only in nx_worker/ (Python inside NX) and nx_bridge/ (C# inside NX), and both are reached across a process boundary.",
+ "subsystems": [
+  {
+   "id": "sub:cli",
+   "name": "cli",
+   "summary": "The `drawgen` console script: argument parsing and wiring of backends and harnesses for `ping`, `live` and `assistant` commands.",
+   "modules": [
+    "mod:src/drawgen/cli.py",
+    "mod:src/drawgen/__init__.py"
+   ]
+  },
+  {
+   "id": "sub:assistant",
+   "name": "assistant",
+   "summary": "Branch C chat assistant: deterministic planning, NXOpen API evidence search, LLM harness adapters, a closed typed tool registry, an answer checker and a JSONL log.",
+   "modules": [
+    "mod:src/drawgen/assistant/agent.py",
+    "mod:src/drawgen/assistant/planning.py",
+    "mod:src/drawgen/assistant/api_search.py",
+    "mod:src/drawgen/assistant/harness.py",
+    "mod:src/drawgen/assistant/tools/__init__.py",
+    "mod:src/drawgen/assistant/checker.py",
+    "mod:src/drawgen/assistant/contracts.py",
+    "mod:src/drawgen/assistant/log.py",
+    "mod:src/drawgen/assistant/panel/app.py"
+   ]
+  },
+  {
+   "id": "sub:backends",
+   "name": "backends",
+   "summary": "Process boundaries to NX: the live bridge client (TCP) and its mock for the assistant, and the batch CadBackend (run_journal subprocess) and its fixture mock for drawing generation.",
+   "modules": [
+    "mod:src/drawgen/backends/live.py",
+    "mod:src/drawgen/backends/bridge.py",
+    "mod:src/drawgen/backends/live_mock.py",
+    "mod:src/drawgen/backends/__init__.py",
+    "mod:src/drawgen/backends/base.py",
+    "mod:src/drawgen/backends/nx.py",
+    "mod:src/drawgen/backends/mock.py"
+   ]
+  },
+  {
+   "id": "sub:contracts",
+   "name": "contracts",
+   "summary": "Pydantic data contracts, no logic. The live/operation-plan/worker contracts are used today; the rest specify the P1-P5 drawing pipeline (RawModel to Findings) and are exported to schemas/.",
+   "modules": [
+    "mod:src/drawgen/contracts/common.py",
+    "mod:src/drawgen/contracts/live.py",
+    "mod:src/drawgen/contracts/operation_plan.py",
+    "mod:src/drawgen/contracts/worker.py",
+    "mod:src/drawgen/contracts/execution.py",
+    "mod:src/drawgen/contracts/raw_model.py",
+    "mod:src/drawgen/contracts/raw_drawing.py",
+    "mod:src/drawgen/contracts/feature_graph.py",
+    "mod:src/drawgen/contracts/drawing_graph.py",
+    "mod:src/drawgen/contracts/convention_profile.py",
+    "mod:src/drawgen/contracts/correspondence.py",
+    "mod:src/drawgen/contracts/candidate_set.py",
+    "mod:src/drawgen/contracts/drawing_plan.py",
+    "mod:src/drawgen/contracts/findings.py",
+    "mod:src/drawgen/contracts/manifest.py",
+    "mod:src/drawgen/contracts/registry.py"
+   ]
+  },
+  {
+   "id": "sub:shared",
+   "name": "shared",
+   "summary": "Standard-library, Python 3.10 helpers shared by src/ and the NX worker: vectors, frames, canonical JSON, fingerprints, tolerances.",
+   "modules": [
+    "mod:shared/drawgen_shared/jsonio.py",
+    "mod:shared/drawgen_shared/vec.py",
+    "mod:shared/drawgen_shared/frame.py",
+    "mod:shared/drawgen_shared/fingerprint.py",
+    "mod:shared/drawgen_shared/tolerances.py"
+   ]
+  },
+  {
+   "id": "sub:nx_worker",
+   "name": "nx_worker",
+   "summary": "Python that runs inside NX via run_journal: reads job.json, dispatches a command module, writes result.json and status.json.",
+   "modules": [
+    "mod:nx_worker/main.py",
+    "mod:nx_worker/commands/ping.py",
+    "mod:nx_worker/commands/selftest.py"
+   ]
+  },
+  {
+   "id": "sub:nx_bridge",
+   "name": "nx_bridge",
+   "summary": "C# add-in loaded into an interactive NX session: a loopback TCP server with token auth that dispatches typed commands to NXOpen.",
+   "modules": [
+    "mod:nx_bridge/src/NxBridgeEntry.cs",
+    "mod:nx_bridge/src/BridgeServer.cs",
+    "mod:nx_bridge/src/BridgeProtocol.cs"
+   ]
+  },
+  {
+   "id": "sub:tools",
+   "name": "tools",
+   "summary": "Developer tooling. Only the Branch C browser UI server is mapped; it shells out to `drawgen assistant chat`.",
+   "modules": [
+    "mod:tools/branch_c_ui_server.py"
+   ]
+  }
+ ],
+ "modules": [
+  {
+   "id": "mod:src/drawgen/cli.py",
+   "name": "cli.py",
+   "path": "src/drawgen/cli.py",
+   "line": 1,
+   "purpose": "argparse CLI: `ping` (batch backend), `live ping|selection` (bridge), `assistant chat|panel`; builds the live backend and harness and runs the agent.",
+   "subsystem": "sub:cli",
+   "functions": [
+    "fn:src/drawgen/cli.py#build_parser",
+    "fn:src/drawgen/cli.py#_live_backend",
+    "fn:src/drawgen/cli.py#_harness",
+    "fn:src/drawgen/cli.py#_run_chat",
+    "fn:src/drawgen/cli.py#_run_panel",
+    "fn:src/drawgen/cli.py#main"
+   ],
+   "flags": []
+  },
+  {
+   "id": "mod:src/drawgen/__init__.py",
+   "name": "drawgen/__init__",
+   "path": "src/drawgen/__init__.py",
+   "line": 1,
+   "purpose": "Package marker holding `__version__`.",
+   "subsystem": "sub:cli",
+   "functions": [],
+   "flags": []
+  },
+  {
+   "id": "mod:src/drawgen/assistant/agent.py",
+   "name": "agent.py",
+   "path": "src/drawgen/assistant/agent.py",
+   "line": 1,
+   "purpose": "AssistantAgent: the provider-neutral turn loop that plans, asks the harness for a step, executes tools with confirmation, and checks the answer.",
+   "subsystem": "sub:assistant",
+   "functions": [
+    "fn:src/drawgen/assistant/agent.py#AssistantAgent.__init__",
+    "fn:src/drawgen/assistant/agent.py#AssistantAgent.run",
+    "fn:src/drawgen/assistant/agent.py#_semantic_call_key",
+    "fn:src/drawgen/assistant/agent.py#_has_measurement_failure"
+   ],
+   "flags": []
+  },
+  {
+   "id": "mod:src/drawgen/assistant/planning.py",
+   "name": "planning.py",
+   "path": "src/drawgen/assistant/planning.py",
+   "line": 1,
+   "purpose": "Deterministic request classification (simple/complex/ambiguous), clarification questions and OperationPlan construction with API evidence.",
+   "subsystem": "sub:assistant",
+   "functions": [
+    "fn:src/drawgen/assistant/planning.py#classify_request",
+    "fn:src/drawgen/assistant/planning.py#clarification_questions",
+    "fn:src/drawgen/assistant/planning.py#build_operation_plan",
+    "fn:src/drawgen/assistant/planning.py#_required_terms",
+    "fn:src/drawgen/assistant/planning.py#discover_api_candidates"
+   ],
+   "flags": []
+  },
+  {
+   "id": "mod:src/drawgen/assistant/api_search.py",
+   "name": "api_search.py",
+   "path": "src/drawgen/assistant/api_search.py",
+   "line": 1,
+   "purpose": "Read-only search of a local NXOpen API index (TSV) with synonym expansion and deterministic candidate validation.",
+   "subsystem": "sub:assistant",
+   "functions": [
+    "fn:src/drawgen/assistant/api_search.py#_tokens",
+    "fn:src/drawgen/assistant/api_search.py#expand_synonyms",
+    "fn:src/drawgen/assistant/api_search.py#ApiCatalog.__init__",
+    "fn:src/drawgen/assistant/api_search.py#ApiCatalog._load",
+    "fn:src/drawgen/assistant/api_search.py#ApiCatalog.search",
+    "fn:src/drawgen/assistant/api_search.py#ApiCatalog._candidate",
+    "fn:src/drawgen/assistant/api_search.py#search_nx_api",
+    "fn:src/drawgen/assistant/api_search.py#validate_candidate"
+   ],
+   "flags": []
+  },
+  {
+   "id": "mod:src/drawgen/assistant/harness.py",
+   "name": "harness.py",
+   "path": "src/drawgen/assistant/harness.py",
+   "line": 1,
+   "purpose": "Harness adapters that turn a HarnessRequest into an AssistantStep: scripted FakeHarness, OpenAI Responses API (urllib), and the `pi` CLI in JSON mode (subprocess).",
+   "subsystem": "sub:assistant",
+   "functions": [
+    "HarnessError@19",
+    "HarnessAdapter.select@24",
+    "fn:src/drawgen/assistant/harness.py#_system_prompt",
+    "fn:src/drawgen/assistant/harness.py#_parse_step",
+    "fn:src/drawgen/assistant/harness.py#_parse_text_step",
+    "FakeHarness.__init__@105",
+    "fn:src/drawgen/assistant/harness.py#FakeHarness.select",
+    "CodexApiHarness.__init__@219",
+    "fn:src/drawgen/assistant/harness.py#CodexApiHarness.select",
+    "PiAgentHarness.__init__@291",
+    "fn:src/drawgen/assistant/harness.py#PiAgentHarness.select"
+   ],
+   "flags": []
+  },
+  {
+   "id": "mod:src/drawgen/assistant/tools/__init__.py",
+   "name": "tools/__init__",
+   "path": "src/drawgen/assistant/tools/__init__.py",
+   "line": 1,
+   "purpose": "The closed tool registry: pydantic argument models, read handlers, and the confirmation gate for change tools (rules 7 and 8).",
+   "subsystem": "sub:assistant",
+   "functions": [
+    "EmptyArgs@18",
+    "SelectionArgs@22",
+    "MeasureArgs@27",
+    "ApiSearchArgs@32",
+    "ListArgs@40",
+    "HandleArgs@44",
+    "PathArgs@49",
+    "AttributeArgs@54",
+    "ExpressionArgs@61",
+    "ScopeArgs@67",
+    "CreateBoxWithHoleArgs._validate_dimensions@98",
+    "CreateSheetArgs@113",
+    "BaseViewArgs@119",
+    "ProjectedViewArgs@126",
+    "DimensionArgs@132",
+    "NoteArgs@140",
+    "ExportArgs@146",
+    "ToolDefinition@153",
+    "ToolError@160",
+    "fn:src/drawgen/assistant/tools/__init__.py#_model_dump",
+    "fn:src/drawgen/assistant/tools/__init__.py#_read_context",
+    "fn:src/drawgen/assistant/tools/__init__.py#_read_selection",
+    "fn:src/drawgen/assistant/tools/__init__.py#_read_measure",
+    "fn:src/drawgen/assistant/tools/__init__.py#_read_api_search",
+    "fn:src/drawgen/assistant/tools/__init__.py#_read_list",
+    "fn:src/drawgen/assistant/tools/__init__.py#ToolRegistry.__init__",
+    "fn:src/drawgen/assistant/tools/__init__.py#ToolRegistry._register",
+    "fn:src/drawgen/assistant/tools/__init__.py#ToolRegistry._register_defaults",
+    "fn:src/drawgen/assistant/tools/__init__.py#ToolRegistry.specs",
+    "fn:src/drawgen/assistant/tools/__init__.py#ToolRegistry.execute"
+   ],
+   "flags": []
+  },
+  {
+   "id": "mod:src/drawgen/assistant/checker.py",
+   "name": "checker.py",
+   "path": "src/drawgen/assistant/checker.py",
+   "line": 1,
+   "purpose": "Rejects an answer that contains any number not present in the user message or tool results (rule 1).",
+   "subsystem": "sub:assistant",
+   "functions": [
+    "fn:src/drawgen/assistant/checker.py#_numbers",
+    "fn:src/drawgen/assistant/checker.py#check_answer"
+   ],
+   "flags": []
+  },
+  {
+   "id": "mod:src/drawgen/assistant/contracts.py",
+   "name": "contracts.py",
+   "path": "src/drawgen/assistant/contracts.py",
+   "line": 1,
+   "purpose": "Assistant message contracts: ToolCall, AssistantStep (exactly one action), HarnessRequest, ToolSpec, ToolExecution, TurnResult.",
+   "subsystem": "sub:assistant",
+   "functions": [
+    "ToolCall@12",
+    "AssistantStep.exactly_one_action@23",
+    "HarnessRequest@36",
+    "ToolSpec@45",
+    "ToolExecution@52",
+    "TurnResult@60"
+   ],
+   "flags": []
+  },
+  {
+   "id": "mod:src/drawgen/assistant/log.py",
+   "name": "log.py",
+   "path": "src/drawgen/assistant/log.py",
+   "line": 1,
+   "purpose": "SessionLog: appends JSONL events under runs/assistant/<session>/events.jsonl.",
+   "subsystem": "sub:assistant",
+   "functions": [
+    "SessionLog.__init__@13",
+    "fn:src/drawgen/assistant/log.py#SessionLog.append"
+   ],
+   "flags": []
+  },
+  {
+   "id": "mod:src/drawgen/assistant/panel/app.py",
+   "name": "app.py",
+   "path": "src/drawgen/assistant/panel/app.py",
+   "line": 1,
+   "purpose": "Tkinter chat window that runs agent turns on a worker thread and marshals confirmations back to the UI thread.",
+   "subsystem": "sub:assistant",
+   "functions": [
+    "fn:src/drawgen/assistant/panel/app.py#run_panel"
+   ],
+   "flags": []
+  },
+  {
+   "id": "mod:src/drawgen/backends/live.py",
+   "name": "live.py",
+   "path": "src/drawgen/backends/live.py",
+   "line": 1,
+   "purpose": "LiveBackend protocol (ping, get_context, get_selection, measure, list, execute) and LiveBackendError.",
+   "subsystem": "sub:backends",
+   "functions": [
+    "LiveBackendError@18",
+    "LiveBackend.ping@23",
+    "LiveBackend.get_context@25",
+    "LiveBackend.get_selection@27",
+    "LiveBackend.measure@29",
+    "LiveBackend.list@31",
+    "LiveBackend.execute@33"
+   ],
+   "flags": []
+  },
+  {
+   "id": "mod:src/drawgen/backends/bridge.py",
+   "name": "bridge.py",
+   "path": "src/drawgen/backends/bridge.py",
+   "line": 1,
+   "purpose": "BridgeBackend: newline-delimited JSON over loopback TCP to the C# bridge, endpoint and token read from bridge.json.",
+   "subsystem": "sub:backends",
+   "functions": [
+    "BridgeBackend.__init__@26",
+    "fn:src/drawgen/backends/bridge.py#BridgeBackend._endpoint",
+    "fn:src/drawgen/backends/bridge.py#BridgeBackend._request",
+    "BridgeBackend.ping@75",
+    "fn:src/drawgen/backends/bridge.py#BridgeBackend.get_context",
+    "fn:src/drawgen/backends/bridge.py#BridgeBackend.get_selection",
+    "fn:src/drawgen/backends/bridge.py#BridgeBackend.measure",
+    "fn:src/drawgen/backends/bridge.py#BridgeBackend.list",
+    "fn:src/drawgen/backends/bridge.py#BridgeBackend.execute"
+   ],
+   "flags": []
+  },
+  {
+   "id": "mod:src/drawgen/backends/live_mock.py",
+   "name": "live_mock.py",
+   "path": "src/drawgen/backends/live_mock.py",
+   "line": 1,
+   "purpose": "MockLiveBackend: scripted context, selection and measurements, records executed commands and fake undo marks.",
+   "subsystem": "sub:backends",
+   "functions": [
+    "MockLiveBackend.__init__@22",
+    "MockLiveBackend.ping@44",
+    "fn:src/drawgen/backends/live_mock.py#MockLiveBackend.get_context",
+    "fn:src/drawgen/backends/live_mock.py#MockLiveBackend.get_selection",
+    "fn:src/drawgen/backends/live_mock.py#MockLiveBackend.measure",
+    "fn:src/drawgen/backends/live_mock.py#MockLiveBackend.list",
+    "fn:src/drawgen/backends/live_mock.py#MockLiveBackend.execute"
+   ],
+   "flags": []
+  },
+  {
+   "id": "mod:src/drawgen/backends/__init__.py",
+   "name": "backends/__init__",
+   "path": "src/drawgen/backends/__init__.py",
+   "line": 1,
+   "purpose": "get_backend(name): lazily constructs MockBackend or NxBackend behind the CadBackend protocol.",
+   "subsystem": "sub:backends",
+   "functions": [
+    "get_backend@8"
+   ],
+   "flags": []
+  },
+  {
+   "id": "mod:src/drawgen/backends/base.py",
+   "name": "base.py",
+   "path": "src/drawgen/backends/base.py",
+   "line": 1,
+   "purpose": "CadBackend protocol for batch drawing generation and the worker error hierarchy (timeout, protocol error, failed status).",
+   "subsystem": "sub:backends",
+   "functions": [
+    "BackendError@14",
+    "WorkerTimeout.__init__@21",
+    "WorkerProtocolError.__init__@32",
+    "WorkerFailed.__init__@43",
+    "CadBackend.ping@55",
+    "CadBackend.extract_model@57",
+    "CadBackend.extract_drawing@59",
+    "CadBackend.execute_plan@61",
+    "CadBackend.measure@63",
+    "CadBackend.export@65"
+   ],
+   "flags": []
+  },
+  {
+   "id": "mod:src/drawgen/backends/nx.py",
+   "name": "nx.py",
+   "path": "src/drawgen/backends/nx.py",
+   "line": 1,
+   "purpose": "NxBackend: writes job.json, runs NX run_journal on nx_worker/main.py as a subprocess, validates status.json and result.json.",
+   "subsystem": "sub:backends",
+   "functions": [
+    "build_command@34",
+    "NxBackend.__init__@46",
+    "NxBackend._resolve_run_journal@62",
+    "NxBackend._tail@77",
+    "NxBackend._text@81",
+    "NxBackend._new_run_dir@88",
+    "NxBackend._dump_model@99",
+    "NxBackend._run@102",
+    "NxBackend._validate_result@162",
+    "NxBackend.ping@175",
+    "NxBackend.extract_model@182",
+    "NxBackend.extract_drawing@190",
+    "NxBackend.execute_plan@200",
+    "NxBackend.measure@208",
+    "NxBackend.export@226"
+   ],
+   "flags": []
+  },
+  {
+   "id": "mod:src/drawgen/backends/mock.py",
+   "name": "mock.py",
+   "path": "src/drawgen/backends/mock.py",
+   "line": 1,
+   "purpose": "MockBackend: reads raw_model.json / raw_drawing.json fixtures; execute/measure/export are stubs for P2-T5.",
+   "subsystem": "sub:backends",
+   "functions": [
+    "MockBackend.__init__@17",
+    "MockBackend._resolve@20",
+    "MockBackend._json_path@26",
+    "MockBackend._read@33",
+    "MockBackend.ping@40",
+    "MockBackend.extract_model@47",
+    "MockBackend.extract_drawing@50",
+    "MockBackend.execute_plan@55",
+    "MockBackend.measure@58",
+    "MockBackend.export@61"
+   ],
+   "flags": []
+  },
+  {
+   "id": "mod:src/drawgen/contracts/common.py",
+   "name": "common.py",
+   "path": "src/drawgen/contracts/common.py",
+   "line": 1,
+   "purpose": "Base `Contract` model and common types (Fingerprint, Tolerances, SheetSize, Placement, FeatureRef).",
+   "subsystem": "sub:contracts",
+   "functions": [
+    "Contract@40",
+    "Fingerprint@56",
+    "Tolerances@69",
+    "SheetSize@81",
+    "Placement@86",
+    "FeatureRef@91"
+   ],
+   "flags": []
+  },
+  {
+   "id": "mod:src/drawgen/contracts/live.py",
+   "name": "live.py",
+   "path": "src/drawgen/contracts/live.py",
+   "line": 1,
+   "purpose": "Bridge request/response envelopes and live types: SessionContext, Selection, measure, list and OperationResult.",
+   "subsystem": "sub:contracts",
+   "functions": [
+    "BridgeRequest@13",
+    "BridgeResponse@22",
+    "PartRef@28",
+    "SessionContext@34",
+    "SelectedObject@56",
+    "Selection@65",
+    "LiveMeasureRequest@73",
+    "LiveMeasureResult@80",
+    "LiveMeasureResults@87",
+    "ListRequest@102",
+    "ListResult@107",
+    "OperationResult@111"
+   ],
+   "flags": []
+  },
+  {
+   "id": "mod:src/drawgen/contracts/operation_plan.py",
+   "name": "operation_plan.py",
+   "path": "src/drawgen/contracts/operation_plan.py",
+   "line": 1,
+   "purpose": "OperationPlan, PlanStep and ApiCandidate for plan-driven Branch C operations.",
+   "subsystem": "sub:contracts",
+   "functions": [
+    "PlanStep@30",
+    "ApiCandidate@46",
+    "PipelineStep@63",
+    "OperationPlan@75",
+    "PipelineResult@91"
+   ],
+   "flags": []
+  },
+  {
+   "id": "mod:src/drawgen/contracts/worker.py",
+   "name": "worker.py",
+   "path": "src/drawgen/contracts/worker.py",
+   "line": 1,
+   "purpose": "Worker protocol: WorkerJob, WorkerStatus, PingResult, measure and export messages (HANDOFF 9).",
+   "subsystem": "sub:contracts",
+   "functions": [
+    "WorkerJob@19",
+    "WorkerError@29",
+    "WorkerStatus@35",
+    "PingResult@47",
+    "MeasureRequest@52",
+    "MeasureResult@60",
+    "MeasureResults@66",
+    "ExportResult@70"
+   ],
+   "flags": []
+  },
+  {
+   "id": "mod:src/drawgen/contracts/execution.py",
+   "name": "execution.py",
+   "path": "src/drawgen/contracts/execution.py",
+   "line": 1,
+   "purpose": "ExecutionJob and ExecutionReport: drawing-creation worker input and output (HANDOFF 8.10).",
+   "subsystem": "sub:contracts",
+   "functions": [
+    "JobSheet@22",
+    "JobView@30",
+    "JobAttachment@40",
+    "JobDimension@45",
+    "JobNote@55",
+    "ExecutionJob@61",
+    "ReportView@75",
+    "ReportDimension@85",
+    "UnresolvedAttachment@96",
+    "ExportedFile@102",
+    "ExecutionReport@107"
+   ],
+   "flags": []
+  },
+  {
+   "id": "mod:src/drawgen/contracts/raw_model.py",
+   "name": "raw_model.py",
+   "path": "src/drawgen/contracts/raw_model.py",
+   "line": 1,
+   "purpose": "RawModel: faces, edges, bodies and components extracted from a 3D part (HANDOFF 8.2).",
+   "subsystem": "sub:contracts",
+   "functions": [
+    "RawModelSource@10",
+    "RawComponent@19",
+    "RawFace@29",
+    "RawEdge@43",
+    "RawBody@55",
+    "RawModel@65"
+   ],
+   "flags": []
+  },
+  {
+   "id": "mod:src/drawgen/contracts/raw_drawing.py",
+   "name": "raw_drawing.py",
+   "path": "src/drawgen/contracts/raw_drawing.py",
+   "line": 1,
+   "purpose": "RawDrawing: sheets, views, dimensions, notes and tables extracted from a drawing (HANDOFF 8.3).",
+   "subsystem": "sub:contracts",
+   "functions": [
+    "RawDrawingSource@22",
+    "RawView@31",
+    "AppendedText@45",
+    "RawTolerance@52",
+    "RawAttachment@58",
+    "RawDimension@68",
+    "RawNote@84",
+    "RawTable@92",
+    "RawSheet@99",
+    "RawDrawing@113"
+   ],
+   "flags": []
+  },
+  {
+   "id": "mod:src/drawgen/contracts/feature_graph.py",
+   "name": "feature_graph.py",
+   "path": "src/drawgen/contracts/feature_graph.py",
+   "line": 1,
+   "purpose": "FeatureGraph: recognised features and relations in the part frame (HANDOFF 8.4).",
+   "subsystem": "sub:contracts",
+   "functions": [
+    "Frame@27",
+    "Feature@35",
+    "Relation@48",
+    "FeatureGraph@55"
+   ],
+   "flags": []
+  },
+  {
+   "id": "mod:src/drawgen/contracts/drawing_graph.py",
+   "name": "drawing_graph.py",
+   "path": "src/drawgen/contracts/drawing_graph.py",
+   "line": 1,
+   "purpose": "DrawingGraph: a RawDrawing linked to features (HANDOFF 8.5).",
+   "subsystem": "sub:contracts",
+   "functions": [
+    "GView@19",
+    "ObservedPlacement@23",
+    "GDimension@30",
+    "GSheet@44",
+    "UnlinkedDimension@57",
+    "DrawingGraph@62"
+   ],
+   "flags": []
+  },
+  {
+   "id": "mod:src/drawgen/contracts/convention_profile.py",
+   "name": "convention_profile.py",
+   "path": "src/drawgen/contracts/convention_profile.py",
+   "line": 1,
+   "purpose": "ConventionProfile learned from a reference drawing (HANDOFF 8.6).",
+   "subsystem": "sub:contracts",
+   "functions": [
+    "ProfileView@21",
+    "Selector@30",
+    "Datum@37",
+    "ProfileDimensionRule@42",
+    "ProfileNote@52",
+    "ToleranceSeen@58",
+    "ConventionProfile@65"
+   ],
+   "flags": []
+  },
+  {
+   "id": "mod:src/drawgen/contracts/correspondence.py",
+   "name": "correspondence.py",
+   "path": "src/drawgen/contracts/correspondence.py",
+   "line": 1,
+   "purpose": "Correspondence: target-to-reference feature pairs (HANDOFF 8.7).",
+   "subsystem": "sub:contracts",
+   "functions": [
+    "FeaturePair@10",
+    "Correspondence@17"
+   ],
+   "flags": []
+  },
+  {
+   "id": "mod:src/drawgen/contracts/candidate_set.py",
+   "name": "candidate_set.py",
+   "path": "src/drawgen/contracts/candidate_set.py",
+   "line": 1,
+   "purpose": "CandidateSet: deterministic view and dimension candidates the LLM may choose from (HANDOFF 8.8).",
+   "subsystem": "sub:contracts",
+   "functions": [
+    "ViewCandidate@21",
+    "DimensionCandidate@30",
+    "CandidateSet@43"
+   ],
+   "flags": []
+  },
+  {
+   "id": "mod:src/drawgen/contracts/drawing_plan.py",
+   "name": "drawing_plan.py",
+   "path": "src/drawgen/contracts/drawing_plan.py",
+   "line": 1,
+   "purpose": "DrawingPlan and PlanSelection with provenance and review flags (HANDOFF 8.9).",
+   "subsystem": "sub:contracts",
+   "functions": [
+    "PlanView@16",
+    "PlanDimension@23",
+    "PlanNote@31",
+    "TitleBlockEntry@39",
+    "ReviewFlag@44",
+    "PlanProvenance@51",
+    "DrawingPlan@57",
+    "DimensionChoice@74",
+    "RoleAssignment@79",
+    "PlanSelection@84"
+   ],
+   "flags": []
+  },
+  {
+   "id": "mod:src/drawgen/contracts/findings.py",
+   "name": "findings.py",
+   "path": "src/drawgen/contracts/findings.py",
+   "line": 1,
+   "purpose": "Findings and the closed set of repair edits (HANDOFF 8.11).",
+   "subsystem": "sub:contracts",
+   "functions": [
+    "MoveDimension@10",
+    "MoveView@17",
+    "SetViewScale@23",
+    "SetSheet@29",
+    "AddDimension@35",
+    "RemoveDimension@41",
+    "SwitchView@46",
+    "AddView@52",
+    "Flag@57",
+    "FindingResult@80",
+    "FindingsSummary@88",
+    "Findings@95"
+   ],
+   "flags": []
+  },
+  {
+   "id": "mod:src/drawgen/contracts/manifest.py",
+   "name": "manifest.py",
+   "path": "src/drawgen/contracts/manifest.py",
+   "line": 1,
+   "purpose": "RunManifest: inputs, config, artifacts, steps and LLM calls of one run (HANDOFF 8.12).",
+   "subsystem": "sub:contracts",
+   "functions": [
+    "RunInputs@10",
+    "RunConfig@16",
+    "Artifact@23",
+    "RunStep@28",
+    "LlmCall@35",
+    "RunManifest@42"
+   ],
+   "flags": []
+  },
+  {
+   "id": "mod:src/drawgen/contracts/registry.py",
+   "name": "registry.py",
+   "path": "src/drawgen/contracts/registry.py",
+   "line": 1,
+   "purpose": "The list of every contract exported to schemas/ and round-trip tested.",
+   "subsystem": "sub:contracts",
+   "functions": [],
+   "flags": []
+  },
+  {
+   "id": "mod:shared/drawgen_shared/jsonio.py",
+   "name": "jsonio.py",
+   "path": "shared/drawgen_shared/jsonio.py",
+   "line": 1,
+   "purpose": "Deterministic canonical JSON read/write and SHA-256 helpers.",
+   "subsystem": "sub:shared",
+   "functions": [
+    "canonical_json@12",
+    "sha256_canonical@24",
+    "read_json@30",
+    "write_json@37"
+   ],
+   "flags": []
+  },
+  {
+   "id": "mod:shared/drawgen_shared/vec.py",
+   "name": "vec.py",
+   "path": "shared/drawgen_shared/vec.py",
+   "line": 1,
+   "purpose": "Small 3D vector helpers used by the worker and core code.",
+   "subsystem": "sub:shared",
+   "functions": [
+    "add@13",
+    "sub@19",
+    "scale@25",
+    "dot@31",
+    "cross@37",
+    "norm@47",
+    "normalize@53",
+    "distance@62",
+    "angle_between@68",
+    "is_parallel@77",
+    "midpoint@88",
+    "bbox_of_points@94",
+    "bbox_union@116",
+    "as_vec3@152"
+   ],
+   "flags": []
+  },
+  {
+   "id": "mod:shared/drawgen_shared/frame.py",
+   "name": "frame.py",
+   "path": "shared/drawgen_shared/frame.py",
+   "line": 1,
+   "purpose": "Orthonormal coordinate frames and conversions between frame coordinates.",
+   "subsystem": "sub:shared",
+   "functions": [
+    "Frame.from_axes@20",
+    "Frame.to_local@31",
+    "Frame.to_global@37",
+    "Frame.dir_to_local@45",
+    "Frame.dir_to_global@50",
+    "Frame.rotation_rows@58"
+   ],
+   "flags": []
+  },
+  {
+   "id": "mod:shared/drawgen_shared/fingerprint.py",
+   "name": "fingerprint.py",
+   "path": "shared/drawgen_shared/fingerprint.py",
+   "line": 1,
+   "purpose": "JSON-ready geometry fingerprints and tolerant matching (HANDOFF 8.1).",
+   "subsystem": "sub:shared",
+   "functions": [
+    "Fingerprint@26",
+    "MatchResult@40",
+    "_finite_float@53",
+    "_geometry@63",
+    "_vec_list@69",
+    "_optional_vec_list@79",
+    "_bbox_list@85",
+    "_circle_bbox@95",
+    "from_face@112",
+    "from_edge@127",
+    "_size_matches@178",
+    "_optional_radius_matches@184",
+    "is_same@194",
+    "match@224"
+   ],
+   "flags": []
+  },
+  {
+   "id": "mod:shared/drawgen_shared/tolerances.py",
+   "name": "tolerances.py",
+   "path": "shared/drawgen_shared/tolerances.py",
+   "line": 1,
+   "purpose": "Shared geometric and fingerprint tolerance configuration.",
+   "subsystem": "sub:shared",
+   "functions": [
+    "Tolerances.to_dict@20"
+   ],
+   "flags": []
+  },
+  {
+   "id": "mod:nx_worker/main.py",
+   "name": "main.py",
+   "path": "nx_worker/main.py",
+   "line": 1,
+   "purpose": "Journal entry: run_job reads job.json, imports nx_worker.commands.<command>, writes result.json and status.json atomically; --selftest exercises the protocol.",
+   "subsystem": "sub:nx_worker",
+   "functions": [
+    "_repository_paths@20",
+    "_runtime_status@55",
+    "_atomic_write_json@74",
+    "_error_payload@89",
+    "_fallback_status_path@97",
+    "_output_dir_from_job@101",
+    "_write_status@111",
+    "_validate_job@118",
+    "run_job@145",
+    "_selftest@199",
+    "main@251"
+   ],
+   "flags": []
+  },
+  {
+   "id": "mod:nx_worker/commands/ping.py",
+   "name": "ping.py",
+   "path": "nx_worker/commands/ping.py",
+   "line": 1,
+   "purpose": "NX availability probe: imports NXOpen and reports versions.",
+   "subsystem": "sub:nx_worker",
+   "functions": [
+    "run@8"
+   ],
+   "flags": []
+  },
+  {
+   "id": "mod:nx_worker/commands/selftest.py",
+   "name": "selftest.py",
+   "path": "nx_worker/commands/selftest.py",
+   "line": 1,
+   "purpose": "Plain-Python command used to exercise the worker protocol without NX.",
+   "subsystem": "sub:nx_worker",
+   "functions": [
+    "run@6"
+   ],
+   "flags": []
+  },
+  {
+   "id": "mod:nx_bridge/src/NxBridgeEntry.cs",
+   "name": "NxBridgeEntry.cs",
+   "path": "nx_bridge/src/NxBridgeEntry.cs",
+   "line": 1,
+   "purpose": "NX add-in entry: starts BridgeServer, writes bridge.json, and InteractiveNxDispatcher maps commands to NXOpen calls under UI lock.",
+   "subsystem": "sub:nx_bridge",
+   "functions": [
+    "fn:nx_bridge/src/NxBridgeEntry.cs#InteractiveNxDispatcher.Measure",
+    "fn:nx_bridge/src/NxBridgeEntry.cs#InteractiveNxDispatcher.Dispatch",
+    "Main@19",
+    "GetContext@76",
+    "GetSelection@97",
+    "CreateBoxWithHole@352",
+    "Display@322",
+    "FitView@346",
+    "Update@436",
+    "Save@443"
+   ],
+   "flags": [
+    "long"
+   ]
+  },
+  {
+   "id": "mod:nx_bridge/src/BridgeServer.cs",
+   "name": "BridgeServer.cs",
+   "path": "nx_bridge/src/BridgeServer.cs",
+   "line": 1,
+   "purpose": "Loopback TCP listener: reads one JSON line, checks the token, answers `ping` or forwards to INxDispatcher, writes one JSON line.",
+   "subsystem": "sub:nx_bridge",
+   "functions": [
+    "fn:nx_bridge/src/BridgeServer.cs#BridgeServer.HandleClientAsync",
+    "Start@33",
+    "AcceptLoopAsync@40",
+    "Dispose@83"
+   ],
+   "flags": []
+  },
+  {
+   "id": "mod:nx_bridge/src/BridgeProtocol.cs",
+   "name": "BridgeProtocol.cs",
+   "path": "nx_bridge/src/BridgeProtocol.cs",
+   "line": 1,
+   "purpose": "C# records for BridgeRequest/BridgeResponse/BridgeStatus and the shared JSON serializer options.",
+   "subsystem": "sub:nx_bridge",
+   "functions": [
+    "BridgeRequest@6",
+    "BridgeResponse@25",
+    "BridgeJson@27"
+   ],
+   "flags": []
+  },
+  {
+   "id": "mod:tools/branch_c_ui_server.py",
+   "name": "branch_c_ui_server.py",
+   "path": "tools/branch_c_ui_server.py",
+   "line": 1,
+   "purpose": "Local HTTP server for web/branch_c_chat.html: /health probes NX and the bridge, /chat runs `uv run drawgen assistant chat` per message.",
+   "subsystem": "sub:tools",
+   "functions": [
+    "_env_flag@22",
+    "_nx_running@29",
+    "_bridge_diagnostic@41",
+    "_bridge_reachable@51",
+    "_health@55",
+    "_chat@72",
+    "Handler._write_json@136",
+    "Handler.do_GET@145",
+    "Handler.do_POST@164",
+    "Handler.log_message@181",
+    "main@185"
+   ],
+   "flags": [
+    "no-doc"
+   ]
+  }
+ ],
+ "moduleEdges": [
+  {
+   "from": "mod:nx_worker/main.py",
+   "to": "mod:shared/drawgen_shared/jsonio.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "nx_worker/main.py:34"
+  },
+  {
+   "from": "mod:src/drawgen/assistant/agent.py",
+   "to": "mod:src/drawgen/assistant/checker.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/assistant/agent.py:9"
+  },
+  {
+   "from": "mod:src/drawgen/assistant/agent.py",
+   "to": "mod:src/drawgen/assistant/contracts.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/assistant/agent.py:10"
+  },
+  {
+   "from": "mod:src/drawgen/assistant/agent.py",
+   "to": "mod:src/drawgen/assistant/harness.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/assistant/agent.py:11"
+  },
+  {
+   "from": "mod:src/drawgen/assistant/agent.py",
+   "to": "mod:src/drawgen/assistant/log.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/assistant/agent.py:12"
+  },
+  {
+   "from": "mod:src/drawgen/assistant/agent.py",
+   "to": "mod:src/drawgen/assistant/planning.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/assistant/agent.py:13"
+  },
+  {
+   "from": "mod:src/drawgen/assistant/agent.py",
+   "to": "mod:src/drawgen/assistant/tools/__init__.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/assistant/agent.py:14"
+  },
+  {
+   "from": "mod:src/drawgen/assistant/agent.py",
+   "to": "mod:src/drawgen/backends/live.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/assistant/agent.py:15"
+  },
+  {
+   "from": "mod:src/drawgen/assistant/api_search.py",
+   "to": "mod:src/drawgen/contracts/operation_plan.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/assistant/api_search.py:13"
+  },
+  {
+   "from": "mod:src/drawgen/assistant/contracts.py",
+   "to": "mod:src/drawgen/contracts/common.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/assistant/contracts.py:9"
+  },
+  {
+   "from": "mod:src/drawgen/assistant/harness.py",
+   "to": "mod:src/drawgen/assistant/contracts.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/assistant/harness.py:16"
+  },
+  {
+   "from": "mod:src/drawgen/assistant/panel/app.py",
+   "to": "mod:src/drawgen/assistant/agent.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/assistant/panel/app.py:9"
+  },
+  {
+   "from": "mod:src/drawgen/assistant/panel/app.py",
+   "to": "mod:src/drawgen/assistant/harness.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/assistant/panel/app.py:10"
+  },
+  {
+   "from": "mod:src/drawgen/assistant/panel/app.py",
+   "to": "mod:src/drawgen/assistant/log.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/assistant/panel/app.py:11"
+  },
+  {
+   "from": "mod:src/drawgen/assistant/panel/app.py",
+   "to": "mod:src/drawgen/backends/live.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/assistant/panel/app.py:12"
+  },
+  {
+   "from": "mod:src/drawgen/assistant/planning.py",
+   "to": "mod:src/drawgen/assistant/api_search.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/assistant/planning.py:7"
+  },
+  {
+   "from": "mod:src/drawgen/assistant/planning.py",
+   "to": "mod:src/drawgen/contracts/operation_plan.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/assistant/planning.py:13"
+  },
+  {
+   "from": "mod:src/drawgen/assistant/tools/__init__.py",
+   "to": "mod:src/drawgen/assistant/api_search.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/assistant/tools/__init__.py:11"
+  },
+  {
+   "from": "mod:src/drawgen/assistant/tools/__init__.py",
+   "to": "mod:src/drawgen/assistant/contracts.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/assistant/tools/__init__.py:12"
+  },
+  {
+   "from": "mod:src/drawgen/assistant/tools/__init__.py",
+   "to": "mod:src/drawgen/backends/live.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/assistant/tools/__init__.py:13"
+  },
+  {
+   "from": "mod:src/drawgen/assistant/tools/__init__.py",
+   "to": "mod:src/drawgen/contracts/live.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/assistant/tools/__init__.py:14"
+  },
+  {
+   "from": "mod:src/drawgen/assistant/tools/__init__.py",
+   "to": "mod:src/drawgen/contracts/operation_plan.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/assistant/tools/__init__.py:15"
+  },
+  {
+   "from": "mod:src/drawgen/backends/__init__.py",
+   "to": "mod:src/drawgen/backends/base.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/backends/__init__.py:5"
+  },
+  {
+   "from": "mod:src/drawgen/backends/__init__.py",
+   "to": "mod:src/drawgen/backends/mock.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/backends/__init__.py:10"
+  },
+  {
+   "from": "mod:src/drawgen/backends/__init__.py",
+   "to": "mod:src/drawgen/backends/nx.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/backends/__init__.py:14"
+  },
+  {
+   "from": "mod:src/drawgen/backends/base.py",
+   "to": "mod:src/drawgen/contracts/execution.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/backends/base.py:8"
+  },
+  {
+   "from": "mod:src/drawgen/backends/base.py",
+   "to": "mod:src/drawgen/contracts/raw_drawing.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/backends/base.py:9"
+  },
+  {
+   "from": "mod:src/drawgen/backends/base.py",
+   "to": "mod:src/drawgen/contracts/raw_model.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/backends/base.py:10"
+  },
+  {
+   "from": "mod:src/drawgen/backends/base.py",
+   "to": "mod:src/drawgen/contracts/worker.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/backends/base.py:11"
+  },
+  {
+   "from": "mod:src/drawgen/backends/bridge.py",
+   "to": "mod:src/drawgen/backends/live.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/backends/bridge.py:11"
+  },
+  {
+   "from": "mod:src/drawgen/backends/bridge.py",
+   "to": "mod:src/drawgen/contracts/live.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/backends/bridge.py:12"
+  },
+  {
+   "from": "mod:src/drawgen/backends/live.py",
+   "to": "mod:src/drawgen/contracts/live.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/backends/live.py:7"
+  },
+  {
+   "from": "mod:src/drawgen/backends/live_mock.py",
+   "to": "mod:src/drawgen/backends/live.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/backends/live_mock.py:8"
+  },
+  {
+   "from": "mod:src/drawgen/backends/live_mock.py",
+   "to": "mod:src/drawgen/contracts/live.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/backends/live_mock.py:9"
+  },
+  {
+   "from": "mod:src/drawgen/backends/mock.py",
+   "to": "mod:src/drawgen/contracts/execution.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/backends/mock.py:10"
+  },
+  {
+   "from": "mod:src/drawgen/backends/mock.py",
+   "to": "mod:src/drawgen/contracts/raw_drawing.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/backends/mock.py:11"
+  },
+  {
+   "from": "mod:src/drawgen/backends/mock.py",
+   "to": "mod:src/drawgen/contracts/raw_model.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/backends/mock.py:12"
+  },
+  {
+   "from": "mod:src/drawgen/backends/mock.py",
+   "to": "mod:src/drawgen/contracts/worker.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/backends/mock.py:13"
+  },
+  {
+   "from": "mod:src/drawgen/backends/nx.py",
+   "to": "mod:shared/drawgen_shared/jsonio.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/backends/nx.py:12"
+  },
+  {
+   "from": "mod:src/drawgen/backends/nx.py",
+   "to": "mod:src/drawgen/backends/base.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/backends/nx.py:14"
+  },
+  {
+   "from": "mod:src/drawgen/backends/nx.py",
+   "to": "mod:src/drawgen/contracts/execution.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/backends/nx.py:20"
+  },
+  {
+   "from": "mod:src/drawgen/backends/nx.py",
+   "to": "mod:src/drawgen/contracts/raw_drawing.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/backends/nx.py:21"
+  },
+  {
+   "from": "mod:src/drawgen/backends/nx.py",
+   "to": "mod:src/drawgen/contracts/raw_model.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/backends/nx.py:22"
+  },
+  {
+   "from": "mod:src/drawgen/backends/nx.py",
+   "to": "mod:src/drawgen/contracts/worker.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/backends/nx.py:23"
+  },
+  {
+   "from": "mod:src/drawgen/cli.py",
+   "to": "mod:src/drawgen/__init__.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/cli.py:9"
+  },
+  {
+   "from": "mod:src/drawgen/cli.py",
+   "to": "mod:src/drawgen/assistant/agent.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/cli.py:10"
+  },
+  {
+   "from": "mod:src/drawgen/cli.py",
+   "to": "mod:src/drawgen/assistant/harness.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/cli.py:11"
+  },
+  {
+   "from": "mod:src/drawgen/cli.py",
+   "to": "mod:src/drawgen/assistant/log.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/cli.py:18"
+  },
+  {
+   "from": "mod:src/drawgen/cli.py",
+   "to": "mod:src/drawgen/backends/__init__.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/cli.py:19"
+  },
+  {
+   "from": "mod:src/drawgen/cli.py",
+   "to": "mod:src/drawgen/backends/base.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/cli.py:20"
+  },
+  {
+   "from": "mod:src/drawgen/cli.py",
+   "to": "mod:src/drawgen/backends/bridge.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/cli.py:21"
+  },
+  {
+   "from": "mod:src/drawgen/cli.py",
+   "to": "mod:src/drawgen/backends/live.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/cli.py:22"
+  },
+  {
+   "from": "mod:src/drawgen/cli.py",
+   "to": "mod:src/drawgen/backends/live_mock.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/cli.py:23"
+  },
+  {
+   "from": "mod:src/drawgen/cli.py",
+   "to": "mod:src/drawgen/contracts/live.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/cli.py:24"
+  },
+  {
+   "from": "mod:src/drawgen/cli.py",
+   "to": "mod:src/drawgen/assistant/panel/app.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/cli.py:143"
+  },
+  {
+   "from": "mod:src/drawgen/contracts/candidate_set.py",
+   "to": "mod:src/drawgen/contracts/common.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/contracts/candidate_set.py:11"
+  },
+  {
+   "from": "mod:src/drawgen/contracts/convention_profile.py",
+   "to": "mod:src/drawgen/contracts/common.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/contracts/convention_profile.py:7"
+  },
+  {
+   "from": "mod:src/drawgen/contracts/convention_profile.py",
+   "to": "mod:src/drawgen/contracts/raw_drawing.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/contracts/convention_profile.py:18"
+  },
+  {
+   "from": "mod:src/drawgen/contracts/correspondence.py",
+   "to": "mod:src/drawgen/contracts/common.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/contracts/correspondence.py:7"
+  },
+  {
+   "from": "mod:src/drawgen/contracts/drawing_graph.py",
+   "to": "mod:src/drawgen/contracts/common.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/contracts/drawing_graph.py:7"
+  },
+  {
+   "from": "mod:src/drawgen/contracts/drawing_graph.py",
+   "to": "mod:src/drawgen/contracts/raw_drawing.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/contracts/drawing_graph.py:16"
+  },
+  {
+   "from": "mod:src/drawgen/contracts/drawing_plan.py",
+   "to": "mod:src/drawgen/contracts/common.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/contracts/drawing_plan.py:13"
+  },
+  {
+   "from": "mod:src/drawgen/contracts/execution.py",
+   "to": "mod:src/drawgen/contracts/common.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/contracts/execution.py:7"
+  },
+  {
+   "from": "mod:src/drawgen/contracts/feature_graph.py",
+   "to": "mod:src/drawgen/contracts/common.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/contracts/feature_graph.py:7"
+  },
+  {
+   "from": "mod:src/drawgen/contracts/findings.py",
+   "to": "mod:src/drawgen/contracts/common.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/contracts/findings.py:7"
+  },
+  {
+   "from": "mod:src/drawgen/contracts/live.py",
+   "to": "mod:src/drawgen/contracts/common.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/contracts/live.py:9"
+  },
+  {
+   "from": "mod:src/drawgen/contracts/live.py",
+   "to": "mod:src/drawgen/contracts/worker.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/contracts/live.py:10"
+  },
+  {
+   "from": "mod:src/drawgen/contracts/manifest.py",
+   "to": "mod:src/drawgen/contracts/common.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/contracts/manifest.py:7"
+  },
+  {
+   "from": "mod:src/drawgen/contracts/operation_plan.py",
+   "to": "mod:src/drawgen/contracts/common.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/contracts/operation_plan.py:12"
+  },
+  {
+   "from": "mod:src/drawgen/contracts/raw_drawing.py",
+   "to": "mod:src/drawgen/contracts/common.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/contracts/raw_drawing.py:7"
+  },
+  {
+   "from": "mod:src/drawgen/contracts/raw_model.py",
+   "to": "mod:src/drawgen/contracts/common.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/contracts/raw_model.py:7"
+  },
+  {
+   "from": "mod:src/drawgen/contracts/registry.py",
+   "to": "mod:src/drawgen/contracts/candidate_set.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/contracts/registry.py:3"
+  },
+  {
+   "from": "mod:src/drawgen/contracts/registry.py",
+   "to": "mod:src/drawgen/contracts/common.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/contracts/registry.py:4"
+  },
+  {
+   "from": "mod:src/drawgen/contracts/registry.py",
+   "to": "mod:src/drawgen/contracts/convention_profile.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/contracts/registry.py:5"
+  },
+  {
+   "from": "mod:src/drawgen/contracts/registry.py",
+   "to": "mod:src/drawgen/contracts/correspondence.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/contracts/registry.py:6"
+  },
+  {
+   "from": "mod:src/drawgen/contracts/registry.py",
+   "to": "mod:src/drawgen/contracts/drawing_graph.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/contracts/registry.py:7"
+  },
+  {
+   "from": "mod:src/drawgen/contracts/registry.py",
+   "to": "mod:src/drawgen/contracts/drawing_plan.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/contracts/registry.py:8"
+  },
+  {
+   "from": "mod:src/drawgen/contracts/registry.py",
+   "to": "mod:src/drawgen/contracts/execution.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/contracts/registry.py:9"
+  },
+  {
+   "from": "mod:src/drawgen/contracts/registry.py",
+   "to": "mod:src/drawgen/contracts/feature_graph.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/contracts/registry.py:10"
+  },
+  {
+   "from": "mod:src/drawgen/contracts/registry.py",
+   "to": "mod:src/drawgen/contracts/findings.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/contracts/registry.py:11"
+  },
+  {
+   "from": "mod:src/drawgen/contracts/registry.py",
+   "to": "mod:src/drawgen/contracts/live.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/contracts/registry.py:12"
+  },
+  {
+   "from": "mod:src/drawgen/contracts/registry.py",
+   "to": "mod:src/drawgen/contracts/manifest.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/contracts/registry.py:13"
+  },
+  {
+   "from": "mod:src/drawgen/contracts/registry.py",
+   "to": "mod:src/drawgen/contracts/operation_plan.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/contracts/registry.py:14"
+  },
+  {
+   "from": "mod:src/drawgen/contracts/registry.py",
+   "to": "mod:src/drawgen/contracts/raw_drawing.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/contracts/registry.py:15"
+  },
+  {
+   "from": "mod:src/drawgen/contracts/registry.py",
+   "to": "mod:src/drawgen/contracts/raw_model.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/contracts/registry.py:16"
+  },
+  {
+   "from": "mod:src/drawgen/contracts/registry.py",
+   "to": "mod:src/drawgen/contracts/worker.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/contracts/registry.py:17"
+  },
+  {
+   "from": "mod:src/drawgen/contracts/worker.py",
+   "to": "mod:src/drawgen/contracts/common.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/contracts/worker.py:11"
+  },
+  {
+   "from": "mod:src/drawgen/contracts/worker.py",
+   "to": "mod:src/drawgen/contracts/execution.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "src/drawgen/contracts/worker.py:12"
+  },
+  {
+   "from": "mod:tools/branch_c_ui_server.py",
+   "to": "mod:src/drawgen/backends/bridge.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "tools/branch_c_ui_server.py:12"
+  },
+  {
+   "from": "mod:tools/branch_c_ui_server.py",
+   "to": "mod:src/drawgen/backends/live.py",
+   "kind": "import",
+   "confidence": "seen",
+   "evidence": "tools/branch_c_ui_server.py:13"
+  },
+  {
+   "from": "mod:src/drawgen/backends/bridge.py",
+   "to": "mod:nx_bridge/src/BridgeServer.cs",
+   "kind": "dynamic",
+   "confidence": "inferred",
+   "evidence": "src/drawgen/backends/bridge.py:48"
+  },
+  {
+   "from": "mod:src/drawgen/backends/nx.py",
+   "to": "mod:nx_worker/main.py",
+   "kind": "dynamic",
+   "confidence": "inferred",
+   "evidence": "src/drawgen/backends/nx.py:57"
+  },
+  {
+   "from": "mod:nx_worker/main.py",
+   "to": "mod:nx_worker/commands/ping.py",
+   "kind": "dynamic",
+   "confidence": "inferred",
+   "evidence": "nx_worker/main.py:164"
+  },
+  {
+   "from": "mod:nx_worker/main.py",
+   "to": "mod:nx_worker/commands/selftest.py",
+   "kind": "dynamic",
+   "confidence": "inferred",
+   "evidence": "nx_worker/main.py:164"
+  },
+  {
+   "from": "mod:tools/branch_c_ui_server.py",
+   "to": "mod:src/drawgen/cli.py",
+   "kind": "dynamic",
+   "confidence": "inferred",
+   "evidence": "tools/branch_c_ui_server.py:75"
+  },
+  {
+   "from": "mod:nx_bridge/src/NxBridgeEntry.cs",
+   "to": "mod:nx_bridge/src/BridgeServer.cs",
+   "kind": "use",
+   "confidence": "seen",
+   "evidence": "nx_bridge/src/NxBridgeEntry.cs:27"
+  },
+  {
+   "from": "mod:nx_bridge/src/BridgeServer.cs",
+   "to": "mod:nx_bridge/src/BridgeProtocol.cs",
+   "kind": "use",
+   "confidence": "seen",
+   "evidence": "nx_bridge/src/BridgeServer.cs:60"
+  }
+ ],
+ "pipeline": {
+  "entry": "fn:src/drawgen/cli.py#main",
+  "stages": [
+   {
+    "id": "stage:01-main",
+    "name": "Parse command",
+    "purpose": "argparse turns argv into a Namespace and main routes on the sub-command; `assistant chat` is the primary path.",
+    "path": "src/drawgen/cli.py",
+    "line": 151,
+    "input": {
+     "type": "Sequence[str] | None",
+     "desc": "argv",
+     "inferred": false
+    },
+    "output": {
+     "type": "argparse.Namespace",
+     "desc": "command, backend, harness, endpoint, message, --yes",
+     "inferred": false
+    },
+    "functions": [
+     "fn:src/drawgen/cli.py#main",
+     "fn:src/drawgen/cli.py#build_parser"
+    ],
+    "flags": []
+   },
+   {
+    "id": "stage:02-_run_chat",
+    "name": "Wire backend, harness, agent",
+    "purpose": "Chooses the live backend (mock or TCP bridge) and the harness (fake, Codex API, pi), then builds AssistantAgent with its ToolRegistry and SessionLog. The panel path does the same and runs in Tk.",
+    "path": "src/drawgen/cli.py",
+    "line": 97,
+    "input": {
+     "type": "argparse.Namespace",
+     "desc": "chat options",
+     "inferred": false
+    },
+    "output": {
+     "type": "AssistantAgent",
+     "desc": "agent bound to a LiveBackend, HarnessAdapter and closed ToolRegistry",
+     "inferred": false
+    },
+    "functions": [
+     "fn:src/drawgen/cli.py#_run_chat",
+     "fn:src/drawgen/cli.py#_live_backend",
+     "fn:src/drawgen/cli.py#_harness",
+     "fn:src/drawgen/cli.py#_run_panel",
+     "fn:src/drawgen/assistant/panel/app.py#run_panel",
+     "fn:src/drawgen/assistant/agent.py#AssistantAgent.__init__",
+     "fn:src/drawgen/assistant/tools/__init__.py#ToolRegistry.__init__",
+     "fn:src/drawgen/assistant/tools/__init__.py#ToolRegistry._register_defaults",
+     "fn:src/drawgen/assistant/tools/__init__.py#ToolRegistry._register"
+    ],
+    "flags": []
+   },
+   {
+    "id": "stage:03-build_operation_plan",
+    "name": "Classify and plan",
+    "purpose": "Deterministically classifies the message and builds an OperationPlan; complex or ambiguous requests stop the turn here with clarification questions.",
+    "path": "src/drawgen/assistant/planning.py",
+    "line": 83,
+    "input": {
+     "type": "str",
+     "desc": "user message",
+     "inferred": false
+    },
+    "output": {
+     "type": "OperationPlan",
+     "desc": "complexity, clarification questions, one step with API queries",
+     "inferred": false
+    },
+    "functions": [
+     "fn:src/drawgen/assistant/planning.py#build_operation_plan",
+     "fn:src/drawgen/assistant/planning.py#classify_request",
+     "fn:src/drawgen/assistant/planning.py#clarification_questions",
+     "fn:src/drawgen/assistant/api_search.py#expand_synonyms",
+     "fn:src/drawgen/assistant/api_search.py#_tokens"
+    ],
+    "flags": []
+   },
+   {
+    "id": "stage:04-discover_api_candidates",
+    "name": "Attach NXOpen API evidence",
+    "purpose": "Searches the local NXOpen index for each step query and validates hits against required terms, so the harness sees evidence-backed candidate IDs.",
+    "path": "src/drawgen/assistant/planning.py",
+    "line": 131,
+    "input": {
+     "type": "OperationPlan",
+     "desc": "plan without evidence",
+     "inferred": false
+    },
+    "output": {
+     "type": "OperationPlan",
+     "desc": "plan with api_candidates and validated IDs per step",
+     "inferred": false
+    },
+    "functions": [
+     "fn:src/drawgen/assistant/planning.py#discover_api_candidates",
+     "fn:src/drawgen/assistant/planning.py#_required_terms",
+     "fn:src/drawgen/assistant/api_search.py#search_nx_api",
+     "fn:src/drawgen/assistant/api_search.py#ApiCatalog.__init__",
+     "fn:src/drawgen/assistant/api_search.py#ApiCatalog.search",
+     "fn:src/drawgen/assistant/api_search.py#ApiCatalog._load",
+     "fn:src/drawgen/assistant/api_search.py#ApiCatalog._candidate",
+     "fn:src/drawgen/assistant/api_search.py#validate_candidate"
+    ],
+    "flags": []
+   },
+   {
+    "id": "stage:05-run",
+    "name": "Select next action (LLM)",
+    "purpose": "Each loop iteration reads live context, packs conversation, tool specs, results and plan into a HarnessRequest, and the harness returns exactly one of tool_calls, answer or ask_user.",
+    "path": "src/drawgen/assistant/agent.py",
+    "line": 32,
+    "input": {
+     "type": "HarnessRequest",
+     "desc": "conversation, context, tools, tool_results, operation_plan",
+     "inferred": false
+    },
+    "output": {
+     "type": "AssistantStep",
+     "desc": "tool_calls | answer | ask_user",
+     "inferred": false
+    },
+    "functions": [
+     "fn:src/drawgen/assistant/agent.py#AssistantAgent.run",
+     "fn:src/drawgen/assistant/tools/__init__.py#ToolRegistry.specs",
+     "fn:src/drawgen/assistant/harness.py#FakeHarness.select",
+     "fn:src/drawgen/assistant/harness.py#CodexApiHarness.select",
+     "fn:src/drawgen/assistant/harness.py#PiAgentHarness.select",
+     "fn:src/drawgen/assistant/harness.py#_system_prompt",
+     "fn:src/drawgen/assistant/harness.py#_parse_step",
+     "fn:src/drawgen/assistant/harness.py#_parse_text_step"
+    ],
+    "flags": []
+   },
+   {
+    "id": "stage:06-execute",
+    "name": "Execute typed tool",
+    "purpose": "Validates a tool call against its pydantic model; change tools first return a preview that the user must confirm; read tools run local handlers, others forward a bridge command. Repeat and failure loops end the turn.",
+    "path": "src/drawgen/assistant/tools/__init__.py",
+    "line": 354,
+    "input": {
+     "type": "ToolCall",
+     "desc": "tool name and raw args",
+     "inferred": false
+    },
+    "output": {
+     "type": "ToolExecution",
+     "desc": "ok/result, needs_confirmation+preview, or error",
+     "inferred": false
+    },
+    "functions": [
+     "fn:src/drawgen/assistant/tools/__init__.py#ToolRegistry.execute",
+     "fn:src/drawgen/assistant/tools/__init__.py#_read_context",
+     "fn:src/drawgen/assistant/tools/__init__.py#_read_selection",
+     "fn:src/drawgen/assistant/tools/__init__.py#_read_measure",
+     "fn:src/drawgen/assistant/tools/__init__.py#_read_api_search",
+     "fn:src/drawgen/assistant/tools/__init__.py#_read_list",
+     "fn:src/drawgen/assistant/tools/__init__.py#_model_dump",
+     "fn:src/drawgen/assistant/agent.py#_semantic_call_key",
+     "fn:src/drawgen/assistant/agent.py#_has_measurement_failure"
+    ],
+    "flags": []
+   },
+   {
+    "id": "stage:07-_request",
+    "name": "Query NX through the live backend",
+    "purpose": "BridgeBackend sends one JSON line over loopback TCP to the C# bridge, which dispatches to NXOpen under UI lock; MockLiveBackend answers from scripted data instead.",
+    "path": "src/drawgen/backends/bridge.py",
+    "line": 37,
+    "input": {
+     "type": "tuple[str, dict[str, Any]]",
+     "desc": "bridge command and inputs",
+     "inferred": false
+    },
+    "output": {
+     "type": "SessionContext | Selection | LiveMeasureResults | ListResult | OperationResult",
+     "desc": "typed NX result",
+     "inferred": false
+    },
+    "functions": [
+     "fn:src/drawgen/backends/bridge.py#BridgeBackend._request",
+     "fn:src/drawgen/backends/bridge.py#BridgeBackend._endpoint",
+     "fn:src/drawgen/backends/bridge.py#BridgeBackend.get_context",
+     "fn:src/drawgen/backends/bridge.py#BridgeBackend.get_selection",
+     "fn:src/drawgen/backends/bridge.py#BridgeBackend.measure",
+     "fn:src/drawgen/backends/bridge.py#BridgeBackend.list",
+     "fn:src/drawgen/backends/bridge.py#BridgeBackend.execute",
+     "fn:src/drawgen/backends/live_mock.py#MockLiveBackend.get_context",
+     "fn:src/drawgen/backends/live_mock.py#MockLiveBackend.get_selection",
+     "fn:src/drawgen/backends/live_mock.py#MockLiveBackend.measure",
+     "fn:src/drawgen/backends/live_mock.py#MockLiveBackend.list",
+     "fn:src/drawgen/backends/live_mock.py#MockLiveBackend.execute",
+     "fn:nx_bridge/src/BridgeServer.cs#BridgeServer.HandleClientAsync",
+     "fn:nx_bridge/src/NxBridgeEntry.cs#InteractiveNxDispatcher.Dispatch",
+     "fn:nx_bridge/src/NxBridgeEntry.cs#InteractiveNxDispatcher.Measure"
+    ],
+    "flags": []
+   },
+   {
+    "id": "stage:08-check_answer",
+    "name": "Check answer and report",
+    "purpose": "Every number in the harness answer must appear in the user message or a tool result, otherwise the answer is replaced; events are logged and the CLI prints the TurnResult.",
+    "path": "src/drawgen/assistant/checker.py",
+    "line": 30,
+    "input": {
+     "type": "tuple[str, list[Any]]",
+     "desc": "answer text and source values",
+     "inferred": false
+    },
+    "output": {
+     "type": "TurnResult",
+     "desc": "checked answer or ask_user, printed by _run_chat",
+     "inferred": false
+    },
+    "functions": [
+     "fn:src/drawgen/assistant/checker.py#check_answer",
+     "fn:src/drawgen/assistant/checker.py#_numbers",
+     "fn:src/drawgen/assistant/log.py#SessionLog.append"
+    ],
+    "flags": []
+   }
+  ]
+ },
+ "functions": [
+  {
+   "id": "fn:src/drawgen/cli.py#main",
+   "name": "main",
+   "path": "src/drawgen/cli.py",
+   "line": 151,
+   "endLine": 194,
+   "module": "mod:src/drawgen/cli.py",
+   "signature": "def main(argv: Sequence[str] | None = None) -> int",
+   "purpose": "Console-script entry: parses argv and routes to the batch ping, a live bridge query, or the assistant chat/panel.",
+   "inputs": [
+    {
+     "name": "argv",
+     "type": "Sequence[str] | None",
+     "desc": "command line; defaults to sys.argv",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "int",
+     "desc": "process exit code",
+     "inferred": false
+    }
+   ],
+   "calls": [
+    {
+     "to": "fn:src/drawgen/cli.py#build_parser",
+     "confidence": "seen",
+     "evidence": "src/drawgen/cli.py:156"
+    },
+    {
+     "to": "fn:src/drawgen/cli.py#_live_backend",
+     "confidence": "seen",
+     "evidence": "src/drawgen/cli.py:179"
+    },
+    {
+     "to": "fn:src/drawgen/cli.py#_run_panel",
+     "confidence": "seen",
+     "evidence": "src/drawgen/cli.py:190"
+    },
+    {
+     "to": "fn:src/drawgen/cli.py#_run_chat",
+     "confidence": "seen",
+     "evidence": "src/drawgen/cli.py:193"
+    }
+   ],
+   "fanIn": 0,
+   "length": 44,
+   "flags": [
+    "no-doc"
+   ],
+   "stage": "stage:01-main"
+  },
+  {
+   "id": "fn:src/drawgen/cli.py#build_parser",
+   "name": "build_parser",
+   "path": "src/drawgen/cli.py",
+   "line": 27,
+   "endLine": 63,
+   "module": "mod:src/drawgen/cli.py",
+   "signature": "def build_parser() -> argparse.ArgumentParser",
+   "purpose": "Declares the `ping`, `live` and `assistant` sub-commands and their backend/harness/endpoint options.",
+   "inputs": [],
+   "outputs": [
+    {
+     "type": "argparse.ArgumentParser",
+     "desc": "parser for the drawgen CLI",
+     "inferred": false
+    }
+   ],
+   "calls": [],
+   "fanIn": 1,
+   "length": 37,
+   "flags": [
+    "no-doc"
+   ],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/cli.py#_run_chat",
+   "name": "_run_chat",
+   "path": "src/drawgen/cli.py",
+   "line": 97,
+   "endLine": 139,
+   "module": "mod:src/drawgen/cli.py",
+   "signature": "def _run_chat(args: argparse.Namespace) -> int",
+   "purpose": "Builds the agent from the chosen backend and harness, then runs one message or a REPL, confirming change tools on stdin unless --yes.",
+   "inputs": [
+    {
+     "name": "args",
+     "type": "argparse.Namespace",
+     "desc": "parsed `assistant chat` options",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "int",
+     "desc": "exit code; 1 on HarnessError in one-shot mode",
+     "inferred": false
+    }
+   ],
+   "calls": [
+    {
+     "to": "fn:src/drawgen/cli.py#_live_backend",
+     "confidence": "seen",
+     "evidence": "src/drawgen/cli.py:98"
+    },
+    {
+     "to": "fn:src/drawgen/cli.py#_harness",
+     "confidence": "seen",
+     "evidence": "src/drawgen/cli.py:99"
+    },
+    {
+     "to": "fn:src/drawgen/assistant/agent.py#AssistantAgent.__init__",
+     "confidence": "seen",
+     "evidence": "src/drawgen/cli.py:100"
+    },
+    {
+     "to": "fn:src/drawgen/assistant/agent.py#AssistantAgent.run",
+     "confidence": "seen",
+     "evidence": "src/drawgen/cli.py:112"
+    }
+   ],
+   "fanIn": 1,
+   "length": 43,
+   "flags": [
+    "no-doc"
+   ],
+   "stage": "stage:02-_run_chat"
+  },
+  {
+   "id": "fn:src/drawgen/cli.py#_run_panel",
+   "name": "_run_panel",
+   "path": "src/drawgen/cli.py",
+   "line": 142,
+   "endLine": 148,
+   "module": "mod:src/drawgen/cli.py",
+   "signature": "def _run_panel(args: argparse.Namespace) -> int",
+   "purpose": "Same wiring as chat, then hands control to the Tkinter panel.",
+   "inputs": [
+    {
+     "name": "args",
+     "type": "argparse.Namespace",
+     "desc": "parsed `assistant panel` options",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "int",
+     "desc": "always 0",
+     "inferred": false
+    }
+   ],
+   "calls": [
+    {
+     "to": "fn:src/drawgen/cli.py#_live_backend",
+     "confidence": "seen",
+     "evidence": "src/drawgen/cli.py:145"
+    },
+    {
+     "to": "fn:src/drawgen/cli.py#_harness",
+     "confidence": "seen",
+     "evidence": "src/drawgen/cli.py:146"
+    },
+    {
+     "to": "fn:src/drawgen/assistant/panel/app.py#run_panel",
+     "confidence": "seen",
+     "evidence": "src/drawgen/cli.py:147"
+    }
+   ],
+   "fanIn": 1,
+   "length": 7,
+   "flags": [
+    "no-doc"
+   ],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/cli.py#_live_backend",
+   "name": "_live_backend",
+   "path": "src/drawgen/cli.py",
+   "line": 66,
+   "endLine": 86,
+   "module": "mod:src/drawgen/cli.py",
+   "signature": "def _live_backend(name: str, endpoint: Path | None) -> LiveBackend",
+   "purpose": "Returns a MockLiveBackend preloaded with a demo face and measurements, or a BridgeBackend for the given endpoint file.",
+   "inputs": [
+    {
+     "name": "name",
+     "type": "str",
+     "desc": "'mock' or 'bridge'",
+     "inferred": false
+    },
+    {
+     "name": "endpoint",
+     "type": "Path | None",
+     "desc": "bridge.json path, required for 'bridge'",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "LiveBackend",
+     "desc": "MockLiveBackend or BridgeBackend",
+     "inferred": false
+    }
+   ],
+   "calls": [],
+   "fanIn": 3,
+   "length": 21,
+   "flags": [
+    "no-doc",
+    "high-fan-in"
+   ],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/cli.py#_harness",
+   "name": "_harness",
+   "path": "src/drawgen/cli.py",
+   "line": 89,
+   "endLine": 94,
+   "module": "mod:src/drawgen/cli.py",
+   "signature": "def _harness(name: str) -> HarnessAdapter",
+   "purpose": "Maps the --harness choice to FakeHarness, CodexApiHarness or PiAgentHarness.",
+   "inputs": [
+    {
+     "name": "name",
+     "type": "str",
+     "desc": "'fake', 'codex' or 'pi'",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "HarnessAdapter",
+     "desc": "object with select(HarnessRequest) -> AssistantStep",
+     "inferred": false
+    }
+   ],
+   "calls": [],
+   "fanIn": 2,
+   "length": 6,
+   "flags": [
+    "no-doc"
+   ],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/assistant/panel/app.py#run_panel",
+   "name": "run_panel",
+   "path": "src/drawgen/assistant/panel/app.py",
+   "line": 15,
+   "endLine": 90,
+   "module": "mod:src/drawgen/assistant/panel/app.py",
+   "signature": "def run_panel(backend: LiveBackend, harness: HarnessAdapter, *, log: SessionLog | None = None ) -> None",
+   "purpose": "Runs a Tk window; each message runs AssistantAgent.run on a daemon thread and results/confirmations are passed through a queue polled every 50 ms.",
+   "inputs": [
+    {
+     "name": "backend",
+     "type": "LiveBackend",
+     "desc": "live backend",
+     "inferred": false
+    },
+    {
+     "name": "harness",
+     "type": "HarnessAdapter",
+     "desc": "LLM adapter",
+     "inferred": false
+    },
+    {
+     "name": "log",
+     "type": "SessionLog | None",
+     "desc": "event log",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "None",
+     "desc": "returns when the window closes",
+     "inferred": false
+    }
+   ],
+   "calls": [
+    {
+     "to": "fn:src/drawgen/assistant/agent.py#AssistantAgent.__init__",
+     "confidence": "seen",
+     "evidence": "src/drawgen/assistant/panel/app.py:23"
+    },
+    {
+     "to": "fn:src/drawgen/assistant/agent.py#AssistantAgent.run",
+     "confidence": "seen",
+     "evidence": "src/drawgen/assistant/panel/app.py:49"
+    }
+   ],
+   "fanIn": 1,
+   "length": 76,
+   "flags": [
+    "long"
+   ],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/assistant/agent.py#AssistantAgent.__init__",
+   "name": "AssistantAgent.__init__",
+   "path": "src/drawgen/assistant/agent.py",
+   "line": 19,
+   "endLine": 30,
+   "module": "mod:src/drawgen/assistant/agent.py",
+   "signature": "def __init__(self, backend: LiveBackend, harness: HarnessAdapter, *, log: SessionLog | None = None) -> None",
+   "purpose": "Stores backend, harness and log, builds the ToolRegistry bound to the backend, and starts an empty conversation.",
+   "inputs": [
+    {
+     "name": "backend",
+     "type": "LiveBackend",
+     "desc": "live NX backend",
+     "inferred": false
+    },
+    {
+     "name": "harness",
+     "type": "HarnessAdapter",
+     "desc": "step selector",
+     "inferred": false
+    },
+    {
+     "name": "log",
+     "type": "SessionLog | None",
+     "desc": "optional event log",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "None",
+     "desc": "constructor",
+     "inferred": false
+    }
+   ],
+   "calls": [
+    {
+     "to": "fn:src/drawgen/assistant/tools/__init__.py#ToolRegistry.__init__",
+     "confidence": "seen",
+     "evidence": "src/drawgen/assistant/agent.py:28"
+    }
+   ],
+   "fanIn": 2,
+   "length": 12,
+   "flags": [
+    "no-doc",
+    "high-fan-in"
+   ],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/assistant/tools/__init__.py#ToolRegistry.__init__",
+   "name": "ToolRegistry.__init__",
+   "path": "src/drawgen/assistant/tools/__init__.py",
+   "line": 206,
+   "endLine": 209,
+   "module": "mod:src/drawgen/assistant/tools/__init__.py",
+   "signature": "def __init__(self, backend: LiveBackend) -> None",
+   "purpose": "Binds the registry to a backend and registers the fixed tool list.",
+   "inputs": [
+    {
+     "name": "backend",
+     "type": "LiveBackend",
+     "desc": "backend the tools act on",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "None",
+     "desc": "constructor",
+     "inferred": false
+    }
+   ],
+   "calls": [
+    {
+     "to": "fn:src/drawgen/assistant/tools/__init__.py#ToolRegistry._register_defaults",
+     "confidence": "seen",
+     "evidence": "src/drawgen/assistant/tools/__init__.py:209"
+    }
+   ],
+   "fanIn": 1,
+   "length": 4,
+   "flags": [
+    "no-doc"
+   ],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/assistant/tools/__init__.py#ToolRegistry._register_defaults",
+   "name": "ToolRegistry._register_defaults",
+   "path": "src/drawgen/assistant/tools/__init__.py",
+   "line": 233,
+   "endLine": 349,
+   "module": "mod:src/drawgen/assistant/tools/__init__.py",
+   "signature": "def _register_defaults(self) -> None",
+   "purpose": "Registers the closed tool set: 5 read tools with handlers, session/change tools that forward a bridge command, and drawing tools (all `change`).",
+   "inputs": [],
+   "outputs": [
+    {
+     "type": "None",
+     "desc": "fills self._tools",
+     "inferred": false
+    }
+   ],
+   "calls": [
+    {
+     "to": "fn:src/drawgen/assistant/tools/__init__.py#ToolRegistry._register",
+     "confidence": "seen",
+     "evidence": "src/drawgen/assistant/tools/__init__.py:234"
+    }
+   ],
+   "fanIn": 1,
+   "length": 117,
+   "flags": [
+    "no-doc",
+    "long"
+   ],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/assistant/tools/__init__.py#ToolRegistry._register",
+   "name": "ToolRegistry._register",
+   "path": "src/drawgen/assistant/tools/__init__.py",
+   "line": 211,
+   "endLine": 231,
+   "module": "mod:src/drawgen/assistant/tools/__init__.py",
+   "signature": "def _register(self, name: str, kind: str, description: str, args_model: type[BaseModel], *, command: str | None = None, handler: Callable[[LiveBackend, BaseModel], dict[str, Any]] | None = None) -> None",
+   "purpose": "Creates a ToolDefinition whose spec carries the argument model's JSON schema.",
+   "inputs": [
+    {
+     "name": "name",
+     "type": "str",
+     "desc": "tool name",
+     "inferred": false
+    },
+    {
+     "name": "kind",
+     "type": "str",
+     "desc": "'read' | 'session' | 'change'",
+     "inferred": false
+    },
+    {
+     "name": "description",
+     "type": "str",
+     "desc": "for the LLM",
+     "inferred": false
+    },
+    {
+     "name": "args_model",
+     "type": "type[BaseModel]",
+     "desc": "argument validator",
+     "inferred": false
+    },
+    {
+     "name": "command",
+     "type": "str | None",
+     "desc": "bridge command for forwarded tools",
+     "inferred": false
+    },
+    {
+     "name": "handler",
+     "type": "Callable[[LiveBackend, BaseModel], dict] | None",
+     "desc": "local implementation",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "None",
+     "desc": "stores into self._tools",
+     "inferred": false
+    }
+   ],
+   "calls": [],
+   "fanIn": 1,
+   "length": 21,
+   "flags": [
+    "no-doc"
+   ],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/assistant/planning.py#build_operation_plan",
+   "name": "build_operation_plan",
+   "path": "src/drawgen/assistant/planning.py",
+   "line": 83,
+   "endLine": 114,
+   "module": "mod:src/drawgen/assistant/planning.py",
+   "signature": "def build_operation_plan(request: str) -> OperationPlan",
+   "purpose": "Normalises the request, classifies it, derives clarification questions, picks a coarse action (measure/operate/inspect) and one PlanStep with synonym API queries.",
+   "inputs": [
+    {
+     "name": "request",
+     "type": "str",
+     "desc": "raw user message",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "OperationPlan",
+     "desc": "plan with complexity, clarification flag and one step",
+     "inferred": false
+    }
+   ],
+   "calls": [
+    {
+     "to": "fn:src/drawgen/assistant/planning.py#classify_request",
+     "confidence": "seen",
+     "evidence": "src/drawgen/assistant/planning.py:87"
+    },
+    {
+     "to": "fn:src/drawgen/assistant/planning.py#clarification_questions",
+     "confidence": "seen",
+     "evidence": "src/drawgen/assistant/planning.py:88"
+    },
+    {
+     "to": "fn:src/drawgen/assistant/api_search.py#expand_synonyms",
+     "confidence": "seen",
+     "evidence": "src/drawgen/assistant/planning.py:104"
+    }
+   ],
+   "fanIn": 1,
+   "length": 32,
+   "flags": [],
+   "stage": "stage:03-build_operation_plan"
+  },
+  {
+   "id": "fn:src/drawgen/assistant/planning.py#classify_request",
+   "name": "classify_request",
+   "path": "src/drawgen/assistant/planning.py",
+   "line": 43,
+   "endLine": 64,
+   "module": "mod:src/drawgen/assistant/planning.py",
+   "signature": "def classify_request(request: str) -> str",
+   "purpose": "Labels a request complex (long, several action verbs, or sequencing words), ambiguous (no question/action verb) or simple.",
+   "inputs": [
+    {
+     "name": "request",
+     "type": "str",
+     "desc": "user message",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "str",
+     "desc": "'simple' | 'complex' | 'ambiguous'",
+     "inferred": false
+    }
+   ],
+   "calls": [],
+   "fanIn": 1,
+   "length": 22,
+   "flags": [],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/assistant/planning.py#clarification_questions",
+   "name": "clarification_questions",
+   "path": "src/drawgen/assistant/planning.py",
+   "line": 67,
+   "endLine": 80,
+   "module": "mod:src/drawgen/assistant/planning.py",
+   "signature": "def clarification_questions(request: str, complexity: str) -> list[str]",
+   "purpose": "Returns no questions for simple requests; otherwise asks for the exact result, the target object, and (if complex) units.",
+   "inputs": [
+    {
+     "name": "request",
+     "type": "str",
+     "desc": "user message",
+     "inferred": false
+    },
+    {
+     "name": "complexity",
+     "type": "str",
+     "desc": "from classify_request",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "list[str]",
+     "desc": "questions to show the user",
+     "inferred": false
+    }
+   ],
+   "calls": [],
+   "fanIn": 1,
+   "length": 14,
+   "flags": [],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/assistant/api_search.py#expand_synonyms",
+   "name": "expand_synonyms",
+   "path": "src/drawgen/assistant/api_search.py",
+   "line": 61,
+   "endLine": 73,
+   "module": "mod:src/drawgen/assistant/api_search.py",
+   "signature": "def expand_synonyms(query: str) -> list[str]",
+   "purpose": "Tokenises the query, drops stopwords, and expands each token into fixed NX search phrases (e.g. volume -> mass properties).",
+   "inputs": [
+    {
+     "name": "query",
+     "type": "str",
+     "desc": "user text or query",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "list[str]",
+     "desc": "ordered unique search phrases",
+     "inferred": false
+    }
+   ],
+   "calls": [
+    {
+     "to": "fn:src/drawgen/assistant/api_search.py#_tokens",
+     "confidence": "seen",
+     "evidence": "src/drawgen/assistant/api_search.py:65"
+    }
+   ],
+   "fanIn": 2,
+   "length": 13,
+   "flags": [],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/assistant/api_search.py#_tokens",
+   "name": "_tokens",
+   "path": "src/drawgen/assistant/api_search.py",
+   "line": 54,
+   "endLine": 58,
+   "module": "mod:src/drawgen/assistant/api_search.py",
+   "signature": "def _tokens(value: str) -> list[str]",
+   "purpose": "Splits CamelCase and prose into lowercase alphanumeric tokens longer than one character.",
+   "inputs": [
+    {
+     "name": "value",
+     "type": "str",
+     "desc": "text",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "list[str]",
+     "desc": "tokens",
+     "inferred": false
+    }
+   ],
+   "calls": [],
+   "fanIn": 2,
+   "length": 5,
+   "flags": [],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/assistant/planning.py#discover_api_candidates",
+   "name": "discover_api_candidates",
+   "path": "src/drawgen/assistant/planning.py",
+   "line": 131,
+   "endLine": 170,
+   "module": "mod:src/drawgen/assistant/planning.py",
+   "signature": "def discover_api_candidates(plan: OperationPlan, *, catalog: ApiCatalog | None = None, nx_version: str | None = None, limit: int = 4) -> OperationPlan",
+   "purpose": "For a plan that needs no clarification, searches the API catalog for each step query, validates candidates against required terms, and attaches evidence and validated IDs.",
+   "inputs": [
+    {
+     "name": "plan",
+     "type": "OperationPlan",
+     "desc": "plan from build_operation_plan",
+     "inferred": false
+    },
+    {
+     "name": "catalog",
+     "type": "ApiCatalog | None",
+     "desc": "override index",
+     "inferred": false
+    },
+    {
+     "name": "nx_version",
+     "type": "str | None",
+     "desc": "recorded on validated candidates",
+     "inferred": false
+    },
+    {
+     "name": "limit",
+     "type": "int",
+     "desc": "candidates per query",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "OperationPlan",
+     "desc": "copy with api_candidates, step.api_candidate_ids and an assumption line",
+     "inferred": false
+    }
+   ],
+   "calls": [
+    {
+     "to": "fn:src/drawgen/assistant/api_search.py#search_nx_api",
+     "confidence": "seen",
+     "evidence": "src/drawgen/assistant/planning.py:147"
+    },
+    {
+     "to": "fn:src/drawgen/assistant/api_search.py#validate_candidate",
+     "confidence": "seen",
+     "evidence": "src/drawgen/assistant/planning.py:149"
+    },
+    {
+     "to": "fn:src/drawgen/assistant/planning.py#_required_terms",
+     "confidence": "seen",
+     "evidence": "src/drawgen/assistant/planning.py:151"
+    }
+   ],
+   "fanIn": 1,
+   "length": 40,
+   "flags": [],
+   "stage": "stage:04-discover_api_candidates"
+  },
+  {
+   "id": "fn:src/drawgen/assistant/planning.py#_required_terms",
+   "name": "_required_terms",
+   "path": "src/drawgen/assistant/planning.py",
+   "line": 117,
+   "endLine": 128,
+   "module": "mod:src/drawgen/assistant/planning.py",
+   "signature": "def _required_terms(query: str) -> tuple[str, ...]",
+   "purpose": "Maps a query to the term a candidate must mention (e.g. 'area', 'volume', 'mass properties').",
+   "inputs": [
+    {
+     "name": "query",
+     "type": "str",
+     "desc": "search phrase",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "tuple[str, ...]",
+     "desc": "required terms, possibly empty",
+     "inferred": false
+    }
+   ],
+   "calls": [],
+   "fanIn": 1,
+   "length": 12,
+   "flags": [],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/assistant/api_search.py#search_nx_api",
+   "name": "search_nx_api",
+   "path": "src/drawgen/assistant/api_search.py",
+   "line": 162,
+   "endLine": 172,
+   "module": "mod:src/drawgen/assistant/api_search.py",
+   "signature": "def search_nx_api(query: str, *, kind: CandidateKind | None = None, namespace: str | None = None, limit: int = 8, catalog: ApiCatalog | None = None) -> list[ApiCandidate]",
+   "purpose": "Convenience wrapper: searches the given catalog or a default ApiCatalog.",
+   "inputs": [
+    {
+     "name": "query",
+     "type": "str",
+     "desc": "search text",
+     "inferred": false
+    },
+    {
+     "name": "kind",
+     "type": "CandidateKind | None",
+     "desc": "filter",
+     "inferred": false
+    },
+    {
+     "name": "namespace",
+     "type": "str | None",
+     "desc": "prefix filter",
+     "inferred": false
+    },
+    {
+     "name": "limit",
+     "type": "int",
+     "desc": "max results",
+     "inferred": false
+    },
+    {
+     "name": "catalog",
+     "type": "ApiCatalog | None",
+     "desc": "override",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "list[ApiCandidate]",
+     "desc": "ranked candidates",
+     "inferred": false
+    }
+   ],
+   "calls": [
+    {
+     "to": "fn:src/drawgen/assistant/api_search.py#ApiCatalog.__init__",
+     "confidence": "seen",
+     "evidence": "src/drawgen/assistant/api_search.py:172"
+    },
+    {
+     "to": "fn:src/drawgen/assistant/api_search.py#ApiCatalog.search",
+     "confidence": "seen",
+     "evidence": "src/drawgen/assistant/api_search.py:172"
+    }
+   ],
+   "fanIn": 2,
+   "length": 11,
+   "flags": [],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/assistant/api_search.py#ApiCatalog.__init__",
+   "name": "ApiCatalog.__init__",
+   "path": "src/drawgen/assistant/api_search.py",
+   "line": 79,
+   "endLine": 88,
+   "module": "mod:src/drawgen/assistant/api_search.py",
+   "signature": "def __init__(self, index_path: Path | None = None) -> None",
+   "purpose": "Resolves the index path from the argument, DRAWGEN_NX_API_INDEX, or a hard-coded Windows default.",
+   "inputs": [
+    {
+     "name": "index_path",
+     "type": "Path | None",
+     "desc": "TSV index",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "None",
+     "desc": "constructor",
+     "inferred": false
+    }
+   ],
+   "calls": [],
+   "fanIn": 1,
+   "length": 10,
+   "flags": [
+    "no-doc"
+   ],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/assistant/api_search.py#ApiCatalog.search",
+   "name": "ApiCatalog.search",
+   "path": "src/drawgen/assistant/api_search.py",
+   "line": 107,
+   "endLine": 139,
+   "module": "mod:src/drawgen/assistant/api_search.py",
+   "signature": "def search(self, query: str, *, kind: CandidateKind | None = None, namespace: str | None = None, limit: int = 8) -> list[ApiCandidate]",
+   "purpose": "Scores every index row by token and phrase hits (+10 for an exact name), sorts by score then name, and returns the top candidates.",
+   "inputs": [
+    {
+     "name": "query",
+     "type": "str",
+     "desc": "search text",
+     "inferred": false
+    },
+    {
+     "name": "kind",
+     "type": "CandidateKind | None",
+     "desc": "filter",
+     "inferred": false
+    },
+    {
+     "name": "namespace",
+     "type": "str | None",
+     "desc": "prefix filter",
+     "inferred": false
+    },
+    {
+     "name": "limit",
+     "type": "int",
+     "desc": "max results",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "list[ApiCandidate]",
+     "desc": "ranked candidates with source evidence",
+     "inferred": false
+    }
+   ],
+   "calls": [
+    {
+     "to": "fn:src/drawgen/assistant/api_search.py#expand_synonyms",
+     "confidence": "seen",
+     "evidence": "src/drawgen/assistant/api_search.py:119"
+    },
+    {
+     "to": "fn:src/drawgen/assistant/api_search.py#_tokens",
+     "confidence": "seen",
+     "evidence": "src/drawgen/assistant/api_search.py:120"
+    },
+    {
+     "to": "fn:src/drawgen/assistant/api_search.py#ApiCatalog._load",
+     "confidence": "seen",
+     "evidence": "src/drawgen/assistant/api_search.py:122"
+    },
+    {
+     "to": "fn:src/drawgen/assistant/api_search.py#ApiCatalog._candidate",
+     "confidence": "seen",
+     "evidence": "src/drawgen/assistant/api_search.py:139"
+    }
+   ],
+   "fanIn": 1,
+   "length": 33,
+   "flags": [],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/assistant/api_search.py#ApiCatalog._load",
+   "name": "ApiCatalog._load",
+   "path": "src/drawgen/assistant/api_search.py",
+   "line": 90,
+   "endLine": 105,
+   "module": "mod:src/drawgen/assistant/api_search.py",
+   "signature": "def _load(self) -> list[dict[str, str]]",
+   "purpose": "Reads the TSV once per path into a module-level cache; a missing file yields an empty catalog.",
+   "inputs": [],
+   "outputs": [
+    {
+     "type": "list[dict[str, str]]",
+     "desc": "index rows with a full_name",
+     "inferred": false
+    }
+   ],
+   "calls": [],
+   "fanIn": 1,
+   "length": 16,
+   "flags": [
+    "no-doc"
+   ],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/assistant/api_search.py#ApiCatalog._candidate",
+   "name": "ApiCatalog._candidate",
+   "path": "src/drawgen/assistant/api_search.py",
+   "line": 141,
+   "endLine": 159,
+   "module": "mod:src/drawgen/assistant/api_search.py",
+   "signature": "def _candidate(self, query: str, row: dict[str, str]) -> ApiCandidate",
+   "purpose": "Builds an ApiCandidate with a stable SHA-1-derived ID from guid and asset_id.",
+   "inputs": [
+    {
+     "name": "query",
+     "type": "str",
+     "desc": "originating query",
+     "inferred": false
+    },
+    {
+     "name": "row",
+     "type": "dict[str, str]",
+     "desc": "index row",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "ApiCandidate",
+     "desc": "unvalidated candidate",
+     "inferred": false
+    }
+   ],
+   "calls": [],
+   "fanIn": 1,
+   "length": 19,
+   "flags": [
+    "no-doc"
+   ],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/assistant/api_search.py#validate_candidate",
+   "name": "validate_candidate",
+   "path": "src/drawgen/assistant/api_search.py",
+   "line": 175,
+   "endLine": 200,
+   "module": "mod:src/drawgen/assistant/api_search.py",
+   "signature": "def validate_candidate(candidate: ApiCandidate, *, required_terms: Iterable[str] = (), nx_version: str | None = None) -> ApiCandidate",
+   "purpose": "Marks a candidate rejected if its name/summary/signature lacks a required term, else validated; never calls NXOpen.",
+   "inputs": [
+    {
+     "name": "candidate",
+     "type": "ApiCandidate",
+     "desc": "catalog hit",
+     "inferred": false
+    },
+    {
+     "name": "required_terms",
+     "type": "Iterable[str]",
+     "desc": "terms that must appear",
+     "inferred": false
+    },
+    {
+     "name": "nx_version",
+     "type": "str | None",
+     "desc": "recorded on success",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "ApiCandidate",
+     "desc": "copy with status and validation_message",
+     "inferred": false
+    }
+   ],
+   "calls": [],
+   "fanIn": 1,
+   "length": 26,
+   "flags": [],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/assistant/agent.py#AssistantAgent.run",
+   "name": "AssistantAgent.run",
+   "path": "src/drawgen/assistant/agent.py",
+   "line": 32,
+   "endLine": 129,
+   "module": "mod:src/drawgen/assistant/agent.py",
+   "signature": "def run(self, user_message: str, *, confirm: Callable[[str], bool] | None = None) -> TurnResult",
+   "purpose": "One user turn: plan and maybe ask for clarification, then loop harness.select -> tool execution (with confirmation, repeat and failure-loop guards) until the harness answers or asks; the answer is checked before it is returned.",
+   "inputs": [
+    {
+     "name": "user_message",
+     "type": "str",
+     "desc": "the user's text",
+     "inferred": false
+    },
+    {
+     "name": "confirm",
+     "type": "Callable[[str], bool] | None",
+     "desc": "asks the user to approve a change-tool preview",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "TurnResult",
+     "desc": "answer or ask_user, plus the tool results of this turn",
+     "inferred": false
+    }
+   ],
+   "calls": [
+    {
+     "to": "fn:src/drawgen/assistant/log.py#SessionLog.append",
+     "confidence": "seen",
+     "evidence": "src/drawgen/assistant/agent.py:40"
+    },
+    {
+     "to": "fn:src/drawgen/assistant/planning.py#build_operation_plan",
+     "confidence": "seen",
+     "evidence": "src/drawgen/assistant/agent.py:41"
+    },
+    {
+     "to": "fn:src/drawgen/assistant/planning.py#discover_api_candidates",
+     "confidence": "seen",
+     "evidence": "src/drawgen/assistant/agent.py:41"
+    },
+    {
+     "to": "fn:src/drawgen/backends/bridge.py#BridgeBackend.get_context",
+     "confidence": "inferred",
+     "evidence": "src/drawgen/assistant/agent.py:56"
+    },
+    {
+     "to": "fn:src/drawgen/backends/live_mock.py#MockLiveBackend.get_context",
+     "confidence": "inferred",
+     "evidence": "src/drawgen/assistant/agent.py:56"
+    },
+    {
+     "to": "fn:src/drawgen/assistant/tools/__init__.py#ToolRegistry.specs",
+     "confidence": "seen",
+     "evidence": "src/drawgen/assistant/agent.py:60"
+    },
+    {
+     "to": "fn:src/drawgen/assistant/harness.py#FakeHarness.select",
+     "confidence": "inferred",
+     "evidence": "src/drawgen/assistant/agent.py:66"
+    },
+    {
+     "to": "fn:src/drawgen/assistant/harness.py#CodexApiHarness.select",
+     "confidence": "inferred",
+     "evidence": "src/drawgen/assistant/agent.py:66"
+    },
+    {
+     "to": "fn:src/drawgen/assistant/harness.py#PiAgentHarness.select",
+     "confidence": "inferred",
+     "evidence": "src/drawgen/assistant/agent.py:66"
+    },
+    {
+     "to": "fn:src/drawgen/assistant/checker.py#check_answer",
+     "confidence": "seen",
+     "evidence": "src/drawgen/assistant/agent.py:72"
+    },
+    {
+     "to": "fn:src/drawgen/assistant/agent.py#_semantic_call_key",
+     "confidence": "seen",
+     "evidence": "src/drawgen/assistant/agent.py:92"
+    },
+    {
+     "to": "fn:src/drawgen/assistant/tools/__init__.py#ToolRegistry.execute",
+     "confidence": "seen",
+     "evidence": "src/drawgen/assistant/agent.py:102"
+    },
+    {
+     "to": "fn:src/drawgen/assistant/agent.py#_has_measurement_failure",
+     "confidence": "seen",
+     "evidence": "src/drawgen/assistant/agent.py:117"
+    }
+   ],
+   "fanIn": 2,
+   "length": 98,
+   "flags": [
+    "no-doc",
+    "high-fan-in",
+    "long"
+   ],
+   "stage": "stage:05-run"
+  },
+  {
+   "id": "fn:src/drawgen/assistant/tools/__init__.py#ToolRegistry.specs",
+   "name": "ToolRegistry.specs",
+   "path": "src/drawgen/assistant/tools/__init__.py",
+   "line": 351,
+   "endLine": 352,
+   "module": "mod:src/drawgen/assistant/tools/__init__.py",
+   "signature": "def specs(self) -> list[dict[str, Any]]",
+   "purpose": "Serialises every ToolSpec (name, kind, description, args schema) for the harness request.",
+   "inputs": [],
+   "outputs": [
+    {
+     "type": "list[dict[str, Any]]",
+     "desc": "tool specs as JSON",
+     "inferred": false
+    }
+   ],
+   "calls": [],
+   "fanIn": 1,
+   "length": 2,
+   "flags": [
+    "no-doc"
+   ],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/assistant/harness.py#FakeHarness.select",
+   "name": "FakeHarness.select",
+   "path": "src/drawgen/assistant/harness.py",
+   "line": 108,
+   "endLine": 209,
+   "module": "mod:src/drawgen/assistant/harness.py",
+   "signature": "def select(self, request: HarnessRequest) -> AssistantStep",
+   "purpose": "Scripted offline policy: pops queued steps, otherwise pattern-matches the last user message (selection, area, volume, show/hide/isolate, fit, box) into a fixed tool sequence or answer.",
+   "inputs": [
+    {
+     "name": "request",
+     "type": "HarnessRequest",
+     "desc": "conversation, context, tools, results",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "AssistantStep",
+     "desc": "one tool call, answer, or ask_user",
+     "inferred": false
+    }
+   ],
+   "calls": [],
+   "fanIn": 0,
+   "length": 102,
+   "flags": [
+    "no-doc",
+    "long"
+   ],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/assistant/harness.py#CodexApiHarness.select",
+   "name": "CodexApiHarness.select",
+   "path": "src/drawgen/assistant/harness.py",
+   "line": 236,
+   "endLine": 280,
+   "module": "mod:src/drawgen/assistant/harness.py",
+   "signature": "def select(self, request: HarnessRequest) -> AssistantStep",
+   "purpose": "POSTs the system prompt and the request JSON to {base_url}/responses with a strict AssistantStep JSON schema and parses the output.",
+   "inputs": [
+    {
+     "name": "request",
+     "type": "HarnessRequest",
+     "desc": "serialised as the user input",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "AssistantStep",
+     "desc": "parsed structured output",
+     "inferred": false
+    }
+   ],
+   "calls": [
+    {
+     "to": "fn:src/drawgen/assistant/harness.py#_system_prompt",
+     "confidence": "seen",
+     "evidence": "src/drawgen/assistant/harness.py:244"
+    },
+    {
+     "to": "fn:src/drawgen/assistant/harness.py#_parse_text_step",
+     "confidence": "seen",
+     "evidence": "src/drawgen/assistant/harness.py:273"
+    },
+    {
+     "to": "fn:src/drawgen/assistant/harness.py#_parse_step",
+     "confidence": "seen",
+     "evidence": "src/drawgen/assistant/harness.py:277"
+    }
+   ],
+   "fanIn": 0,
+   "length": 45,
+   "flags": [
+    "no-doc"
+   ],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/assistant/harness.py#PiAgentHarness.select",
+   "name": "PiAgentHarness.select",
+   "path": "src/drawgen/assistant/harness.py",
+   "line": 309,
+   "endLine": 346,
+   "module": "mod:src/drawgen/assistant/harness.py",
+   "signature": "def select(self, request: HarnessRequest) -> AssistantStep",
+   "purpose": "Pipes prompt + schema + request to the `pi` CLI (optionally with the nxopen-cad skill) and parses the last JSON line of stdout.",
+   "inputs": [
+    {
+     "name": "request",
+     "type": "HarnessRequest",
+     "desc": "serialised into the prompt",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "AssistantStep",
+     "desc": "parsed step",
+     "inferred": false
+    }
+   ],
+   "calls": [
+    {
+     "to": "fn:src/drawgen/assistant/harness.py#_system_prompt",
+     "confidence": "seen",
+     "evidence": "src/drawgen/assistant/harness.py:312"
+    },
+    {
+     "to": "fn:src/drawgen/assistant/harness.py#_parse_step",
+     "confidence": "seen",
+     "evidence": "src/drawgen/assistant/harness.py:343"
+    },
+    {
+     "to": "fn:src/drawgen/assistant/harness.py#_parse_text_step",
+     "confidence": "seen",
+     "evidence": "src/drawgen/assistant/harness.py:346"
+    }
+   ],
+   "fanIn": 0,
+   "length": 38,
+   "flags": [
+    "no-doc"
+   ],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/assistant/harness.py#_system_prompt",
+   "name": "_system_prompt",
+   "path": "src/drawgen/assistant/harness.py",
+   "line": 27,
+   "endLine": 53,
+   "module": "mod:src/drawgen/assistant/harness.py",
+   "signature": "def _system_prompt() -> str",
+   "purpose": "The fixed instruction text: JSON only, listed tools only, no code or invented numbers, follow the operation plan, and per-task tool recipes.",
+   "inputs": [],
+   "outputs": [
+    {
+     "type": "str",
+     "desc": "system/developer prompt",
+     "inferred": false
+    }
+   ],
+   "calls": [],
+   "fanIn": 2,
+   "length": 27,
+   "flags": [
+    "no-doc"
+   ],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/assistant/harness.py#_parse_step",
+   "name": "_parse_step",
+   "path": "src/drawgen/assistant/harness.py",
+   "line": 56,
+   "endLine": 89,
+   "module": "mod:src/drawgen/assistant/harness.py",
+   "signature": "def _parse_step(value: Any) -> AssistantStep",
+   "purpose": "Recursively digs an AssistantStep out of the provider envelope shapes (assistant_step, step, message.content, messages[], assistantMessageEvent).",
+   "inputs": [
+    {
+     "name": "value",
+     "type": "Any",
+     "desc": "decoded JSON or text",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "AssistantStep",
+     "desc": "validated step; raises HarnessError",
+     "inferred": false
+    }
+   ],
+   "calls": [
+    {
+     "to": "fn:src/drawgen/assistant/harness.py#_parse_step",
+     "confidence": "seen",
+     "evidence": "src/drawgen/assistant/harness.py:59"
+    },
+    {
+     "to": "fn:src/drawgen/assistant/harness.py#_parse_text_step",
+     "confidence": "seen",
+     "evidence": "src/drawgen/assistant/harness.py:70"
+    }
+   ],
+   "fanIn": 2,
+   "length": 34,
+   "flags": [
+    "no-doc"
+   ],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/assistant/harness.py#_parse_text_step",
+   "name": "_parse_text_step",
+   "path": "src/drawgen/assistant/harness.py",
+   "line": 92,
+   "endLine": 99,
+   "module": "mod:src/drawgen/assistant/harness.py",
+   "signature": "def _parse_text_step(text: str) -> AssistantStep",
+   "purpose": "Strips Markdown code fences and validates the text as AssistantStep JSON.",
+   "inputs": [
+    {
+     "name": "text",
+     "type": "str",
+     "desc": "model text output",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "AssistantStep",
+     "desc": "validated step; raises HarnessError",
+     "inferred": false
+    }
+   ],
+   "calls": [],
+   "fanIn": 3,
+   "length": 8,
+   "flags": [
+    "no-doc",
+    "high-fan-in"
+   ],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/assistant/tools/__init__.py#ToolRegistry.execute",
+   "name": "ToolRegistry.execute",
+   "path": "src/drawgen/assistant/tools/__init__.py",
+   "line": 354,
+   "endLine": 384,
+   "module": "mod:src/drawgen/assistant/tools/__init__.py",
+   "signature": "def execute(self, name: str, raw_args: dict[str, Any], *, confirmed: bool = False ) -> ToolExecution",
+   "purpose": "Validates arguments against the tool's model; for change tools without confirmation returns a preview; otherwise runs the local handler or forwards the command to backend.execute.",
+   "inputs": [
+    {
+     "name": "name",
+     "type": "str",
+     "desc": "tool name",
+     "inferred": false
+    },
+    {
+     "name": "raw_args",
+     "type": "dict[str, Any]",
+     "desc": "arguments from the harness",
+     "inferred": false
+    },
+    {
+     "name": "confirmed",
+     "type": "bool",
+     "desc": "user approved the preview",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "ToolExecution",
+     "desc": "ok/result, needs_confirmation+preview, or error",
+     "inferred": false
+    }
+   ],
+   "calls": [
+    {
+     "to": "fn:src/drawgen/assistant/tools/__init__.py#_read_context",
+     "confidence": "inferred",
+     "evidence": "src/drawgen/assistant/tools/__init__.py:377"
+    },
+    {
+     "to": "fn:src/drawgen/assistant/tools/__init__.py#_read_selection",
+     "confidence": "inferred",
+     "evidence": "src/drawgen/assistant/tools/__init__.py:377"
+    },
+    {
+     "to": "fn:src/drawgen/assistant/tools/__init__.py#_read_measure",
+     "confidence": "inferred",
+     "evidence": "src/drawgen/assistant/tools/__init__.py:377"
+    },
+    {
+     "to": "fn:src/drawgen/assistant/tools/__init__.py#_read_api_search",
+     "confidence": "inferred",
+     "evidence": "src/drawgen/assistant/tools/__init__.py:377"
+    },
+    {
+     "to": "fn:src/drawgen/assistant/tools/__init__.py#_read_list",
+     "confidence": "inferred",
+     "evidence": "src/drawgen/assistant/tools/__init__.py:377"
+    },
+    {
+     "to": "fn:src/drawgen/backends/bridge.py#BridgeBackend.execute",
+     "confidence": "inferred",
+     "evidence": "src/drawgen/assistant/tools/__init__.py:379"
+    },
+    {
+     "to": "fn:src/drawgen/backends/live_mock.py#MockLiveBackend.execute",
+     "confidence": "inferred",
+     "evidence": "src/drawgen/assistant/tools/__init__.py:379"
+    },
+    {
+     "to": "fn:src/drawgen/assistant/tools/__init__.py#_model_dump",
+     "confidence": "seen",
+     "evidence": "src/drawgen/assistant/tools/__init__.py:384"
+    }
+   ],
+   "fanIn": 1,
+   "length": 31,
+   "flags": [
+    "no-doc"
+   ],
+   "stage": "stage:06-execute"
+  },
+  {
+   "id": "fn:src/drawgen/assistant/tools/__init__.py#_read_context",
+   "name": "_read_context",
+   "path": "src/drawgen/assistant/tools/__init__.py",
+   "line": 172,
+   "endLine": 173,
+   "module": "mod:src/drawgen/assistant/tools/__init__.py",
+   "signature": "def _read_context(backend: LiveBackend, _: BaseModel) -> dict[str, Any]",
+   "purpose": "Handler for get_context.",
+   "inputs": [
+    {
+     "name": "backend",
+     "type": "LiveBackend",
+     "desc": "",
+     "inferred": false
+    },
+    {
+     "name": "_",
+     "type": "BaseModel",
+     "desc": "EmptyArgs",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "dict[str, Any]",
+     "desc": "SessionContext as JSON",
+     "inferred": false
+    }
+   ],
+   "calls": [
+    {
+     "to": "fn:src/drawgen/backends/bridge.py#BridgeBackend.get_context",
+     "confidence": "inferred",
+     "evidence": "src/drawgen/assistant/tools/__init__.py:173"
+    },
+    {
+     "to": "fn:src/drawgen/backends/live_mock.py#MockLiveBackend.get_context",
+     "confidence": "inferred",
+     "evidence": "src/drawgen/assistant/tools/__init__.py:173"
+    }
+   ],
+   "fanIn": 0,
+   "length": 2,
+   "flags": [
+    "no-doc"
+   ],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/assistant/tools/__init__.py#_read_selection",
+   "name": "_read_selection",
+   "path": "src/drawgen/assistant/tools/__init__.py",
+   "line": 176,
+   "endLine": 179,
+   "module": "mod:src/drawgen/assistant/tools/__init__.py",
+   "signature": "def _read_selection(backend: LiveBackend, args: BaseModel) -> dict[str, Any]",
+   "purpose": "Handler for get_selection.",
+   "inputs": [
+    {
+     "name": "backend",
+     "type": "LiveBackend",
+     "desc": "",
+     "inferred": false
+    },
+    {
+     "name": "args",
+     "type": "BaseModel",
+     "desc": "SelectionArgs",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "dict[str, Any]",
+     "desc": "Selection as JSON",
+     "inferred": false
+    }
+   ],
+   "calls": [
+    {
+     "to": "fn:src/drawgen/backends/bridge.py#BridgeBackend.get_selection",
+     "confidence": "inferred",
+     "evidence": "src/drawgen/assistant/tools/__init__.py:177"
+    },
+    {
+     "to": "fn:src/drawgen/backends/live_mock.py#MockLiveBackend.get_selection",
+     "confidence": "inferred",
+     "evidence": "src/drawgen/assistant/tools/__init__.py:177"
+    }
+   ],
+   "fanIn": 0,
+   "length": 4,
+   "flags": [
+    "no-doc"
+   ],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/assistant/tools/__init__.py#_read_measure",
+   "name": "_read_measure",
+   "path": "src/drawgen/assistant/tools/__init__.py",
+   "line": 182,
+   "endLine": 184,
+   "module": "mod:src/drawgen/assistant/tools/__init__.py",
+   "signature": "def _read_measure(backend: LiveBackend, args: BaseModel) -> dict[str, Any]",
+   "purpose": "Handler for measure: revalidates MeasureArgs and calls backend.measure.",
+   "inputs": [
+    {
+     "name": "backend",
+     "type": "LiveBackend",
+     "desc": "",
+     "inferred": false
+    },
+    {
+     "name": "args",
+     "type": "BaseModel",
+     "desc": "MeasureArgs",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "dict[str, Any]",
+     "desc": "LiveMeasureResults as JSON",
+     "inferred": false
+    }
+   ],
+   "calls": [
+    {
+     "to": "fn:src/drawgen/backends/bridge.py#BridgeBackend.measure",
+     "confidence": "inferred",
+     "evidence": "src/drawgen/assistant/tools/__init__.py:184"
+    },
+    {
+     "to": "fn:src/drawgen/backends/live_mock.py#MockLiveBackend.measure",
+     "confidence": "inferred",
+     "evidence": "src/drawgen/assistant/tools/__init__.py:184"
+    }
+   ],
+   "fanIn": 0,
+   "length": 3,
+   "flags": [
+    "no-doc"
+   ],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/assistant/tools/__init__.py#_read_api_search",
+   "name": "_read_api_search",
+   "path": "src/drawgen/assistant/tools/__init__.py",
+   "line": 187,
+   "endLine": 198,
+   "module": "mod:src/drawgen/assistant/tools/__init__.py",
+   "signature": "def _read_api_search(_: LiveBackend, args: BaseModel) -> dict[str, Any]",
+   "purpose": "Handler for search_nx_api: lets the LLM search the local API catalog.",
+   "inputs": [
+    {
+     "name": "_",
+     "type": "LiveBackend",
+     "desc": "unused",
+     "inferred": false
+    },
+    {
+     "name": "args",
+     "type": "BaseModel",
+     "desc": "ApiSearchArgs",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "dict[str, Any]",
+     "desc": "query and candidate list",
+     "inferred": false
+    }
+   ],
+   "calls": [
+    {
+     "to": "fn:src/drawgen/assistant/api_search.py#search_nx_api",
+     "confidence": "seen",
+     "evidence": "src/drawgen/assistant/tools/__init__.py:189"
+    }
+   ],
+   "fanIn": 0,
+   "length": 12,
+   "flags": [
+    "no-doc"
+   ],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/assistant/tools/__init__.py#_read_list",
+   "name": "_read_list",
+   "path": "src/drawgen/assistant/tools/__init__.py",
+   "line": 201,
+   "endLine": 202,
+   "module": "mod:src/drawgen/assistant/tools/__init__.py",
+   "signature": "def _read_list(backend: LiveBackend, args: BaseModel) -> dict[str, Any]",
+   "purpose": "Handler for list.",
+   "inputs": [
+    {
+     "name": "backend",
+     "type": "LiveBackend",
+     "desc": "",
+     "inferred": false
+    },
+    {
+     "name": "args",
+     "type": "BaseModel",
+     "desc": "ListArgs",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "dict[str, Any]",
+     "desc": "ListResult as JSON",
+     "inferred": false
+    }
+   ],
+   "calls": [
+    {
+     "to": "fn:src/drawgen/backends/bridge.py#BridgeBackend.list",
+     "confidence": "inferred",
+     "evidence": "src/drawgen/assistant/tools/__init__.py:202"
+    },
+    {
+     "to": "fn:src/drawgen/backends/live_mock.py#MockLiveBackend.list",
+     "confidence": "inferred",
+     "evidence": "src/drawgen/assistant/tools/__init__.py:202"
+    }
+   ],
+   "fanIn": 0,
+   "length": 2,
+   "flags": [
+    "no-doc"
+   ],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/assistant/tools/__init__.py#_model_dump",
+   "name": "_model_dump",
+   "path": "src/drawgen/assistant/tools/__init__.py",
+   "line": 164,
+   "endLine": 169,
+   "module": "mod:src/drawgen/assistant/tools/__init__.py",
+   "signature": "def _model_dump(value: Any) -> dict[str, Any]",
+   "purpose": "Normalises a handler result (model or dict) to a JSON dict.",
+   "inputs": [
+    {
+     "name": "value",
+     "type": "Any",
+     "desc": "handler result",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "dict[str, Any]",
+     "desc": "JSON object; TypeError otherwise",
+     "inferred": false
+    }
+   ],
+   "calls": [],
+   "fanIn": 1,
+   "length": 6,
+   "flags": [
+    "no-doc"
+   ],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/assistant/agent.py#_semantic_call_key",
+   "name": "_semantic_call_key",
+   "path": "src/drawgen/assistant/agent.py",
+   "line": 132,
+   "endLine": 147,
+   "module": "mod:src/drawgen/assistant/agent.py",
+   "signature": "def _semantic_call_key(tool: str, args: dict[str, Any]) -> str",
+   "purpose": "Builds a call key that ignores measurement request IDs, so retrying a failed measure under a new ID is detected as a loop.",
+   "inputs": [
+    {
+     "name": "tool",
+     "type": "str",
+     "desc": "tool name",
+     "inferred": false
+    },
+    {
+     "name": "args",
+     "type": "dict[str, Any]",
+     "desc": "tool arguments",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "str",
+     "desc": "canonical JSON key",
+     "inferred": false
+    }
+   ],
+   "calls": [],
+   "fanIn": 1,
+   "length": 16,
+   "flags": [],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/assistant/agent.py#_has_measurement_failure",
+   "name": "_has_measurement_failure",
+   "path": "src/drawgen/assistant/agent.py",
+   "line": 150,
+   "endLine": 159,
+   "module": "mod:src/drawgen/assistant/agent.py",
+   "signature": "def _has_measurement_failure(result: Any) -> bool",
+   "purpose": "True when a measure result list is empty or any entry has an error or no value.",
+   "inputs": [
+    {
+     "name": "result",
+     "type": "Any",
+     "desc": "tool result payload",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "bool",
+     "desc": "failure detected",
+     "inferred": false
+    }
+   ],
+   "calls": [],
+   "fanIn": 1,
+   "length": 10,
+   "flags": [
+    "no-doc"
+   ],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/backends/bridge.py#BridgeBackend._request",
+   "name": "BridgeBackend._request",
+   "path": "src/drawgen/backends/bridge.py",
+   "line": 37,
+   "endLine": 73,
+   "module": "mod:src/drawgen/backends/bridge.py",
+   "signature": "def _request(self, command: str, inputs: dict[str, Any] | None = None) -> dict[str, Any]",
+   "purpose": "Sends one BridgeRequest (fresh ID, token) as a JSON line over TCP, reads one line back, and checks ID match and status.ok.",
+   "inputs": [
+    {
+     "name": "command",
+     "type": "str",
+     "desc": "bridge command",
+     "inferred": false
+    },
+    {
+     "name": "inputs",
+     "type": "dict[str, Any] | None",
+     "desc": "command inputs",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "dict[str, Any]",
+     "desc": "response.result; LiveBackendError on any failure",
+     "inferred": false
+    }
+   ],
+   "calls": [
+    {
+     "to": "fn:src/drawgen/backends/bridge.py#BridgeBackend._endpoint",
+     "confidence": "seen",
+     "evidence": "src/drawgen/backends/bridge.py:38"
+    },
+    {
+     "to": "fn:nx_bridge/src/BridgeServer.cs#BridgeServer.HandleClientAsync",
+     "confidence": "inferred",
+     "evidence": "src/drawgen/backends/bridge.py:48"
+    }
+   ],
+   "fanIn": 5,
+   "length": 37,
+   "flags": [
+    "no-doc",
+    "high-fan-in"
+   ],
+   "stage": "stage:07-_request"
+  },
+  {
+   "id": "fn:src/drawgen/backends/bridge.py#BridgeBackend._endpoint",
+   "name": "BridgeBackend._endpoint",
+   "path": "src/drawgen/backends/bridge.py",
+   "line": 30,
+   "endLine": 35,
+   "module": "mod:src/drawgen/backends/bridge.py",
+   "signature": "def _endpoint(self) -> tuple[str, int, str]",
+   "purpose": "Reads host, port and token from the bridge.json endpoint file.",
+   "inputs": [],
+   "outputs": [
+    {
+     "type": "tuple[str, int, str]",
+     "desc": "host, port, token",
+     "inferred": false
+    }
+   ],
+   "calls": [],
+   "fanIn": 1,
+   "length": 6,
+   "flags": [
+    "no-doc"
+   ],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/backends/bridge.py#BridgeBackend.get_context",
+   "name": "BridgeBackend.get_context",
+   "path": "src/drawgen/backends/bridge.py",
+   "line": 78,
+   "endLine": 79,
+   "module": "mod:src/drawgen/backends/bridge.py",
+   "signature": "def get_context(self) -> SessionContext",
+   "purpose": "get_context over the bridge.",
+   "inputs": [],
+   "outputs": [
+    {
+     "type": "SessionContext",
+     "desc": "work/displayed part, application, sheet, view",
+     "inferred": false
+    }
+   ],
+   "calls": [
+    {
+     "to": "fn:src/drawgen/backends/bridge.py#BridgeBackend._request",
+     "confidence": "seen",
+     "evidence": "src/drawgen/backends/bridge.py:79"
+    }
+   ],
+   "fanIn": 0,
+   "length": 2,
+   "flags": [
+    "no-doc"
+   ],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/backends/bridge.py#BridgeBackend.get_selection",
+   "name": "BridgeBackend.get_selection",
+   "path": "src/drawgen/backends/bridge.py",
+   "line": 81,
+   "endLine": 84,
+   "module": "mod:src/drawgen/backends/bridge.py",
+   "signature": "def get_selection(self, include_properties: bool = True) -> Selection",
+   "purpose": "get_selection over the bridge.",
+   "inputs": [
+    {
+     "name": "include_properties",
+     "type": "bool",
+     "desc": "include area/volume etc.",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "Selection",
+     "desc": "selected objects with handles",
+     "inferred": false
+    }
+   ],
+   "calls": [
+    {
+     "to": "fn:src/drawgen/backends/bridge.py#BridgeBackend._request",
+     "confidence": "seen",
+     "evidence": "src/drawgen/backends/bridge.py:83"
+    }
+   ],
+   "fanIn": 0,
+   "length": 4,
+   "flags": [
+    "no-doc"
+   ],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/backends/bridge.py#BridgeBackend.measure",
+   "name": "BridgeBackend.measure",
+   "path": "src/drawgen/backends/bridge.py",
+   "line": 86,
+   "endLine": 89,
+   "module": "mod:src/drawgen/backends/bridge.py",
+   "signature": "def measure(self, requests: list[LiveMeasureRequest]) -> LiveMeasureResults",
+   "purpose": "measure over the bridge.",
+   "inputs": [
+    {
+     "name": "requests",
+     "type": "list[LiveMeasureRequest]",
+     "desc": "id, kind, handles",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "LiveMeasureResults",
+     "desc": "value/unit or error per request",
+     "inferred": false
+    }
+   ],
+   "calls": [
+    {
+     "to": "fn:src/drawgen/backends/bridge.py#BridgeBackend._request",
+     "confidence": "seen",
+     "evidence": "src/drawgen/backends/bridge.py:88"
+    }
+   ],
+   "fanIn": 0,
+   "length": 4,
+   "flags": [
+    "no-doc"
+   ],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/backends/bridge.py#BridgeBackend.list",
+   "name": "BridgeBackend.list",
+   "path": "src/drawgen/backends/bridge.py",
+   "line": 91,
+   "endLine": 92,
+   "module": "mod:src/drawgen/backends/bridge.py",
+   "signature": "def list(self, request: ListRequest) -> ListResult",
+   "purpose": "list over the bridge (the C# dispatcher has no `list` case yet).",
+   "inputs": [
+    {
+     "name": "request",
+     "type": "ListRequest",
+     "desc": "what to list",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "ListResult",
+     "desc": "typed items",
+     "inferred": false
+    }
+   ],
+   "calls": [
+    {
+     "to": "fn:src/drawgen/backends/bridge.py#BridgeBackend._request",
+     "confidence": "seen",
+     "evidence": "src/drawgen/backends/bridge.py:92"
+    }
+   ],
+   "fanIn": 0,
+   "length": 2,
+   "flags": [
+    "no-doc"
+   ],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/backends/bridge.py#BridgeBackend.execute",
+   "name": "BridgeBackend.execute",
+   "path": "src/drawgen/backends/bridge.py",
+   "line": 94,
+   "endLine": 107,
+   "module": "mod:src/drawgen/backends/bridge.py",
+   "signature": "def execute(self, command: str, inputs: dict[str, Any]) -> OperationResult",
+   "purpose": "Forwards a session/change command and wraps legacy create_box_with_hole payloads into an OperationResult.",
+   "inputs": [
+    {
+     "name": "command",
+     "type": "str",
+     "desc": "bridge command",
+     "inferred": false
+    },
+    {
+     "name": "inputs",
+     "type": "dict[str, Any]",
+     "desc": "validated tool args",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "OperationResult",
+     "desc": "command, undo_mark, changed, saved, details",
+     "inferred": false
+    }
+   ],
+   "calls": [
+    {
+     "to": "fn:src/drawgen/backends/bridge.py#BridgeBackend._request",
+     "confidence": "seen",
+     "evidence": "src/drawgen/backends/bridge.py:95"
+    }
+   ],
+   "fanIn": 0,
+   "length": 14,
+   "flags": [
+    "no-doc"
+   ],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/backends/live_mock.py#MockLiveBackend.get_context",
+   "name": "MockLiveBackend.get_context",
+   "path": "src/drawgen/backends/live_mock.py",
+   "line": 47,
+   "endLine": 48,
+   "module": "mod:src/drawgen/backends/live_mock.py",
+   "signature": "def get_context(self) -> SessionContext",
+   "purpose": "Returns the scripted SessionContext.",
+   "inputs": [],
+   "outputs": [
+    {
+     "type": "SessionContext",
+     "desc": "demo.prt context",
+     "inferred": false
+    }
+   ],
+   "calls": [],
+   "fanIn": 0,
+   "length": 2,
+   "flags": [
+    "no-doc"
+   ],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/backends/live_mock.py#MockLiveBackend.get_selection",
+   "name": "MockLiveBackend.get_selection",
+   "path": "src/drawgen/backends/live_mock.py",
+   "line": 50,
+   "endLine": 55,
+   "module": "mod:src/drawgen/backends/live_mock.py",
+   "signature": "def get_selection(self, include_properties: bool = True) -> Selection",
+   "purpose": "Returns the scripted selection, optionally with properties stripped.",
+   "inputs": [
+    {
+     "name": "include_properties",
+     "type": "bool",
+     "desc": "",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "Selection",
+     "desc": "scripted items",
+     "inferred": false
+    }
+   ],
+   "calls": [],
+   "fanIn": 0,
+   "length": 6,
+   "flags": [
+    "no-doc"
+   ],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/backends/live_mock.py#MockLiveBackend.measure",
+   "name": "MockLiveBackend.measure",
+   "path": "src/drawgen/backends/live_mock.py",
+   "line": 57,
+   "endLine": 64,
+   "module": "mod:src/drawgen/backends/live_mock.py",
+   "signature": "def measure(self, requests: list[LiveMeasureRequest]) -> LiveMeasureResults",
+   "purpose": "Looks up scripted results by request ID; missing IDs return an error entry.",
+   "inputs": [
+    {
+     "name": "requests",
+     "type": "list[LiveMeasureRequest]",
+     "desc": "",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "LiveMeasureResults",
+     "desc": "scripted results",
+     "inferred": false
+    }
+   ],
+   "calls": [],
+   "fanIn": 0,
+   "length": 8,
+   "flags": [
+    "no-doc"
+   ],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/backends/live_mock.py#MockLiveBackend.list",
+   "name": "MockLiveBackend.list",
+   "path": "src/drawgen/backends/live_mock.py",
+   "line": 66,
+   "endLine": 67,
+   "module": "mod:src/drawgen/backends/live_mock.py",
+   "signature": "def list(self, request: ListRequest) -> ListResult",
+   "purpose": "Returns the scripted ListResult for request.what.",
+   "inputs": [
+    {
+     "name": "request",
+     "type": "ListRequest",
+     "desc": "",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "ListResult",
+     "desc": "scripted or empty",
+     "inferred": false
+    }
+   ],
+   "calls": [],
+   "fanIn": 0,
+   "length": 2,
+   "flags": [
+    "no-doc"
+   ],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/backends/live_mock.py#MockLiveBackend.execute",
+   "name": "MockLiveBackend.execute",
+   "path": "src/drawgen/backends/live_mock.py",
+   "line": 69,
+   "endLine": 83,
+   "module": "mod:src/drawgen/backends/live_mock.py",
+   "signature": "def execute(self, command: str, inputs: dict[str, Any]) -> OperationResult",
+   "purpose": "Records the command, issues a fake undo mark, and fails only for the `fail` command.",
+   "inputs": [
+    {
+     "name": "command",
+     "type": "str",
+     "desc": "",
+     "inferred": false
+    },
+    {
+     "name": "inputs",
+     "type": "dict[str, Any]",
+     "desc": "",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "OperationResult",
+     "desc": "changed unless a view/session command",
+     "inferred": false
+    }
+   ],
+   "calls": [],
+   "fanIn": 0,
+   "length": 15,
+   "flags": [
+    "no-doc"
+   ],
+   "stage": null
+  },
+  {
+   "id": "fn:nx_bridge/src/BridgeServer.cs#BridgeServer.HandleClientAsync",
+   "name": "BridgeServer.HandleClientAsync",
+   "path": "nx_bridge/src/BridgeServer.cs",
+   "line": 51,
+   "endLine": 81,
+   "module": "mod:nx_bridge/src/BridgeServer.cs",
+   "signature": "private async Task HandleClientAsync(TcpClient client, CancellationToken cancellationToken)",
+   "purpose": "Reads one JSON request line, rejects a wrong token, answers ping itself or calls the dispatcher, and writes a BridgeResponse line with status and timing.",
+   "inputs": [
+    {
+     "name": "client",
+     "type": "TcpClient",
+     "desc": "accepted loopback connection",
+     "inferred": false
+    },
+    {
+     "name": "cancellationToken",
+     "type": "CancellationToken",
+     "desc": "",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "Task",
+     "desc": "completes after one request/response",
+     "inferred": false
+    }
+   ],
+   "calls": [
+    {
+     "to": "fn:nx_bridge/src/NxBridgeEntry.cs#InteractiveNxDispatcher.Dispatch",
+     "confidence": "inferred",
+     "evidence": "nx_bridge/src/BridgeServer.cs:69"
+    }
+   ],
+   "fanIn": 0,
+   "length": 31,
+   "flags": [
+    "no-doc"
+   ],
+   "stage": null
+  },
+  {
+   "id": "fn:nx_bridge/src/NxBridgeEntry.cs#InteractiveNxDispatcher.Dispatch",
+   "name": "InteractiveNxDispatcher.Dispatch",
+   "path": "nx_bridge/src/NxBridgeEntry.cs",
+   "line": 49,
+   "endLine": 74,
+   "module": "mod:nx_bridge/src/NxBridgeEntry.cs",
+   "signature": "public object? Dispatch(string command, Dictionary<string, object?> inputs)",
+   "purpose": "Under UI.LockAccess, switches on the command name to GetContext, GetSelection, Measure, CreateBoxWithHole, display, fit_view, update or save; anything else throws NotSupportedException.",
+   "inputs": [
+    {
+     "name": "command",
+     "type": "string",
+     "desc": "bridge command",
+     "inferred": false
+    },
+    {
+     "name": "inputs",
+     "type": "Dictionary<string, object?>",
+     "desc": "decoded inputs",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "object?",
+     "desc": "anonymous result serialised to JSON",
+     "inferred": false
+    }
+   ],
+   "calls": [
+    {
+     "to": "fn:nx_bridge/src/NxBridgeEntry.cs#InteractiveNxDispatcher.Measure",
+     "confidence": "seen",
+     "evidence": "nx_bridge/src/NxBridgeEntry.cs:58"
+    }
+   ],
+   "fanIn": 0,
+   "length": 26,
+   "flags": [
+    "no-doc"
+   ],
+   "stage": null
+  },
+  {
+   "id": "fn:nx_bridge/src/NxBridgeEntry.cs#InteractiveNxDispatcher.Measure",
+   "name": "InteractiveNxDispatcher.Measure",
+   "path": "nx_bridge/src/NxBridgeEntry.cs",
+   "line": 156,
+   "endLine": 190,
+   "module": "mod:nx_bridge/src/NxBridgeEntry.cs",
+   "signature": "private object Measure(Dictionary<string, object?> inputs)",
+   "purpose": "Resolves each request's handle and computes area or volume via NXOpen measurement helpers.",
+   "inputs": [
+    {
+     "name": "inputs",
+     "type": "Dictionary<string, object?>",
+     "desc": "requests list",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "object",
+     "desc": "{results: [...]} with value/unit or error",
+     "inferred": true
+    }
+   ],
+   "calls": [],
+   "fanIn": 1,
+   "length": 35,
+   "flags": [
+    "no-doc"
+   ],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/assistant/checker.py#check_answer",
+   "name": "check_answer",
+   "path": "src/drawgen/assistant/checker.py",
+   "line": 30,
+   "endLine": 38,
+   "module": "mod:src/drawgen/assistant/checker.py",
+   "signature": "def check_answer(answer: str, sources: list[Any], tolerance: float = 1e-9 ) -> tuple[bool, list[float]]",
+   "purpose": "Collects every number in the sources (user message + tool results) and reports any answer number not matched within tolerance.",
+   "inputs": [
+    {
+     "name": "answer",
+     "type": "str",
+     "desc": "harness answer",
+     "inferred": false
+    },
+    {
+     "name": "sources",
+     "type": "list[Any]",
+     "desc": "user message and tool results",
+     "inferred": false
+    },
+    {
+     "name": "tolerance",
+     "type": "float",
+     "desc": "absolute match tolerance",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "tuple[bool, list[float]]",
+     "desc": "accepted, unsupported numbers",
+     "inferred": false
+    }
+   ],
+   "calls": [
+    {
+     "to": "fn:src/drawgen/assistant/checker.py#_numbers",
+     "confidence": "seen",
+     "evidence": "src/drawgen/assistant/checker.py:33"
+    }
+   ],
+   "fanIn": 1,
+   "length": 9,
+   "flags": [
+    "no-doc"
+   ],
+   "stage": "stage:08-check_answer"
+  },
+  {
+   "id": "fn:src/drawgen/assistant/checker.py#_numbers",
+   "name": "_numbers",
+   "path": "src/drawgen/assistant/checker.py",
+   "line": 12,
+   "endLine": 27,
+   "module": "mod:src/drawgen/assistant/checker.py",
+   "signature": "def _numbers(value: Any) -> list[float]",
+   "purpose": "Recursively extracts numbers from scalars, strings (regex), dicts and lists; booleans are ignored.",
+   "inputs": [
+    {
+     "name": "value",
+     "type": "Any",
+     "desc": "any JSON-like value",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "list[float]",
+     "desc": "numbers found",
+     "inferred": false
+    }
+   ],
+   "calls": [
+    {
+     "to": "fn:src/drawgen/assistant/checker.py#_numbers",
+     "confidence": "seen",
+     "evidence": "src/drawgen/assistant/checker.py:24"
+    }
+   ],
+   "fanIn": 1,
+   "length": 16,
+   "flags": [
+    "no-doc"
+   ],
+   "stage": null
+  },
+  {
+   "id": "fn:src/drawgen/assistant/log.py#SessionLog.append",
+   "name": "SessionLog.append",
+   "path": "src/drawgen/assistant/log.py",
+   "line": 18,
+   "endLine": 21,
+   "module": "mod:src/drawgen/assistant/log.py",
+   "signature": "def append(self, event: str, **payload: Any) -> None",
+   "purpose": "Appends one timestamped JSON event line to the session's events.jsonl.",
+   "inputs": [
+    {
+     "name": "event",
+     "type": "str",
+     "desc": "event name",
+     "inferred": false
+    },
+    {
+     "name": "payload",
+     "type": "**Any",
+     "desc": "event fields",
+     "inferred": false
+    }
+   ],
+   "outputs": [
+    {
+     "type": "None",
+     "desc": "writes to disk",
+     "inferred": false
+    }
+   ],
+   "calls": [],
+   "fanIn": 1,
+   "length": 4,
+   "flags": [
+    "no-doc"
+   ],
+   "stage": null
+  }
+ ]
+}</script>
+<script>
+(function () {
+  'use strict';
+  const dataEl = document.getElementById('code-map-data');
+  let DATA;
+  try { DATA = JSON.parse(dataEl.textContent); }
+  catch (e) { document.getElementById('view').textContent = 'code-map: the embedded data block is not valid JSON (' + e.message + ').'; return; }
+
+  // ---------- helpers ----------
+  const $ = (sel) => document.querySelector(sel);
+  const el = (tag, attrs, ...children) => {
+    const n = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs || {})) {
+      if (v == null) continue;
+      if (k === 'class') n.className = v;
+      else if (k === 'text') n.textContent = v;
+      else if (k.startsWith('on')) n.addEventListener(k.slice(2), v);
+      else n.setAttribute(k, v);
+    }
+    for (const c of children) if (c != null && c !== false) n.append(c);
+    return n;
+  };
+  const svgEl = (tag, attrs) => {
+    const n = document.createElementNS('http://www.w3.org/2000/svg', tag);
+    for (const [k, v] of Object.entries(attrs || {})) n.setAttribute(k, v);
+    return n;
+  };
+  const put = (parent, ...items) => { for (const it of items) if (it) parent.append(it); };
+  const push = (map, k, v) => { if (!map.has(k)) map.set(k, []); map.get(k).push(v); };
+  const truncate = (s, n) => { s = String(s || ''); return s.length > n ? s.slice(0, n - 1) + '…' : s; };
+
+  // ---------- index ----------
+  const nodes = new Map(), kindOf = new Map();
+  const add = (list, kind) => (list || []).forEach((n) => { nodes.set(n.id, n); kindOf.set(n.id, kind); });
+  const stages = (DATA.pipeline && DATA.pipeline.stages) || [];
+  add(DATA.subsystems, 'subsystem'); add(DATA.modules, 'module'); add(stages, 'stage'); add(DATA.functions, 'function');
+  const callers = new Map(), modIn = new Map(), modOut = new Map(), stageOf = new Map();
+  (DATA.functions || []).forEach((f) => (f.calls || []).forEach((c) => push(callers, c.to, { from: f.id, confidence: c.confidence, evidence: c.evidence })));
+  (DATA.moduleEdges || []).forEach((e) => { push(modOut, e.from, e); push(modIn, e.to, e); });
+  stages.forEach((s) => (s.functions || []).forEach((fid) => { if (!stageOf.has(fid)) stageOf.set(fid, s.id); }));
+
+  const FLAG_HELP = {
+    'no-doc': 'No docstring or doc comment',
+    'untyped': 'No type information on parameters or return',
+    'high-fan-in': 'Called from many places; changes ripple',
+    'long': 'Long body; refactor candidate',
+    'todo': 'Contains TODO, FIXME, or HACK',
+    'no-callers': 'No static callers found; dead or dynamic'
+  };
+
+  const state = { layer: 'overview', subsystem: null, expanded: null, selected: null, query: '', zoom: 1 };
+  const view = $('#view'), detail = $('#detail'), searchInput = $('#search'), results = $('#results');
+
+  // ---------- notes (browser storage, keyed by repo root + stable node id) ----------
+  const noteKey = (id) => 'codemap:' + ((DATA.meta && (DATA.meta.repoRoot || DATA.meta.repo)) || '') + ':' + id;
+  const loadNote = (id) => { try { return localStorage.getItem(noteKey(id)) || ''; } catch (e) { return ''; } };
+  const saveNote = (id, text) => { try { if (text) localStorage.setItem(noteKey(id), text); else localStorage.removeItem(noteKey(id)); return true; } catch (e) { return false; } };
+  const hasNote = (id) => loadNote(id) !== '';
+
+  // ---------- editor links ----------
+  function buildLink(n) {
+    const m = DATA.meta || {};
+    const scheme = m.editorScheme || 'vscode://file/{abs_path}:{line}:{col}';
+    const root = String(m.repoRoot || '').replace(/\\/g, '/').replace(/\/+$/, '');
+    const rel = String(n.path || '').replace(/\\/g, '/');
+    const abs = root ? root + '/' + rel : rel;
+    return scheme
+      .replace('{abs_path}', encodeURI(abs))
+      .replace('{rel_path}', encodeURI(rel))
+      .replace('{line}', String(n.line || 1))
+      .replace('{col}', '1')
+      .replace('{project}', encodeURIComponent(m.project || m.repo || ''));
+  }
+  async function copyText(t) { try { await navigator.clipboard.writeText(t); return true; } catch (e) { return false; } }
+
+  // ---------- layered DAG layout: columns by dependency depth, back edges ignored for layering ----------
+  const NODE_W = 172, NODE_H = 36, GAP_X = 72, GAP_Y = 14, PAD = 16;
+  function layoutDag(ids, edges, groupOf) {
+    const idSet = new Set(ids);
+    const out = new Map(); ids.forEach((i) => out.set(i, []));
+    edges.forEach((e) => { if (idSet.has(e.from) && idSet.has(e.to) && e.from !== e.to) out.get(e.from).push(e.to); });
+    const color = new Map(), fwd = new Map(); ids.forEach((i) => fwd.set(i, []));
+    const visit = (u) => {
+      color.set(u, 1);
+      for (const v of out.get(u)) { if (color.get(v) === 1) continue; fwd.get(u).push(v); if (!color.has(v)) visit(v); }
+      color.set(u, 2);
+    };
+    ids.forEach((i) => { if (!color.has(i)) visit(i); });
+    const indeg = new Map(); ids.forEach((i) => indeg.set(i, 0));
+    fwd.forEach((list) => list.forEach((v) => indeg.set(v, indeg.get(v) + 1)));
+    const depth = new Map();
+    const queue = ids.filter((i) => indeg.get(i) === 0); queue.forEach((i) => depth.set(i, 0));
+    while (queue.length) {
+      const u = queue.shift();
+      for (const v of fwd.get(u)) {
+        depth.set(v, Math.max(depth.get(v) || 0, depth.get(u) + 1));
+        indeg.set(v, indeg.get(v) - 1);
+        if (indeg.get(v) === 0) queue.push(v);
+      }
+    }
+    ids.forEach((i) => { if (!depth.has(i)) depth.set(i, 0); });
+    const cols = new Map(); ids.forEach((i) => push(cols, depth.get(i), i));
+    const colKeys = [...cols.keys()].sort((a, b) => a - b);
+    const pos = new Map(); let maxRows = 1;
+    colKeys.forEach((d, ci) => {
+      const list = cols.get(d).sort((a, b) => (groupOf(a) + ' ' + nodes.get(a).name).localeCompare(groupOf(b) + ' ' + nodes.get(b).name));
+      maxRows = Math.max(maxRows, list.length);
+      list.forEach((id, ri) => pos.set(id, { x: PAD + ci * (NODE_W + GAP_X), y: PAD + ri * (NODE_H + GAP_Y) }));
+    });
+    const width = PAD * 2 + Math.max(1, colKeys.length) * (NODE_W + GAP_X) - GAP_X;
+    const height = PAD * 2 + maxRows * (NODE_H + GAP_Y) - GAP_Y;
+    return { pos, width, height };
+  }
+  function edgePath(a, b) {
+    const y1 = a.y + NODE_H / 2, y2 = b.y + NODE_H / 2;
+    if (b.x > a.x) { const x1 = a.x + NODE_W, x2 = b.x, dx = Math.max(30, (x2 - x1) / 2); return 'M' + x1 + ',' + y1 + ' C' + (x1 + dx) + ',' + y1 + ' ' + (x2 - dx) + ',' + y2 + ' ' + x2 + ',' + y2; }
+    if (b.x < a.x) { const x1 = a.x, x2 = b.x + NODE_W; return 'M' + x1 + ',' + y1 + ' C' + (x1 - 50) + ',' + (y1 + 34) + ' ' + (x2 + 50) + ',' + (y2 + 34) + ' ' + x2 + ',' + y2; }
+    const x1 = a.x + NODE_W, x2 = b.x + NODE_W; return 'M' + x1 + ',' + y1 + ' C' + (x1 + 46) + ',' + y1 + ' ' + (x2 + 46) + ',' + y2 + ' ' + x2 + ',' + y2;
+  }
+  function drawGraph(ids, edges, opts) {
+    opts = opts || {};
+    const groupOf = opts.groupOf || (() => '');
+    const { pos, width, height } = layoutDag(ids, edges, groupOf);
+    const svg = svgEl('svg', { class: 'graph', viewBox: '0 0 ' + width + ' ' + height, width: Math.round(width * state.zoom), height: Math.round(height * state.zoom) });
+    const defs = svgEl('defs');
+    ['seen', 'inferred'].forEach((c) => {
+      const m = svgEl('marker', { id: 'arrow-' + c, viewBox: '0 0 10 10', refX: 10, refY: 5, markerWidth: 7, markerHeight: 7, orient: 'auto' });
+      m.append(svgEl('path', { d: 'M0,0 L10,5 L0,10 z', class: 'arrow ' + c }));
+      defs.append(m);
+    });
+    svg.append(defs);
+    const edgeLayer = svgEl('g', { class: 'edges' }); svg.append(edgeLayer);
+    edges.forEach((e) => {
+      const a = pos.get(e.from), b = pos.get(e.to); if (!a || !b) return;
+      const conf = e.confidence === 'inferred' ? 'inferred' : 'seen';
+      const p = svgEl('path', { d: edgePath(a, b), class: 'edge ' + conf, 'marker-end': 'url(#arrow-' + conf + ')', 'data-from': e.from, 'data-to': e.to });
+      const t = svgEl('title');
+      t.textContent = nodes.get(e.from).name + ' → ' + nodes.get(e.to).name + (conf === 'inferred' ? ' (inferred)' : '') + (e.evidence ? '\n' + e.evidence : '');
+      p.append(t);
+      edgeLayer.append(p);
+    });
+    const nodeLayer = svgEl('g', { class: 'nodes' }); svg.append(nodeLayer);
+    ids.forEach((id) => {
+      const n = nodes.get(id), p = pos.get(id), kind = kindOf.get(id);
+      const g = svgEl('g', { class: 'node kind-' + kind + (opts.faded && opts.faded.has(id) ? ' faded' : '') + (state.selected === id ? ' selected' : ''), transform: 'translate(' + p.x + ',' + p.y + ')', 'data-id': id, tabindex: 0, role: 'button' });
+      g.append(svgEl('rect', { width: NODE_W, height: NODE_H, rx: 6 }));
+      const label = svgEl('text', { x: 10, y: NODE_H / 2 + 4, class: 'label' }); label.textContent = truncate(n.name, 21); g.append(label);
+      (n.flags || []).slice(0, 4).forEach((f, i) => g.append(svgEl('circle', { cx: NODE_W - 10 - i * 10, cy: 8, r: 3.5, class: 'flag-dot flag-' + f })));
+      if (hasNote(id)) g.append(svgEl('circle', { cx: NODE_W - 10, cy: NODE_H - 8, r: 3.5, class: 'note-dot' }));
+      const t = svgEl('title');
+      t.textContent = n.name + (n.signature ? '\n' + n.signature : '') + (n.path ? '\n' + n.path + ':' + (n.line || 1) : '') + ((n.flags || []).length ? '\nflags: ' + n.flags.join(', ') : '');
+      g.append(t);
+      g.addEventListener('click', () => select(id));
+      g.addEventListener('keydown', (ev) => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); select(id); } });
+      g.addEventListener('mouseenter', () => hoverEdges(svg, id, true));
+      g.addEventListener('mouseleave', () => hoverEdges(svg, id, false));
+      nodeLayer.append(g);
+    });
+    const box = el('div', { class: 'graph-box' }); box.append(svg); return box;
+  }
+  function hoverEdges(svg, id, on) { svg.querySelectorAll('path.edge').forEach((p) => p.classList.toggle('hot', on && (p.dataset.from === id || p.dataset.to === id))); }
+
+  // ---------- views ----------
+  function render() {
+    view.innerHTML = '';
+    document.querySelectorAll('.tab').forEach((t) => t.classList.toggle('active', t.dataset.layer === state.layer));
+    if (state.layer === 'overview') renderOverview(); else if (state.layer === 'modules') renderModules(); else renderPipeline();
+    renderDetail(); applyQuery();
+  }
+  function renderOverview() {
+    view.append(el('section', { class: 'block' }, el('h2', { text: 'Architecture' }), el('p', { class: 'prose', text: DATA.overview || 'No overview recorded.' })));
+    const grid = el('div', { class: 'cards' });
+    (DATA.subsystems || []).forEach((s) => {
+      const count = (s.modules || []).length;
+      grid.append(el('button', { class: 'card' + (state.selected === s.id ? ' selected' : ''), 'data-id': s.id, onclick: () => { state.subsystem = s.id; state.layer = 'modules'; state.selected = s.id; setHash(s.id); render(); } },
+        el('div', { class: 'card-title', text: s.name }),
+        el('div', { class: 'card-sub', text: count + (count === 1 ? ' module' : ' modules') }),
+        el('p', { class: 'card-body', text: s.summary || '' })));
+    });
+    view.append(el('section', { class: 'block' }, el('h2', { text: 'Subsystems' }), (DATA.subsystems || []).length ? grid : el('p', { class: 'muted', text: 'No subsystems recorded.' })));
+    if (stages.length) {
+      view.append(el('section', { class: 'block' }, el('h2', { text: 'Pipeline at a glance' }),
+        el('p', { class: 'prose', text: stages.map((s) => s.name).join('  →  ') }),
+        el('button', { class: 'linkish', text: 'Open the pipeline view', onclick: () => { state.layer = 'pipeline'; render(); } })));
+    }
+  }
+  function renderModules() {
+    const chips = el('div', { class: 'chips' });
+    const chip = (label, id) => el('button', { class: 'chip' + (state.subsystem === id ? ' active' : ''), text: label, onclick: () => { state.subsystem = id; render(); } });
+    chips.append(chip('All', null)); (DATA.subsystems || []).forEach((s) => chips.append(chip(s.name, s.id)));
+    const ids = (DATA.modules || []).filter((m) => !state.subsystem || m.subsystem === state.subsystem).map((m) => m.id);
+    const idSet = new Set(ids);
+    const edges = (DATA.moduleEdges || []).filter((e) => idSet.has(e.from) && idSet.has(e.to));
+    view.append(el('section', { class: 'block' }, el('h2', { text: 'Module dependency map' }), chips,
+      el('p', { class: 'muted small', text: ids.length + ' modules, ' + edges.length + ' import edges. An arrow points from a module to what it imports; hover a node to light its edges, click it for detail.' })));
+    if (ids.length) view.append(drawGraph(ids, edges, { groupOf: (id) => nodes.get(id).subsystem || '' }));
+  }
+  function renderPipeline() {
+    view.append(el('section', { class: 'block' }, el('h2', { text: 'Algorithm pipeline' }),
+      el('p', { class: 'muted small', text: stages.length ? 'Click a stage to expand the functions inside it; click again to collapse. The label on each arrow is the data type passed to the next stage.' : 'No pipeline recorded.' })));
+    if (!stages.length) return;
+    const flow = el('div', { class: 'flow' });
+    stages.forEach((s, i) => {
+      flow.append(el('button', { class: 'stage' + (state.expanded === s.id ? ' expanded' : '') + (state.selected === s.id ? ' selected' : ''), 'data-id': s.id,
+        onclick: () => { state.expanded = state.expanded === s.id ? null : s.id; state.selected = s.id; setHash(s.id); render(); } },
+        el('div', { class: 'stage-idx', text: 'stage ' + (i + 1) }),
+        el('div', { class: 'stage-name', text: s.name }),
+        el('div', { class: 'stage-io', text: ((s.input && s.input.type) || '?') + ' → ' + ((s.output && s.output.type) || '?') }),
+        flagRow(s.flags)));
+      if (i < stages.length - 1) {
+        const o = s.output || {};
+        flow.append(el('div', { class: 'arrow' + (o.inferred ? ' inferred' : ''), title: o.desc || '' }, el('span', { class: 'arrow-type', text: o.type || '' }), el('span', { class: 'arrow-line', text: '⟶' })));
+      }
+    });
+    view.append(flow);
+    const s = state.expanded && nodes.get(state.expanded);
+    if (!s) return;
+    const own = new Set(s.functions || []);
+    const ids = [...own].filter((id) => nodes.has(id));
+    ids.slice().forEach((fid) => (nodes.get(fid).calls || []).forEach((c) => { if (nodes.has(c.to) && !own.has(c.to) && !ids.includes(c.to)) ids.push(c.to); }));
+    const idSet = new Set(ids), edges = [];
+    ids.forEach((fid) => (nodes.get(fid).calls || []).forEach((c) => { if (idSet.has(c.to)) edges.push({ from: fid, to: c.to, confidence: c.confidence, evidence: c.evidence }); }));
+    const faded = new Set(ids.filter((id) => !own.has(id)));
+    const drawer = el('section', { class: 'block drawer' }, el('h3', { text: 'Inside “' + s.name + '”' }),
+      el('p', { class: 'muted small', text: own.size + (own.size === 1 ? ' function' : ' functions') + ' in this stage' + (faded.size ? ', plus ' + faded.size + (faded.size === 1 ? ' callee that belongs' : ' callees that belong') + ' elsewhere (faded)' : '') + '. Arrows are calls; dashed means inferred.' }));
+    if (ids.length) drawer.append(drawGraph(ids, edges, { groupOf: (id) => (own.has(id) ? '0' : '1'), faded }));
+    else drawer.append(el('p', { class: 'muted', text: 'No functions recorded for this stage.' }));
+    view.append(drawer);
+  }
+  function flagRow(flags) { const row = el('div', { class: 'flag-row' }); (flags || []).forEach((f) => row.append(el('span', { class: 'badge', text: f, title: FLAG_HELP[f] || f }))); return row; }
+
+  // ---------- detail panel ----------
+  function renderDetail() {
+    detail.innerHTML = '';
+    const id = state.selected, n = id && nodes.get(id);
+    if (!n) { detail.append(el('p', { class: 'muted hint', text: 'Select a node to see its purpose, typed inputs and outputs, flags, relations, and your notes. Press / to search.' })); return; }
+    const kind = kindOf.get(id);
+    detail.append(el('div', { class: 'kind', text: kind }));
+    detail.append(el('h2', { class: 'detail-title', text: n.name }));
+    if (n.signature) detail.append(el('pre', { class: 'sig' }, el('code', { text: n.signature })));
+    if (n.path) {
+      const href = buildLink(n);
+      const copyBtn = el('button', { class: 'copy', text: 'copy', title: 'Copy path:line' });
+      copyBtn.addEventListener('click', async () => { const ok = await copyText(n.path + ':' + (n.line || 1)); copyBtn.textContent = ok ? 'copied' : 'copy failed'; setTimeout(() => { copyBtn.textContent = 'copy'; }, 1200); });
+      detail.append(el('div', { class: 'loc' }, el('a', { class: 'open', href: href, title: href, text: 'Open in editor' }), el('code', { class: 'loc-text', text: n.path + ':' + (n.line || 1) + (n.endLine ? '–' + n.endLine : '') }), copyBtn));
+    }
+    if (n.purpose || n.summary) detail.append(el('p', { class: 'prose', text: n.purpose || n.summary }));
+    if (kind === 'stage') put(detail, ioTable('Input', n.input ? [n.input] : []), ioTable('Output', n.output ? [n.output] : []));
+    if (kind === 'function') put(detail, ioTable('Inputs', n.inputs || []), ioTable('Outputs', n.outputs || []), statLine(n));
+    if ((n.flags || []).length) detail.append(section('Flags', el('ul', { class: 'flags' }, ...n.flags.map((f) => el('li', {}, el('span', { class: 'badge', text: f }), ' ', el('span', { class: 'muted small', text: FLAG_HELP[f] || '' }))))));
+    relations(n, kind);
+    notesBlock(id);
+  }
+  function section(title, ...body) { return el('section', { class: 'dsec' }, el('h3', { text: title }), ...body); }
+  function ioTable(title, rows) {
+    if (!rows.length) return section(title, el('p', { class: 'muted small', text: 'none recorded' }));
+    const t = el('table', { class: 'io' });
+    rows.forEach((r) => t.append(el('tr', {}, el('td', { class: 'io-name', text: r.name || '' }), el('td', {}, el('code', { text: r.type || '?' }), r.inferred ? el('span', { class: 'inferred-tag', text: 'inferred' }) : null), el('td', { class: 'muted', text: r.desc || '' }))));
+    return section(title, t);
+  }
+  function statLine(n) {
+    const parts = [];
+    if (n.fanIn != null) parts.push('fan-in ' + n.fanIn);
+    if (n.length != null) parts.push(n.length + ' lines');
+    const st = n.stage && nodes.get(n.stage); if (st) parts.push('stage: ' + st.name);
+    const m = n.module && nodes.get(n.module); if (m) parts.push('module: ' + m.name);
+    return parts.length ? el('p', { class: 'muted small', text: parts.join(' · ') }) : null;
+  }
+  function relList(title, items) {
+    if (!items.length) return null;
+    return section(title, el('ul', { class: 'rel' }, ...items.map((it) => {
+      const t = nodes.get(it.id);
+      return el('li', {},
+        t ? el('button', { class: 'linkish', text: t.name, title: t.path ? t.path + ':' + (t.line || 1) : '', onclick: () => navigateTo(it.id) }) : el('span', { class: 'muted', text: String(it.id) }),
+        it.confidence === 'inferred' ? el('span', { class: 'inferred-tag', text: 'inferred' }) : null,
+        it.evidence ? el('span', { class: 'muted small', text: '  ' + it.evidence }) : null);
+    })));
+  }
+  function relations(n, kind) {
+    if (kind === 'function') {
+      put(detail, relList('Calls', (n.calls || []).map((c) => ({ id: c.to, confidence: c.confidence, evidence: c.evidence }))),
+        relList('Called by', (callers.get(n.id) || []).map((c) => ({ id: c.from, confidence: c.confidence, evidence: c.evidence }))));
+    } else if (kind === 'module') {
+      put(detail, relList('Imports', (modOut.get(n.id) || []).map((e) => ({ id: e.to, confidence: e.confidence, evidence: e.evidence }))),
+        relList('Imported by', (modIn.get(n.id) || []).map((e) => ({ id: e.from, confidence: e.confidence, evidence: e.evidence }))),
+        relList('Functions', (n.functions || []).map((f) => ({ id: f }))));
+    } else if (kind === 'stage') {
+      put(detail, relList('Functions', (n.functions || []).map((f) => ({ id: f }))));
+    } else if (kind === 'subsystem') {
+      put(detail, relList('Modules', (n.modules || []).map((m) => ({ id: m }))));
+    }
+  }
+  function notesBlock(id) {
+    const ta = el('textarea', { class: 'notes', rows: 5, placeholder: 'Your notes on this node. Saved in this browser under the node id, so they survive regenerating the map.' });
+    ta.value = loadNote(id);
+    const status = el('span', { class: 'muted small', text: '' });
+    let timer = null;
+    ta.addEventListener('input', () => {
+      clearTimeout(timer); status.textContent = 'saving…';
+      timer = setTimeout(() => { const ok = saveNote(id, ta.value); status.textContent = ok ? 'saved' : 'not saved: browser storage unavailable'; refreshNoteDots(); }, 300);
+    });
+    detail.append(section('Notes', ta, status));
+  }
+  function refreshNoteDots() {
+    document.querySelectorAll('.node').forEach((g) => {
+      const id = g.dataset.id, has = hasNote(id), dot = g.querySelector('.note-dot');
+      if (has && !dot) g.append(svgEl('circle', { cx: NODE_W - 10, cy: NODE_H - 8, r: 3.5, class: 'note-dot' }));
+      if (!has && dot) dot.remove();
+    });
+  }
+
+  // ---------- selection and navigation ----------
+  function setHash(id) { try { history.replaceState(null, '', '#' + encodeURIComponent(id)); } catch (e) { /* some file:// contexts refuse; harmless */ } }
+  function select(id) {
+    state.selected = id; setHash(id);
+    document.querySelectorAll('[data-id]').forEach((x) => x.classList.toggle('selected', x.dataset.id === id));
+    renderDetail();
+  }
+  function findStageCalling(fid) {
+    for (const s of stages) for (const f of (s.functions || [])) { const fn = nodes.get(f); if (fn && (fn.calls || []).some((c) => c.to === fid)) return s.id; }
+    return null;
+  }
+  function navigateTo(id) {
+    const kind = kindOf.get(id); if (!kind) return;
+    if (kind === 'subsystem') state.layer = 'overview';
+    else if (kind === 'module') { state.layer = 'modules'; const m = nodes.get(id); if (state.subsystem && m.subsystem !== state.subsystem) state.subsystem = null; }
+    else if (kind === 'stage') { state.layer = 'pipeline'; state.expanded = id; }
+    else { state.layer = 'pipeline'; const sid = nodes.get(id).stage || stageOf.get(id) || findStageCalling(id); if (sid) state.expanded = sid; }
+    state.selected = id; setHash(id); render();
+    const target = view.querySelector('[data-id="' + CSS.escape(id) + '"]');
+    if (target && target.scrollIntoView) target.scrollIntoView({ block: 'center', inline: 'center' });
+  }
+
+  // ---------- search ----------
+  const matches = (n, q) => [n.name, n.path, n.signature, n.id].some((v) => v && String(v).toLowerCase().includes(q));
+  function applyQuery() {
+    const q = state.query.trim().toLowerCase();
+    document.querySelectorAll('[data-id]').forEach((x) => { const n = nodes.get(x.dataset.id); if (!n) return; const hit = !!q && matches(n, q); x.classList.toggle('match', hit); x.classList.toggle('dim', !!q && !hit); });
+    document.querySelectorAll('path.edge').forEach((p) => {
+      if (!q) { p.classList.remove('match', 'dim'); return; }
+      const a = nodes.get(p.dataset.from), b = nodes.get(p.dataset.to);
+      const hit = !!((a && matches(a, q)) || (b && matches(b, q)));
+      p.classList.toggle('match', hit); p.classList.toggle('dim', !hit);
+    });
+  }
+  function renderResults() {
+    results.innerHTML = '';
+    const q = state.query.trim().toLowerCase();
+    if (!q) { results.hidden = true; return; }
+    const score = (n) => {
+      const name = String(n.name || '').toLowerCase();
+      if (name === q) return 0;
+      if (name.startsWith(q)) return 1;
+      if (name.includes(q)) return 2;
+      if (String(n.path || '').toLowerCase().includes(q)) return 3;
+      if (String(n.signature || '').toLowerCase().includes(q)) return 4;
+      return 5;
+    };
+    const hits = [...nodes.values()].filter((n) => matches(n, q)).map((n) => [score(n), n]).sort((a, b) => a[0] - b[0]).map((x) => x[1]).slice(0, 30);
+    if (!hits.length) results.append(el('div', { class: 'muted result-empty', text: 'no matches' }));
+    hits.forEach((n) => results.append(el('button', { class: 'result', onclick: () => { results.hidden = true; navigateTo(n.id); } },
+      el('span', { class: 'kind', text: kindOf.get(n.id) }), el('span', { class: 'result-name', text: n.name }), el('span', { class: 'muted small', text: n.path ? n.path + ':' + (n.line || 1) : '' }))));
+    results.hidden = false;
+  }
+  searchInput.addEventListener('input', () => { state.query = searchInput.value; applyQuery(); renderResults(); });
+  searchInput.addEventListener('keydown', (ev) => {
+    if (ev.key === 'Escape') { searchInput.value = ''; state.query = ''; applyQuery(); renderResults(); searchInput.blur(); }
+    if (ev.key === 'Enter') { const first = results.querySelector('.result'); if (first) first.click(); }
+  });
+  searchInput.addEventListener('focus', () => { if (state.query.trim()) renderResults(); });
+  document.addEventListener('keydown', (ev) => {
+    const tag = (document.activeElement && document.activeElement.tagName) || '';
+    if (ev.key === '/' && !/^(INPUT|TEXTAREA)$/.test(tag)) { ev.preventDefault(); searchInput.focus(); searchInput.select(); }
+  });
+  document.addEventListener('click', (ev) => { if (!results.contains(ev.target) && ev.target !== searchInput) results.hidden = true; });
+
+  // ---------- tabs, zoom, header ----------
+  document.querySelectorAll('.tab').forEach((t) => t.addEventListener('click', () => { state.layer = t.dataset.layer; render(); }));
+  $('#zoom-in').addEventListener('click', () => { state.zoom = Math.min(2.2, +(state.zoom + 0.15).toFixed(2)); render(); });
+  $('#zoom-out').addEventListener('click', () => { state.zoom = Math.max(0.4, +(state.zoom - 0.15).toFixed(2)); render(); });
+  $('#zoom-reset').addEventListener('click', () => { state.zoom = 1; render(); });
+  function renderMeta() {
+    const m = DATA.meta || {}, sc = m.scope || {};
+    if (m.repo) { $('#title').textContent = m.repo; document.title = m.repo + ' · code map'; }
+    const parts = [];
+    if (m.generated) parts.push('generated ' + m.generated);
+    if (sc.entry) { const e = nodes.get(sc.entry); parts.push('entry ' + (e ? e.name : sc.entry)); }
+    if (sc.focus) parts.push('focus ' + sc.focus);
+    if (m.editorScheme) parts.push('links open in ' + m.editorScheme.split(':')[0]);
+    parts.push((DATA.modules || []).length + ' modules, ' + stages.length + ' stages, ' + (DATA.functions || []).length + ' functions');
+    $('#meta').textContent = parts.join(' · ');
+    const box = $('#scope'); box.innerHTML = '';
+    if (sc.kept) box.append(el('span', { text: sc.kept + ' ' }));
+    const cut = sc.cut || [];
+    if (cut.length) box.append(el('details', {}, el('summary', { text: cut.length + ' left out of this map' }), el('span', { class: 'small', text: ' ' + cut.join(', ') })));
+  }
+
+  // ---------- init ----------
+  renderMeta();
+  let initial = '';
+  try { initial = decodeURIComponent((location.hash || '').slice(1)); } catch (e) { initial = ''; }
+  if (initial && nodes.has(initial)) navigateTo(initial); else render();
+})();
+</script>
+</body>
+</html>
