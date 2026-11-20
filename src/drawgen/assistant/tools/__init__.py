@@ -155,6 +155,8 @@ class ToolDefinition:
     args_model: type[BaseModel]
     command: str | None = None
     handler: Callable[[LiveBackend, BaseModel], dict[str, Any]] | None = None
+    # The bridge command this tool needs; None for tools that run locally.
+    requires: str | None = None
 
 
 class ToolError(Exception):
@@ -206,6 +208,7 @@ class ToolRegistry:
     def __init__(self, backend: LiveBackend) -> None:
         self.backend = backend
         self._tools: dict[str, ToolDefinition] = {}
+        self._capabilities: frozenset[str] | None = None
         self._register_defaults()
 
     def _register(
@@ -217,6 +220,7 @@ class ToolRegistry:
         *,
         command: str | None = None,
         handler: Callable[[LiveBackend, BaseModel], dict[str, Any]] | None = None,
+        requires: str | None = None,
     ) -> None:
         self._tools[name] = ToolDefinition(
             ToolSpec(
@@ -228,6 +232,7 @@ class ToolRegistry:
             args_model,
             command,
             handler,
+            requires if requires is not None else command,
         )
 
     def _register_defaults(self) -> None:
@@ -237,6 +242,7 @@ class ToolRegistry:
             "Read the current NX session context.",
             EmptyArgs,
             handler=_read_context,
+            requires="get_context",
         )
         self._register(
             "get_selection",
@@ -244,6 +250,7 @@ class ToolRegistry:
             "Read the current NX selection.",
             SelectionArgs,
             handler=_read_selection,
+            requires="get_selection",
         )
         self._register(
             "measure",
@@ -251,6 +258,7 @@ class ToolRegistry:
             "Measure selected session handles.",
             MeasureArgs,
             handler=_read_measure,
+            requires="measure",
         )
         self._register(
             "search_nx_api",
@@ -265,6 +273,7 @@ class ToolRegistry:
             "List typed objects from the current NX session.",
             ListArgs,
             handler=_read_list,
+            requires="list",
         )
         for name, description, args_model, command, kind in (
             ("open_part", "Open a part by local path.", PathArgs, "open_part", "session"),
@@ -354,8 +363,28 @@ class ToolRegistry:
         definition = self._tools.get(name)
         return definition.spec.kind if definition is not None else None
 
+    def available(self, name: str) -> bool:
+        """Whether the connected bridge can run this tool (C4).
+
+        A tool the bridge does not implement is never offered to the LLM, so
+        the model cannot pick an operation that would fail in NX.
+        """
+
+        definition = self._tools.get(name)
+        if definition is None:
+            return False
+        if definition.requires is None:
+            return True
+        if self._capabilities is None:
+            self._capabilities = self.backend.capabilities()
+        return self._capabilities is None or definition.requires in self._capabilities
+
     def specs(self) -> list[dict[str, Any]]:
-        return [tool.spec.model_dump(mode="json") for tool in self._tools.values()]
+        return [
+            tool.spec.model_dump(mode="json")
+            for name, tool in self._tools.items()
+            if self.available(name)
+        ]
 
     def execute(
         self, name: str, raw_args: dict[str, Any], *, confirmed: bool = False
@@ -363,6 +392,8 @@ class ToolRegistry:
         definition = self._tools.get(name)
         if definition is None:
             raise ToolError(f"unknown tool: {name}")
+        if not self.available(name):
+            raise ToolError(f"the NX bridge in this session does not support {name}")
         try:
             args = definition.args_model.model_validate(raw_args)
         except Exception as exc:

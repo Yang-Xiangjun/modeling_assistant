@@ -21,6 +21,27 @@ from drawgen.contracts.live import (
     SessionContext,
 )
 
+# Commands that both C# dispatchers (BranchCSmokeRuntime.Dispatch and
+# NxBridgeEntry.InteractiveNxDispatcher.Dispatch) implement at d3923a8. Used only
+# when the loaded bridge does not answer the `capabilities` command yet; a
+# bridge that does answer is the single source of truth.
+LEGACY_BRIDGE_COMMANDS = frozenset(
+    {
+        "ping",
+        "get_context",
+        "get_selection",
+        "measure",
+        "create_box_with_hole",
+        "highlight",
+        "show_entity",
+        "hide_entity",
+        "isolate_entity",
+        "fit_view",
+        "update",
+        "save",
+    }
+)
+
 
 class BridgeBackend:
     def __init__(
@@ -90,6 +111,26 @@ class BridgeBackend:
 
     def ping(self) -> dict[str, Any]:
         return self._request("ping")
+
+    def capabilities(self) -> frozenset[str] | None:
+        """Ask the bridge which commands it runs; fall back for older bridges.
+
+        Returns None when the bridge cannot be reached, so the caller can ask
+        again later instead of caching a wrong answer.
+        """
+
+        try:
+            payload = self._request("capabilities")
+        except LiveBackendTimeout:
+            return None
+        except LiveBackendError as exc:
+            if "unsupported" in str(exc).lower():
+                return LEGACY_BRIDGE_COMMANDS
+            return None
+        commands = payload.get("commands")
+        if not isinstance(commands, list):
+            return LEGACY_BRIDGE_COMMANDS
+        return frozenset(str(command) for command in commands)
 
     def get_context(self) -> SessionContext:
         return SessionContext.model_validate(self._request("get_context"))

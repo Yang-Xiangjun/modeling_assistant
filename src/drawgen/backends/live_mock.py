@@ -26,7 +26,9 @@ class MockLiveBackend:
         selection: Selection | None = None,
         lists: dict[str, ListResult] | None = None,
         measurements: dict[str, LiveMeasureResult] | None = None,
+        supported: frozenset[str] | None = None,
     ) -> None:
+        self.supported = supported
         self.context = context or SessionContext(
             work_part={"name": "demo.prt", "path": "C:/demo.prt", "modified": False},
             displayed_part={"name": "demo.prt", "path": "C:/demo.prt", "modified": False},
@@ -40,6 +42,11 @@ class MockLiveBackend:
         self.executed: list[tuple[str, dict[str, Any]]] = []
         self.undo_marks: list[str] = []
         self._marks = itertools.count(1)
+
+    def capabilities(self) -> frozenset[str] | None:
+        """The scripted session supports every command unless a test restricts it."""
+
+        return self.supported
 
     def ping(self) -> dict[str, Any]:
         return {"bridge_version": "mock-0", "nx_version": "mock"}
