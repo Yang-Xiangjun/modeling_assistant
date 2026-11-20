@@ -24,9 +24,7 @@ def test_mock_live_supports_typed_volume_measurement() -> None:
         }
     )
 
-    results = backend.measure(
-        [LiveMeasureRequest(id="volume-0", kind="volume", a="body:0")]
-    )
+    results = backend.measure([LiveMeasureRequest(id="volume-0", kind="volume", a="body:0")])
 
     assert results.results[0].value == 120000.0
     assert results.results[0].unit == "mm3"

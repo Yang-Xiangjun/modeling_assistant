@@ -84,4 +84,3 @@ def test_plan_attaches_validated_api_candidates(tmp_path: Path) -> None:
     assert plan.api_candidates
     assert plan.steps[0].api_candidate_ids
     assert any(candidate.status == "validated" for candidate in plan.api_candidates)
-

@@ -47,14 +47,8 @@ def classify_request(request: str) -> str:
     if not text:
         return "ambiguous"
     lowered = f" {text.lower()} "
-    action_count = sum(
-        1 for word in _ACTION_WORDS if re.search(rf"\b{re.escape(word)}\b", lowered)
-    )
-    if (
-        len(text) > 160
-        or action_count > 1
-        or any(marker in lowered for marker in _COMPLEX_MARKERS)
-    ):
+    action_count = sum(1 for word in _ACTION_WORDS if re.search(rf"\b{re.escape(word)}\b", lowered))
+    if len(text) > 160 or action_count > 1 or any(marker in lowered for marker in _COMPLEX_MARKERS):
         return "complex"
     if not re.search(
         r"\b(what|which|how|tell|show|measure|calculate|create|make|build|fit|orient)\b",

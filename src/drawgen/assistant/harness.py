@@ -295,11 +295,7 @@ class PiAgentHarness:
         configured = args or os.environ.get("DRAWGEN_PI_ARGS", "--print --mode json")
         self.args = shlex.split(configured, posix=False)
         default_skill = (
-            Path(__file__).resolve().parents[3]
-            / ".pi-agent"
-            / "skills"
-            / "nxopen-cad"
-            / "SKILL.md"
+            Path(__file__).resolve().parents[3] / ".pi-agent" / "skills" / "nxopen-cad" / "SKILL.md"
         )
         skill = os.environ.get("DRAWGEN_PI_SKILL", str(default_skill))
         if skill and Path(skill).is_file():

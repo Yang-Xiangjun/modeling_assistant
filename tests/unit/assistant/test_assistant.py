@@ -17,9 +17,7 @@ class _NineRoundHarness:
                 tool_calls=[
                     {
                         "tool": "measure",
-                        "args": {
-                            "requests": [{"id": identifier, "kind": "area", "a": "h-face"}]
-                        },
+                        "args": {"requests": [{"id": identifier, "kind": "area", "a": "h-face"}]},
                     }
                 ]
             )
@@ -89,9 +87,7 @@ def test_volume_request_measures_selected_body() -> None:
         measurements={"v0": LiveMeasureResult(id="v0", value=120000.0, unit="mm3")},
     )
 
-    result = AssistantAgent(backend, FakeHarness()).run(
-        "What is the volume of the selected body?"
-    )
+    result = AssistantAgent(backend, FakeHarness()).run("What is the volume of the selected body?")
 
     assert result.answer == "The measured volume is 120000.0 mm3."
 

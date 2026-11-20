@@ -180,9 +180,7 @@ def validate_candidate(
 ) -> ApiCandidate:
     """Apply deterministic evidence checks without invoking NXOpen."""
 
-    haystack = " ".join(
-        (candidate.full_name, candidate.summary, candidate.signature or "")
-    ).lower()
+    haystack = " ".join((candidate.full_name, candidate.summary, candidate.signature or "")).lower()
     missing = [term for term in required_terms if term.lower() not in haystack]
     if missing:
         return candidate.model_copy(

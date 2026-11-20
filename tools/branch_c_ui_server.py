@@ -12,7 +12,6 @@ from urllib.parse import urlparse
 from drawgen.backends.bridge import BridgeBackend
 from drawgen.backends.live import LiveBackendError
 
-
 ROOT = Path(__file__).resolve().parents[1]
 STATIC_FILE = ROOT / "web" / "branch_c_chat.html"
 DEFAULT_ENDPOINT = Path(os.environ.get("LOCALAPPDATA", Path.home())) / "drawgen" / "bridge.json"
@@ -142,7 +141,7 @@ class Handler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(body)
 
-    def do_GET(self) -> None:  # noqa: N802
+    def do_GET(self) -> None:
         path = urlparse(self.path).path
         if path == "/api/health":
             self._write_json(200, _health())
@@ -161,7 +160,7 @@ class Handler(BaseHTTPRequestHandler):
             return
         self._write_json(404, {"ok": False, "error": "Not found"})
 
-    def do_POST(self) -> None:  # noqa: N802
+    def do_POST(self) -> None:
         if urlparse(self.path).path != "/api/chat":
             self._write_json(404, {"ok": False, "error": "Not found"})
             return
