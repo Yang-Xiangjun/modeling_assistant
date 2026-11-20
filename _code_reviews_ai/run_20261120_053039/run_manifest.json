@@ -1,0 +1,18 @@
+{
+  "run_id": "run_20261120_053039",
+  "created_at": "2026-11-20T05:30:39",
+  "project_root": "/Users/young/Desktop/code/modeling_assistant/.claude/worktrees/branch-c-review",
+  "root_folder": "_code_reviews_ai",
+  "current_cycle": "cycle_01",
+  "max_retries": 5,
+  "permission_confirm_after": 2,
+  "requires_user_confirmation": false,
+  "reviewers": [
+    "reviewer_01",
+    "reviewer_02",
+    "reviewer_03"
+  ],
+  "team_size": 3,
+  "run_state": "active",
+  "last_retry_reason": ""
+}

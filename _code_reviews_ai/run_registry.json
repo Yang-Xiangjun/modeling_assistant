@@ -1,0 +1,17 @@
+{
+  "active_run_id": "run_20261120_053039",
+  "active_cycle_id": "cycle_01",
+  "updated_at": "2026-11-20T05:30:39",
+  "runs": {
+    "run_20261120_053039": {
+      "state": "active",
+      "team_size": 3,
+      "reviewers": [
+        "reviewer_01",
+        "reviewer_02",
+        "reviewer_03"
+      ],
+      "updated_at": "2026-11-20T05:30:39"
+    }
+  }
+}

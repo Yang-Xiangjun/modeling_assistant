@@ -1,0 +1,13 @@
+# Review Query
+
+Review the Branch C "NX modeling assistant" implementation (commit d3923a8 on top of 991fdb1) as a basic review plus planning input. Do not propose code patches; report findings with evidence.
+
+Target environment: Windows workstation with Siemens NX 2506 (.NET 8 hosted runtime), PowerShell launch scripts, a Python 3.12 assistant (uv), the `pi` coding-agent CLI as the default LLM harness, and a C# NXOpen bridge loaded into the interactive NX session.
+
+The owner's goal ("flexibility"): the assistant should support many kinds of NX operations, not a hard-coded handful. For a user request, pi should (1) plan the operation, (2) look up the relevant NXOpen APIs, and (3) form an NXOpen C# pipeline that carries out what the user asked, executed through the bridge.
+
+Evaluate:
+1. How far the current architecture is from that goal, and which parts block it (planning, API lookup, tool registry, bridge dispatch, harness, UI/session handling).
+2. Safety and correctness defects in what exists now (confirmation, undo marks, saving, main-thread dispatch, token/loopback, handles, number checking).
+3. Windows-specific runtime concerns (paths, PowerShell scripts, process launching of pi/uv, encoding, .NET 8 / NX 2506 loading).
+4. The tension between the goal and project rule 7 ("The assistant acts on NX only through listed tools. It never runs NXOpen code written by a model.") and rule 8 (confirm, undo mark first, never save on its own). Assess safe designs that reach the goal, e.g. a model-composed pipeline of pre-compiled typed adapters versus model-generated C# compiled at runtime, and what guardrails each would need.

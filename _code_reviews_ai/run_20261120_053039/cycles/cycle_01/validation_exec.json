@@ -1,0 +1,24 @@
+{
+  "ran_at": "2026-11-20T05:44:17",
+  "command": [
+    "/Users/young/Desktop/code/modeling_assistant/.claude/worktrees/branch-c-review/.venv/bin/python3",
+    "/Users/young/.cc-switch/skills/parallel-consensus-code-review/scripts/validate_cycle_outputs.py",
+    "--project-root",
+    "/Users/young/Desktop/code/modeling_assistant/.claude/worktrees/branch-c-review",
+    "--run-id",
+    "run_20261120_053039",
+    "--cycle-id",
+    "cycle_01",
+    "--reviewer-files",
+    "reviewer_01.md",
+    "reviewer_02.md",
+    "reviewer_03.md"
+  ],
+  "returncode": 0,
+  "stdout_preview": [
+    "status=ready_for_consensus",
+    "reason=all_reviewer_outputs_valid",
+    "attempts_used=0/5"
+  ],
+  "stderr_preview": []
+}

@@ -1,0 +1,4 @@
+# Raw reviewer process logs are large and local; the reports and consensus are kept.
+*.stderr.log
+*.stdout.log
+review_cycle.lock

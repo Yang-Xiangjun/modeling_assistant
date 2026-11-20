@@ -1,0 +1,25 @@
+{
+  "evaluated_at": "2026-11-20T05:44:17",
+  "run_id": "run_20261120_053039",
+  "cycle_id": "cycle_01",
+  "status": "ready_for_consensus",
+  "reason": "all_reviewer_outputs_valid",
+  "attempts_used": 0,
+  "max_retries": 5,
+  "permission_confirm_after": 2,
+  "reviewer_files": [
+    "reviewer_01.md",
+    "reviewer_02.md",
+    "reviewer_03.md"
+  ],
+  "missing_or_invalid_reviewers": [],
+  "execution_permission_block_detected": false,
+  "force_majeure_confirmed": false,
+  "force_majeure_categories": [],
+  "force_majeure_hits": {},
+  "low_overhead_mode_allowed": false,
+  "requires_user_confirmation": false,
+  "decision_needed": false,
+  "decision_request_file": "/Users/young/Desktop/code/modeling_assistant/.claude/worktrees/branch-c-review/_code_reviews_ai/run_20261120_053039/cycles/cycle_01/decision_request.json",
+  "next_action": "continue_or_retry"
+}
