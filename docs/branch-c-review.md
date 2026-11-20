@@ -13,6 +13,24 @@ Owner goal ("flexibility"): the assistant supports many kinds of NX operation,
 not a fixed handful. For each request, pi plans the operation, looks up the
 NXOpen API, and forms an NXOpen C# pipeline that does what the user asked.
 
+## Status update (Python-side fixes)
+
+These commits on top of the review fix the Python side. The C# bridge is
+unchanged: it cannot be built or run on the review machine, and CLAUDE.md
+forbids inventing NXOpen calls.
+
+| Commit | Fixes | What changed |
+|---|---|---|
+| C-R0-1 | C1, C8 (browser), S8 (browser), S11 | The UI server runs in-process sessions, one agent per tab. A change pauses on the exact call it previewed until the page sends that turn's confirmation ID. There is no auto-confirm. A per-launch token and JSON-only POSTs are required. |
+| C-R0-2 | C6 | Numeric arguments of session and change tools must come from the user or a tool result. The checker matches at the precision shown, counts list lengths, and ignores digits inside identifiers. One retry, then raw results. |
+| C-R0-3 | S12, C8 (agent) | Clear requests and non-English text are no longer blocked. A clarification answer completes the original request. |
+| C-R0-4 | C7 | A timed-out session or change command raises `LiveOutcomeUnknown` and is never resent. Changes get their own 60 s deadline. |
+| C-R1-1 | C4 (Python side) | The registry offers only tools that the connected bridge runs. `capabilities()` falls back to the 11 commands both C# dispatchers implement. |
+
+Still open, all needing C# or an NX seat: C2 (real undo marks), C3 (add-in
+main-thread queue), C5 (handle table), S3, S5, S6, S7, S10, and the C# side of
+C4 (answering `capabilities` from the manifest).
+
 ## 1. Summary
 
 - The Python side is a sound base. It has typed contracts, a provider-neutral
