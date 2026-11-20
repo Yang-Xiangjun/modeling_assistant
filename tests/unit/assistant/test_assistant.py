@@ -1,8 +1,16 @@
+from typing import Any
+
 from drawgen.assistant.agent import AssistantAgent
 from drawgen.assistant.contracts import AssistantStep, HarnessRequest
 from drawgen.assistant.harness import FakeHarness
+from drawgen.backends.live import LiveOutcomeUnknown
 from drawgen.backends.live_mock import MockLiveBackend
-from drawgen.contracts.live import LiveMeasureResult, SelectedObject, Selection
+from drawgen.contracts.live import (
+    LiveMeasureResult,
+    OperationResult,
+    SelectedObject,
+    Selection,
+)
 
 
 class _NineRoundHarness:
@@ -251,3 +259,20 @@ def test_rejected_answer_is_retried_once_then_raw_results_are_shown() -> None:
     assert answer is not None
     assert "could not be verified" in answer
     assert "12.5" in answer
+
+
+class _StalledBackend(MockLiveBackend):
+    def execute(self, command: str, inputs: dict[str, Any]) -> OperationResult:
+        self.executed.append((command, inputs))
+        raise LiveOutcomeUnknown(f"NX did not answer '{command}'; the outcome is unknown.")
+
+
+def test_unknown_outcome_is_reported_and_not_retried() -> None:
+    backend = _StalledBackend()
+    hide = AssistantStep(tool_calls=[{"tool": "hide_entity", "args": {"handle": "h1"}}])
+    result = AssistantAgent(backend, FakeHarness([hide, hide])).run(
+        "Hide this body", confirm=lambda _: True
+    )
+    assert result.ask_user is not None
+    assert "outcome is unknown" in result.ask_user
+    assert backend.executed == [("hide_entity", {"handle": "h1"})]

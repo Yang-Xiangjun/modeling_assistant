@@ -19,6 +19,18 @@ class LiveBackendError(Exception):
     """The live bridge could not complete a request."""
 
 
+class LiveBackendTimeout(LiveBackendError):
+    """The bridge did not answer before the deadline."""
+
+
+class LiveOutcomeUnknown(LiveBackendTimeout):
+    """A session or change command timed out; NX may or may not have applied it.
+
+    The client never replays such a request (HANDOFF 17.2). The user must look
+    at NX before asking again.
+    """
+
+
 class LiveBackend(Protocol):
     def ping(self) -> dict[str, Any]: ...
 

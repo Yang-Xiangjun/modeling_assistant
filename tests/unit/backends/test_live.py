@@ -6,9 +6,60 @@ from pathlib import Path
 import pytest
 
 from drawgen.backends.bridge import BridgeBackend
-from drawgen.backends.live import LiveBackendError
+from drawgen.backends.live import LiveBackendError, LiveBackendTimeout, LiveOutcomeUnknown
 from drawgen.backends.live_mock import MockLiveBackend
 from drawgen.contracts.live import LiveMeasureRequest, LiveMeasureResult, Selection
+
+
+def _silent_bridge(tmp_path: Path) -> tuple[Path, list[str], threading.Event]:
+    """A bridge that reads requests and never answers, like a stalled NX."""
+
+    listener = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    listener.bind(("127.0.0.1", 0))
+    listener.listen(4)
+    received: list[str] = []
+    stop = threading.Event()
+
+    def serve() -> None:
+        listener.settimeout(0.1)
+        open_connections = []
+        while not stop.is_set():
+            try:
+                connection, _ = listener.accept()
+            except TimeoutError:
+                continue
+            open_connections.append(connection)
+            received.append(json.loads(connection.recv(4096).decode("utf-8"))["command"])
+        for connection in open_connections:
+            connection.close()
+        listener.close()
+
+    threading.Thread(target=serve, daemon=True).start()
+    endpoint = tmp_path / "bridge.json"
+    port = listener.getsockname()[1]
+    endpoint.write_text(json.dumps({"host": "127.0.0.1", "port": port, "token": "t"}))
+    return endpoint, received, stop
+
+
+def test_read_timeout_is_a_plain_timeout(tmp_path: Path) -> None:
+    endpoint, _received, stop = _silent_bridge(tmp_path)
+    try:
+        with pytest.raises(LiveBackendTimeout) as caught:
+            BridgeBackend(endpoint, timeout_s=0.2).get_selection()
+        assert not isinstance(caught.value, LiveOutcomeUnknown)
+    finally:
+        stop.set()
+
+
+def test_change_timeout_reports_unknown_outcome_and_is_not_resent(tmp_path: Path) -> None:
+    endpoint, received, stop = _silent_bridge(tmp_path)
+    try:
+        backend = BridgeBackend(endpoint, timeout_s=0.2, change_timeout_s=0.2)
+        with pytest.raises(LiveOutcomeUnknown, match="outcome is unknown"):
+            backend.execute("hide_entity", {"handle": "tag:1"})
+        assert received == ["hide_entity"]
+    finally:
+        stop.set()
 
 
 def test_mock_live_ping_and_empty_selection() -> None:

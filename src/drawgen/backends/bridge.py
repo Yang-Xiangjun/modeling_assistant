@@ -8,7 +8,7 @@ import uuid
 from pathlib import Path
 from typing import Any
 
-from drawgen.backends.live import LiveBackendError
+from drawgen.backends.live import LiveBackendError, LiveBackendTimeout, LiveOutcomeUnknown
 from drawgen.contracts.live import (
     BridgeRequest,
     BridgeResponse,
@@ -23,9 +23,14 @@ from drawgen.contracts.live import (
 
 
 class BridgeBackend:
-    def __init__(self, endpoint_file: Path, timeout_s: float = 2.0) -> None:
+    def __init__(
+        self, endpoint_file: Path, timeout_s: float = 2.0, change_timeout_s: float = 60.0
+    ) -> None:
         self.endpoint_file = endpoint_file.expanduser().resolve()
         self.timeout_s = timeout_s
+        # Session and change commands (feature commits, updates) can take far
+        # longer than a read; a timeout there leaves the outcome unknown.
+        self.change_timeout_s = change_timeout_s
 
     def _endpoint(self) -> tuple[str, int, str]:
         try:
@@ -34,19 +39,26 @@ class BridgeBackend:
         except (OSError, KeyError, TypeError, ValueError) as exc:
             raise LiveBackendError(f"invalid bridge endpoint: {self.endpoint_file}") from exc
 
-    def _request(self, command: str, inputs: dict[str, Any] | None = None) -> dict[str, Any]:
+    def _request(
+        self,
+        command: str,
+        inputs: dict[str, Any] | None = None,
+        *,
+        timeout_s: float | None = None,
+    ) -> dict[str, Any]:
         host, port, token = self._endpoint()
+        deadline = self.timeout_s if timeout_s is None else timeout_s
         request = BridgeRequest(
             id=uuid.uuid4().hex,
             token=token,
             command=command,
             inputs=inputs or {},
-            options={"timeout_s": self.timeout_s},
+            options={"timeout_s": deadline},
         )
         data = (request.model_dump_json() + "\n").encode("utf-8")
         try:
             with socket.create_connection((host, port), timeout=self.timeout_s) as stream:
-                stream.settimeout(self.timeout_s)
+                stream.settimeout(deadline)
                 stream.sendall(data)
                 chunks: list[bytes] = []
                 while b"\n" not in b"".join(chunks):
@@ -54,6 +66,10 @@ class BridgeBackend:
                     if not chunk:
                         break
                     chunks.append(chunk)
+        except TimeoutError as exc:
+            raise LiveBackendTimeout(
+                f"bridge did not answer '{command}' within {deadline:g} s"
+            ) from exc
         except OSError as exc:
             raise LiveBackendError(f"bridge connection failed: {exc}") from exc
         raw = b"".join(chunks).split(b"\n", 1)[0]
@@ -92,7 +108,14 @@ class BridgeBackend:
         return ListResult.model_validate(self._request("list", request.model_dump(mode="json")))
 
     def execute(self, command: str, inputs: dict[str, Any]) -> OperationResult:
-        payload = self._request(command, inputs)
+        try:
+            payload = self._request(command, inputs, timeout_s=self.change_timeout_s)
+        except LiveBackendTimeout as exc:
+            raise LiveOutcomeUnknown(
+                f"NX did not answer '{command}' within {self.change_timeout_s:g} s, so the "
+                "outcome is unknown: it may have been applied. Check NX (use Undo if it ran) "
+                "before asking again; the request will not be resent."
+            ) from exc
         # Early smoke journals returned operation details directly. Accept that
         # shape while seats still have an older journal loaded, then use the
         # typed operation envelope for all new bridge builds.
