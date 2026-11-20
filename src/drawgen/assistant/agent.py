@@ -28,6 +28,8 @@ class AssistantAgent:
         self.registry = ToolRegistry(backend)
         self.log = log
         self.conversation: list[dict[str, str]] = []
+        # The request that is waiting for the user's clarification, if any.
+        self.pending_clarification: str | None = None
 
     def run(
         self,
@@ -38,18 +40,35 @@ class AssistantAgent:
         self.conversation.append({"role": "user", "content": user_message})
         if self.log:
             self.log.append("user_message", content=user_message)
-        operation_plan = discover_api_candidates(build_operation_plan(user_message))
+        # An answer to a clarification completes the earlier request instead of
+        # being planned on its own, and is not asked about a second time.
+        request_text = user_message
+        answered = self.pending_clarification is not None
+        if self.pending_clarification is not None:
+            request_text = f"{self.pending_clarification}\n{user_message}"
+            self.pending_clarification = None
+        plan = build_operation_plan(request_text)
+        if answered and plan.clarification_required:
+            plan = plan.model_copy(
+                update={
+                    "clarification_required": False,
+                    "clarification_questions": [],
+                    "assumptions": [*plan.assumptions, "The user answered the clarification."],
+                }
+            )
+        operation_plan = discover_api_candidates(plan)
         if self.log:
             self.log.append("operation_plan", plan=operation_plan.model_dump(mode="json"))
         if operation_plan.clarification_required:
             questions = "\n".join(
                 f"- {question}" for question in operation_plan.clarification_questions
             )
-            return TurnResult(
-                ask_user=f"Before I plan this NX operation, please clarify:\n{questions}"
-            )
+            question = f"Before I plan this NX operation, please clarify:\n{questions}"
+            self.pending_clarification = request_text
+            self.conversation.append({"role": "assistant", "content": question})
+            return TurnResult(ask_user=question)
         results: list[Any] = []
-        sources: list[Any] = [user_message]
+        sources: list[Any] = [request_text]
         # Numeric tool arguments may come from anything the user said in this
         # conversation or from a tool result of this turn (HANDOFF 17.5).
         argument_sources: list[Any] = [

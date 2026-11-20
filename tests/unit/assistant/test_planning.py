@@ -2,17 +2,21 @@
 
 from pathlib import Path
 
+from drawgen.assistant.agent import AssistantAgent
 from drawgen.assistant.api_search import (
     ApiCatalog,
     expand_synonyms,
     search_nx_api,
     validate_candidate,
 )
+from drawgen.assistant.contracts import AssistantStep
+from drawgen.assistant.harness import FakeHarness
 from drawgen.assistant.planning import (
     build_operation_plan,
     classify_request,
     discover_api_candidates,
 )
+from drawgen.backends.live_mock import MockLiveBackend
 
 
 def test_complex_request_is_marked_for_clarification() -> None:
@@ -34,6 +38,31 @@ def test_ambiguous_request_asks_for_goal_and_target() -> None:
     assert plan.clarification_required is True
     assert any("result" in question.lower() for question in plan.clarification_questions)
     assert any("target" in question.lower() for question in plan.clarification_questions)
+
+
+def test_clear_operations_and_other_languages_are_not_blocked() -> None:
+    for request in (
+        "hide this body",
+        "isolate the selected body",
+        "save the part",
+        "update the model",
+        "Area of the face?",
+        "选中面的面积是多少",
+    ):
+        assert classify_request(request) == "simple", request
+
+
+def test_clarification_answer_completes_the_original_request() -> None:
+    backend = MockLiveBackend()
+    harness = FakeHarness([AssistantStep(answer="Done.")])
+    agent = AssistantAgent(backend, harness)
+
+    first = agent.run("Do something with NX")
+    assert first.ask_user is not None and "clarify" in first.ask_user
+
+    second = agent.run("the selected body")
+    assert second.answer == "Done."
+    assert agent.pending_clarification is None
 
 
 def test_volume_request_expands_to_mass_property_search_terms() -> None:

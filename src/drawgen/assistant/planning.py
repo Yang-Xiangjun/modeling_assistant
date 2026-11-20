@@ -40,8 +40,22 @@ _ACTION_WORDS = {
 }
 
 
+# Words that make an English request specific enough to plan: a question word,
+# an operation verb, or a measurable quantity.
+_SPECIFIC = re.compile(
+    r"\b(what|which|how|tell|show|give|list|find|measure|calculate|create|make|build|fit|"
+    r"orient|hide|isolate|highlight|open|switch|edit|change|set|update|save|export|add|"
+    r"remove|area|volume|mass|length|radius|diameter|distance|angle|centroid)\b"
+)
+
+
 def classify_request(request: str) -> str:
-    """Classify a request before API discovery or NX execution."""
+    """Classify a request before API discovery or NX execution.
+
+    Only English wording is judged here. Text in another language is passed to
+    the harness as ``simple`` and the model asks if something is missing,
+    because a keyword list cannot tell what such a request leaves out.
+    """
 
     text = " ".join(request.split()).strip()
     if not text:
@@ -50,10 +64,7 @@ def classify_request(request: str) -> str:
     action_count = sum(1 for word in _ACTION_WORDS if re.search(rf"\b{re.escape(word)}\b", lowered))
     if len(text) > 160 or action_count > 1 or any(marker in lowered for marker in _COMPLEX_MARKERS):
         return "complex"
-    if not re.search(
-        r"\b(what|which|how|tell|show|measure|calculate|create|make|build|fit|orient)\b",
-        lowered,
-    ):
+    if text.isascii() and not text.endswith("?") and not _SPECIFIC.search(lowered):
         return "ambiguous"
     return "simple"
 
