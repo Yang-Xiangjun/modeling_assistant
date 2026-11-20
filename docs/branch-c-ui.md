@@ -42,9 +42,14 @@ pi
 
 Inside Pi, run `/login` and choose the ChatGPT Plus/Pro Codex provider. The launcher passes `--print --mode json` to the existing Branch C Pi adapter.
 
-The browser route passes `--yes` for the explicit local chat request so change
-tools can run without a terminal prompt. Direct CLI use keeps its confirmation
-prompt unless `--yes` is supplied.
+The UI server keeps one assistant session per browser tab, so the conversation
+and any pending clarification carry over between messages. A change tool pauses
+on the exact call it previewed and the page shows a Confirm / Cancel card;
+nothing runs until the user clicks Confirm (rule 8). API requests carry a
+per-launch token embedded in the served page, so other web pages cannot drive
+NX through the server. Set `DRAWGEN_UI_HARNESS` to `fake` or `codex` to use
+another harness. Direct CLI use keeps its terminal prompt unless `--yes` is
+supplied by the person running it.
 
 The Pi harness loads `.pi-agent/skills/nxopen-cad/SKILL.md` for every chat turn.
 That skill maps selection and measurement requests to the typed NXOpen bridge.
@@ -59,5 +64,5 @@ part unsaved so the existing `save` tool remains explicit.
 ## Files
 
 - `web/branch_c_chat.html` contains the split assistant interface.
-- `tools/branch_c_ui_server.py` serves the page and forwards chat requests to `drawgen assistant chat`.
+- `tools/branch_c_ui_server.py` serves the page and runs in-process assistant sessions (`drawgen.assistant.session`).
 - `tools/start_branch_c_ui.ps1` starts NX and the UI, then tiles both windows.

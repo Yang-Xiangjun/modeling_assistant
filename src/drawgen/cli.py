@@ -63,7 +63,7 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def _live_backend(name: str, endpoint: Path | None) -> LiveBackend:
+def live_backend(name: str, endpoint: Path | None) -> LiveBackend:
     if name == "mock":
         return MockLiveBackend(
             selection=Selection(
@@ -86,7 +86,7 @@ def _live_backend(name: str, endpoint: Path | None) -> LiveBackend:
     return BridgeBackend(endpoint)
 
 
-def _harness(name: str) -> HarnessAdapter:
+def harness_for(name: str) -> HarnessAdapter:
     if name == "fake":
         return FakeHarness()
     if name == "codex":
@@ -95,8 +95,8 @@ def _harness(name: str) -> HarnessAdapter:
 
 
 def _run_chat(args: argparse.Namespace) -> int:
-    backend = _live_backend(args.backend, args.endpoint)
-    harness = _harness(args.harness)
+    backend = live_backend(args.backend, args.endpoint)
+    harness = harness_for(args.harness)
     agent = AssistantAgent(backend, harness, log=SessionLog(session_id=args.session))
 
     def confirm(preview: str) -> bool:
@@ -142,8 +142,8 @@ def _run_chat(args: argparse.Namespace) -> int:
 def _run_panel(args: argparse.Namespace) -> int:
     from drawgen.assistant.panel.app import run_panel
 
-    backend = _live_backend(args.backend, args.endpoint)
-    harness = _harness(args.harness)
+    backend = live_backend(args.backend, args.endpoint)
+    harness = harness_for(args.harness)
     run_panel(backend, harness, log=SessionLog(session_id=args.session))
     return 0
 
@@ -176,7 +176,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         if args.live_command is None:
             parser.parse_args(["live", "--help"])
         try:
-            backend = _live_backend(args.backend, args.endpoint)
+            backend = live_backend(args.backend, args.endpoint)
             if args.live_command == "ping":
                 result = backend.ping()
             else:

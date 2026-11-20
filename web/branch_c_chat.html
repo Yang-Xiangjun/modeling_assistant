@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="drawgen-token" content="__DRAWGEN_UI_TOKEN__">
   <title>Branch C - NX Assistant</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap');
@@ -42,6 +43,11 @@
     textarea:focus { border-color:#9a701c; box-shadow:0 0 0 3px rgba(245,158,11,.1); }
     button { border:0; border-radius:10px; padding:0 18px; color:#17120a; background:var(--accent); font-weight:700; cursor:pointer; }
     button:disabled { opacity:.5; cursor:wait; }
+    .message.confirm { border-color:#9a701c; background:#2a2112; }
+    .confirm-title { font-weight:700; margin-bottom:6px; }
+    .confirm-actions { display:flex; gap:8px; margin-top:10px; }
+    .confirm-actions button { height:34px; }
+    .confirm-actions button.secondary { color:var(--text); background:#2b3644; }
     .hint { padding:0 14px 14px; color:var(--muted); font:11px 'DM Mono',monospace; }
     @media (max-width:900px) { main { grid-template-columns:1fr; } .viewport { min-height:280px; } }
   </style>
@@ -90,12 +96,56 @@
         $('overallText').textContent = ready ? 'Assistant ready' : (data.bridge_error ? 'Load NX bridge journal' : 'Setup required');
       } catch (error) { $('overallDot').className = 'dot bad'; $('overallText').textContent = 'UI server unavailable'; }
     }
+    // One session per tab keeps the conversation and any pending clarification.
+    const token = document.querySelector('meta[name="drawgen-token"]').content;
+    const sessionId = (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2)).replace(/[^A-Za-z0-9_-]/g, '');
+    const api = (path, body) => fetch(path, body === undefined
+      ? { cache:'no-store', headers:{'X-Drawgen-Token':token} }
+      : { method:'POST', cache:'no-store', headers:{'Content-Type':'application/json','X-Drawgen-Token':token}, body:JSON.stringify(body) });
+    const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+    // A change waits on this card; only the user's click confirms it (rule 8).
+    function askConfirmation(turnId, turn) {
+      return new Promise((resolve) => {
+        const card = addMessage('', 'confirm');
+        const title = document.createElement('div'); title.className = 'confirm-title'; title.textContent = 'Confirm NX change';
+        const body = document.createElement('div'); body.textContent = turn.preview || 'Confirm operation?';
+        const actions = document.createElement('div'); actions.className = 'confirm-actions';
+        const decide = async (approve) => {
+          for (const button of actions.querySelectorAll('button')) button.disabled = true;
+          const response = await api('/api/confirm', { session_id:sessionId, turn_id:turnId, confirm_id:turn.confirm_id, approve });
+          const data = await response.json();
+          actions.textContent = data.ok ? (approve ? 'Confirmed.' : 'Cancelled.') : `Error: ${data.error}`;
+          resolve();
+        };
+        for (const [text, approve, cls] of [['Confirm', true, ''], ['Cancel', false, 'secondary']]) {
+          const button = document.createElement('button'); button.textContent = text; button.className = cls;
+          button.addEventListener('click', () => decide(approve)); actions.appendChild(button);
+        }
+        card.append(title, body, actions);
+      });
+    }
+
     async function sendMessage() {
-      const input = message; const text = input.value.trim(); if (!text) return;
-      input.value = ''; addMessage(text, 'user'); const pending = addMessage('Pi is working...', 'system'); send.disabled = true;
+      const input = $('message'); const text = input.value.trim(); if (!text) return;
+      input.value = ''; addMessage(text, 'user'); const pending = addMessage('Pi is working...', 'system'); $('send').disabled = true;
       try {
-        const response = await fetch('/api/chat', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({message:text}) });
-        const data = await response.json(); pending.remove(); addMessage(data.ok ? (data.answer || 'Completed.') : `Error: ${data.error}`, data.ok ? 'assistant' : 'system');
+        const started = await (await api('/api/chat', { session_id:sessionId, message:text })).json();
+        if (!started.ok) { pending.remove(); addMessage(`Error: ${started.error}`, 'system'); return; }
+        const query = `/api/turn?session_id=${encodeURIComponent(sessionId)}&turn_id=${encodeURIComponent(started.turn_id)}`;
+        let shownConfirm = null;
+        while (true) {
+          const turn = await (await api(query)).json();
+          if (!turn.ok) { pending.remove(); addMessage(`Error: ${turn.error}`, 'system'); return; }
+          if (turn.status === 'needs_confirmation' && turn.confirm_id !== shownConfirm) {
+            shownConfirm = turn.confirm_id; await askConfirmation(started.turn_id, turn);
+          } else if (turn.status === 'done') {
+            pending.remove(); addMessage(turn.answer || turn.ask_user || 'Completed.', 'assistant'); return;
+          } else if (turn.status === 'error') {
+            pending.remove(); addMessage(`Error: ${turn.error}`, 'system'); return;
+          }
+          await sleep(400);
+        }
       } catch (error) { pending.remove(); addMessage(`Request failed: ${error}`, 'system'); }
       finally { $('send').disabled = false; refreshHealth(); input.focus(); }
     }

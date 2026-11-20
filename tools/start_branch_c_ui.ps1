@@ -16,7 +16,6 @@ $env:DRAWGEN_BRIDGE_ENDPOINT = $endpoint
 $env:DRAWGEN_PI_COMMAND = 'pi.cmd'
 $env:DRAWGEN_PI_ARGS = '--print --mode json'
 $env:DRAWGEN_PI_SKILL = Join-Path $repo '.pi-agent\skills\nxopen-cad\SKILL.md'
-$env:DRAWGEN_UI_AUTO_CONFIRM = '1'
 if ($NoFixture) {
     Remove-Item Env:DRAWGEN_CREATE_FIXTURE -ErrorAction SilentlyContinue
 } else {
